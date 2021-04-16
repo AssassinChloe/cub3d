@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/04/13 18:08:12 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/04/16 18:21:29 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ double ft_ray_lenght(t_window window, int ray_nb, t_data *data)
 	double d_i_l;
 	double d_i_c;
 	double wall_size;
-	int map[8][8] ={{1,1,1,1,1,1,1,1},
+	int tabmap[MAPY][MAPX] = {{1,1,1,1,1,1,1,1},
 		{1,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,1},
@@ -39,99 +39,92 @@ double ft_ray_lenght(t_window window, int ray_nb, t_data *data)
 		{1,0,0,0,0,0,0,1},
 		{1,1,1,1,1,1,1,1}};
 
-	ray_angle = ((data->dir - 30) + (window.sub_ray_angle * ray_nb));
+	ray_angle = ((data->dir + 30) - (window.sub_ray_angle * ray_nb));
 	if (ray_angle >= 360)
 		ray_angle -= 360;
 	if (ray_angle < 0)
 		ray_angle += 360;
-	d_i_l = ft_check_intersect_line(data, ray_angle, map);
-	d_i_c = ft_check_intersect_column(data, ray_angle, map);
+	d_i_l = ft_check_intersect_line(data, ray_angle,tabmap);
+	d_i_c = ft_check_intersect_column(data, ray_angle, tabmap);
 	if (d_i_l > d_i_c)
 		wall_size = floor(GRID * window.dpp / d_i_c);
 	else
 		wall_size = floor(GRID * window.dpp / d_i_l); 
+	printf ("wall_size %.2f\n", wall_size);
 	return (wall_size);
 
 }
 
-double ft_check_intersect_line(t_data *data, double ray_angle, int map[8][8])
+double ft_check_intersect_line(t_data *data, double ray_angle, int tabmap[MAPY][MAPX])
 {
 	t_point A;
 	double dist;
 	double 	yA;
 	double	xA;
-	int i;
+	
 	yA = GRID;
 	if (ray_angle == 0 || ray_angle == 180)
 		return (10000);
 	else if (ray_angle > 0 && ray_angle < 180)
 	{
-		A.y = (floor((data->P.y/GRID)) * GRID) - 0.0001;
+		A.y = (floor(data->Py/GRID) * GRID) - 1;
 		yA = -yA;
 	}
 	else if (ray_angle > 180 && ray_angle < 360)
-		A.y = (floor((data->P.y/GRID)) * GRID) + GRID;
+		A.y = (floor(data->Py/GRID) * GRID) + GRID;
 	else 
 		printf("error ray_angle: %f\n", ray_angle);
 	if (ray_angle == 90 || ray_angle == 270)
 	{
-		A.x = data->P.x;
+		A.x = data->Px;
 		xA = 0;
 	}
 	else
 	{
-		A.x = data->P.x + ((data->P.y - A.y) / (tan(ray_angle * DEG_CONV)));
-		xA = GRID * tan(ray_angle * DEG_CONV);
+		A.x = data->Px + ((data->Py - A.y) / sin(ray_angle * DEG_CONV) * cos(ray_angle * DEG_CONV));
+		xA = -yA * tan(ray_angle * DEG_CONV);
 	}
-	i = 0;
-	while ((A.x/GRID < 8) && (A.y/GRID > 8) && map[(int)floor(A.y/GRID)][(int)floor(A.x/GRID)] == 0)
+	while (tabmap[(int)floor(A.y/GRID)][(int)floor(A.x/GRID)] == 0)
 	{
 		A.x = A.x + xA;
 		A.y = A.y + yA;
-		i++;
 	}
-	dist = fabs(cos(ray_angle * DEG_CONV) / (data->P.x - A.x) * (cos((ray_angle - data->dir) * DEG_CONV)));
+		
+	printf("RA %.3f, DIL A.x : %.1f, A.y : %.1f -> ",ray_angle, A.x, A.y);
+	dist = fabs(((data->Py - A.y) / (sin(ray_angle * DEG_CONV))) * cos((data->dir - ray_angle) * DEG_CONV));
+	printf("dil %.f\n", dist);
 	return (dist);
 
 }
 
-double ft_check_intersect_column(t_data *data, double ray_angle, int map[8][8])
+double ft_check_intersect_column(t_data *data, double ray_angle, int tabmap[MAPY][MAPX])
 {
 	t_point B;
 	double dist;
 	double  yB;
 	double  xB;
-	int i;
 
 	xB = GRID;
 	if (ray_angle == 90 || ray_angle == 270)
 		return (10000);
 	else if ((ray_angle >= 0 && ray_angle < 90) || (ray_angle > 270 && ray_angle < 360))
-		B.x = (floor((data->P.x/GRID)) * GRID) - 0.0001;
-	else if (ray_angle > 90  && ray_angle <= 270 )
+		B.x = (floor((data->Px/GRID)) * GRID) + GRID;
+	else if (ray_angle > 90  && ray_angle < 270 )
 	{
-		B.x = (floor((data->P.x/GRID)) * GRID) + GRID;
+		B.x = (floor((data->Px/GRID)) * GRID) - 1;
 		xB = -xB;
 	}
 	else
 		printf("Error wrong angle (%f) of camera", ray_angle);
-	if (ray_angle == 0 || ray_angle == 180)
-	{
-		B.y = data->P.y;
-		yB = 0;
-	}
-	else
-	{	
-		yB = GRID * fabs(tan(ray_angle * DEG_CONV));
-		B.y = floor(data->P.y + ((data->P.x - B.x) * fabs(tan(ray_angle * DEG_CONV))));
-	}
-	i = 0;
-	while (map[(int)floor(B.y/GRID)][(int)floor(B.x/GRID)] == 0 || i < 6)
+	yB = -xB * tan(ray_angle * DEG_CONV);
+	B.y = data->Py + (tan(ray_angle * DEG_CONV) * (data->Px - B.x));
+	while (tabmap[(int)(B.y/GRID)][(int)(B.x/GRID)] == 0)
 	{
 		B.x = B.x + xB;
 		B.y = B.y + yB;
-		i++;
 	}
-	dist = fabs(cos(ray_angle * DEG_CONV) / (data->P.x - B.x) * (cos((ray_angle - data->dir) * DEG_CONV)));
+	printf("RA %.3f, DIC B.x : %.1f, B.y : %.1f ->",ray_angle, B.x, B.y);
+	dist = fabs(((data->Px - B.x) / cos((ray_angle * DEG_CONV))) * cos((data->dir - ray_angle) * DEG_CONV));
+	printf("dic %.f\n", dist);
 	return (dist);
 }

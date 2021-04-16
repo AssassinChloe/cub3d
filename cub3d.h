@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/04/13 16:25:11 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/04/16 17:54:03 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@
 # ifndef WIN_HEIGHT
 #  define WIN_HEIGHT 200
 # endif
-# define PI 3.14159265
+# define PI 3.14
 # define GRID 64 
 # define DEG_CONV PI/180
-# define RED_PIXEL 0x00FF0000
-# define GREEN_PIXEL 0x0000FF00
-# define WHITE_PIXEL 0x00FFFFFF
+# define RED_PIXEL 0x00BBE8FF
+# define GREEN_PIXEL 0x005E6F6A
+# define WHITE_PIXEL 0x001A6927
+# define MAPX 8
+# define MAPY 8
 
 typedef struct	s_window
 {
@@ -65,7 +67,8 @@ typedef struct s_data
 	void	*win_ptr;
 	t_img	img;
 	int	cur_img;
-	t_point	P;
+	double	Px;
+	double	Py;
 	int	dir;
 } t_data;
 
@@ -77,10 +80,11 @@ typedef struct s_rect
 	int	height;
 	int	color;
 } t_rect;
+
 void ft_init_window(t_window *window);
 double ft_ray_lenght(t_window window, int ray_nb, t_data *data);
-double ft_check_intersect_line(t_data *data, double ray_angle, int map[8][8]);
-double ft_check_intersect_column(t_data *data, double ray_angle, int map[8][8]);
+double ft_check_intersect_line(t_data *data, double ray_angle, int tabmap[MAPY][MAPX]);
+double ft_check_intersect_column(t_data *data, double ray_angle, int tabmap[MAPY][MAPX]);
 
 
 #endif
