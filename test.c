@@ -64,29 +64,39 @@ int	handle_keypress(int keysym, t_data *data)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		data->win_ptr = NULL;
 	}
-	if (keysym == XK_d)
+	if (keysym == XK_Right)
 	{
 		data->dir -= 5;
 		if (data->dir < 0)
 			data->dir += 360;
 	}
-	if (keysym == XK_q)
+	if (keysym == XK_Left)
 	{
 		data->dir += 5;
 		if (data->dir >= 360)
 			data->dir -= 360;
 	}
-	delta_x = cos(data->dir * DEG_CONV);
-	delta_y = -sin(data->dir * DEG_CONV);
+	delta_x = (cos(data->dir * DEG_CONV) * 5);
+	delta_y = (-sin(data->dir * DEG_CONV) * 5);
 	if (keysym == XK_z)
 	{ 
-		data->Px += (delta_x * 5);
-		data->Py += (delta_y * 5);
+		data->Px += delta_x;
+		data->Py += delta_y;
 	}
 	if (keysym == XK_s)
 	{
-		data->Px -= (delta_x * 5);
-		data->Py -= (delta_y * 5);
+		data->Px -= delta_x;
+		data->Py -= delta_y;
+	}
+	if (keysym == XK_q)
+	{
+		data->Px += delta_y;
+		data->Py -= delta_x;
+	}
+	if (keysym == XK_d)
+	{
+		data->Px -= delta_y;
+		data->Py += delta_x;
 	}
 	printf("dir: %d\n", data->dir);
 	return (0);
@@ -95,7 +105,7 @@ int	handle_keypress(int keysym, t_data *data)
 int	render(t_data *data)
 {
 	int i;
-	//int count;
+	int color;
 	double wall_size;
 	t_window window;
 	int start_h;
@@ -112,7 +122,8 @@ int	render(t_data *data)
 		if (wall_size > WIN_HEIGHT)
 			wall_size = WIN_HEIGHT;
 		start_h = (int)((WIN_HEIGHT/2) - (wall_size/2));
-		render_rect(&data->img, (t_rect){(i), start_h, 1, (int)wall_size, GREEN_PIXEL});
+		color = ft_get_wall(data);
+		render_rect(&data->img, (t_rect){(i), start_h, 1, (int)wall_size, color});
 		i++;
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
@@ -125,7 +136,8 @@ int	main(void)
 	t_data	data;
 	data.Px = 160;
 	data.Py = 160;
-	data.dir = 317;
+	data.dir = 10;
+	data.hit = 0;
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (MLX_ERROR);

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/04/16 17:54:03 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/04/16 22:16:22 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,19 @@
 # define MLX_ERROR 1
 
 # ifndef WIN_WIDTH
-#  define WIN_WIDTH 320 
+#  define WIN_WIDTH 640 
 # endif
 # ifndef WIN_HEIGHT
-#  define WIN_HEIGHT 200
+#  define WIN_HEIGHT 400
 # endif
-# define PI 3.14
+# define PI 3.14159265
 # define GRID 64 
 # define DEG_CONV PI/180
 # define RED_PIXEL 0x00BBE8FF
-# define GREEN_PIXEL 0x005E6F6A
+# define LEFT_PIXEL 0x005E6F6A
+# define RIGHT_PIXEL 0x008B6F6A
+# define BOT_PIXEL 0x007F6F6A
+# define TOP_PIXEL 0x008D6F5A
 # define WHITE_PIXEL 0x001A6927
 # define MAPX 8
 # define MAPY 8
@@ -70,6 +73,7 @@ typedef struct s_data
 	double	Px;
 	double	Py;
 	int	dir;
+	int	hit;
 } t_data;
 
 typedef struct s_rect
@@ -85,6 +89,6 @@ void ft_init_window(t_window *window);
 double ft_ray_lenght(t_window window, int ray_nb, t_data *data);
 double ft_check_intersect_line(t_data *data, double ray_angle, int tabmap[MAPY][MAPX]);
 double ft_check_intersect_column(t_data *data, double ray_angle, int tabmap[MAPY][MAPX]);
-
+int	ft_get_wall(t_data *data);
 
 #endif
