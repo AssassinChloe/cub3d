@@ -78,25 +78,25 @@ int	handle_keypress(int keysym, t_data *data)
 	}
 	delta_x = (cos(data->dir * DEG_CONV) * 5);
 	delta_y = (-sin(data->dir * DEG_CONV) * 5);
-	if (keysym == XK_z)
+	if (keysym == XK_z && data->map[(int)(data->Py + floor(delta_y))/GRID][(int)(data->Px + floor(delta_x))/GRID] == 0)
 	{ 
-		data->Px += delta_x;
-		data->Py += delta_y;
+		data->Px += floor(delta_x);
+		data->Py += floor(delta_y);
 	}
-	if (keysym == XK_s)
+	if (keysym == XK_s && data->map[(int)(data->Py - floor(delta_y))/GRID][(int)(data->Px - floor(delta_x))/GRID] == 0)
 	{
-		data->Px -= delta_x;
-		data->Py -= delta_y;
+		data->Px -= floor(delta_x);
+		data->Py -= floor(delta_y);
 	}
-	if (keysym == XK_q)
+	if (keysym == XK_q && data->map[(int)(data->Py - floor(delta_x))/GRID][(int)(data->Px + floor(delta_y))/GRID] == 0)
 	{
-		data->Px += delta_y;
-		data->Py -= delta_x;
+		data->Px += floor(delta_y);
+		data->Py -= floor(delta_x);
 	}
-	if (keysym == XK_d)
+	if (keysym == XK_d && data->map[(int)(data->Py + floor(delta_x))/GRID][(int)(data->Px - floor(delta_y))/GRID] == 0)
 	{
-		data->Px -= delta_y;
-		data->Py += delta_x;
+		data->Px -= floor(delta_y);
+		data->Py += floor(delta_x);
 	}
 	printf("dir: %d\n", data->dir);
 	return (0);
@@ -131,13 +131,39 @@ int	render(t_data *data)
 	return (0);
 }
 
+void	ft_init_map(t_data *data)
+{
+	int i;
+	int j;
+	int initmap[MAPY][MAPX] = {{1,1,1,1,1,1,1,1},
+                                {1,0,1,0,0,0,0,1},
+                                {1,0,1,0,0,1,0,1},
+                                {1,0,0,0,0,1,0,1},
+                                {1,0,0,0,0,0,0,1},
+                                {1,0,0,0,1,1,1,1},
+                                {1,1,0,0,0,0,0,1},
+                                {1,1,1,1,1,1,1,1}};
+	j = 0;
+	while (j < MAPX)
+	{
+		i = 0;
+		while (i < MAPY)
+		{
+			data->map[i][j] = initmap[i][j];
+			i++;
+		}
+		j++; 
+	}
+}
+
 int	main(void)
 {
 	t_data	data;
-	data.Px = 160;
-	data.Py = 160;
-	data.dir = 10;
+	data.Px = 224;
+	data.Py = 224;
+	data.dir = 45;
 	data.hit = 0;
+	ft_init_map(&data);	
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (MLX_ERROR);

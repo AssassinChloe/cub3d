@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/04/16 22:16:22 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/04/19 16:40:40 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # define MLX_ERROR 1
 
 # ifndef WIN_WIDTH
-#  define WIN_WIDTH 640 
+#  define WIN_WIDTH 1000 
 # endif
 # ifndef WIN_HEIGHT
-#  define WIN_HEIGHT 400
+#  define WIN_HEIGHT 800
 # endif
 # define PI 3.14159265
 # define GRID 64 
@@ -74,6 +74,7 @@ typedef struct s_data
 	double	Py;
 	int	dir;
 	int	hit;
+	int	map[MAPY][MAPX];
 } t_data;
 
 typedef struct s_rect
@@ -87,8 +88,8 @@ typedef struct s_rect
 
 void ft_init_window(t_window *window);
 double ft_ray_lenght(t_window window, int ray_nb, t_data *data);
-double ft_check_intersect_line(t_data *data, double ray_angle, int tabmap[MAPY][MAPX]);
-double ft_check_intersect_column(t_data *data, double ray_angle, int tabmap[MAPY][MAPX]);
+double ft_check_intersect_line(t_data *data, double ray_angle);
+double ft_check_intersect_column(t_data *data, double ray_angle);
 int	ft_get_wall(t_data *data);
 
 #endif
