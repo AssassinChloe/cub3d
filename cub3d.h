@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/04/19 16:40:40 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/04/20 20:39:11 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # define MLX_ERROR 1
 
 # ifndef WIN_WIDTH
-#  define WIN_WIDTH 1000 
+#  define WIN_WIDTH 800 
 # endif
 # ifndef WIN_HEIGHT
-#  define WIN_HEIGHT 800
+#  define WIN_HEIGHT 600
 # endif
 # define PI 3.14159265
 # define GRID 64 
@@ -55,6 +55,13 @@ typedef struct	s_point
 	double 	y;
 }		t_point;
 
+typedef struct s_cross
+{
+	t_point	cross;
+	t_point	delta;	
+	double	dist;
+}		t_cross;
+
 typedef struct s_img
 {
 	void	*mlx_img;
@@ -75,6 +82,7 @@ typedef struct s_data
 	int	dir;
 	int	hit;
 	int	map[MAPY][MAPX];
+	double	wall_size;
 } t_data;
 
 typedef struct s_rect
@@ -87,9 +95,15 @@ typedef struct s_rect
 } t_rect;
 
 void ft_init_window(t_window *window);
-double ft_ray_lenght(t_window window, int ray_nb, t_data *data);
-double ft_check_intersect_line(t_data *data, double ray_angle);
-double ft_check_intersect_column(t_data *data, double ray_angle);
+t_cross ft_ray_lenght(t_window window, int ray_nb, t_data *data);
+t_cross ft_check_intersect_line(t_data *data, double ray_angle);
+t_cross ft_check_intersect_column(t_data *data, double ray_angle);
 int	ft_get_wall(t_data *data);
-
+int	handle_keypress(int keysym, t_data *data);
+void	ft_init_data(t_data *data);
+void	ft_init_map(t_data *data);
+int	img_pix_get(t_img *img, int x, int y);
+int	ft_get_wall(t_data *data);
+void	img_pix_put(t_img *img, int x, int y, int color);
+int	ft_texture(t_data *data, t_img tex, t_cross wall, int i);
 #endif

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/04/19 17:24:26 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/04/20 20:05:53 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,36 +21,19 @@ void ft_init_window(t_window *window)
 	window->sub_ray_angle = (window->fov_angle / window->width);
 }
 
-double ft_ray_lenght(t_window window, int ray_nb, t_data *data)
+t_cross ft_ray_lenght(t_window window, int ray_nb, t_data *data)
 {
 	double ray_angle;
-	double d_i_l;
-	double d_i_c;
-	double wall_size;
+	t_cross d_i_l;
+	t_cross d_i_c;
 
 	ray_angle = ((data->dir + 30) - (window.sub_ray_angle * ray_nb));
 	if (ray_angle >= 360)
 		ray_angle -= 360;
 	if (ray_angle < 0)
 		ray_angle += 360;
-	d_i_l = ft_check_intersect_line(data, (ray_angle));
-	d_i_c = ft_check_intersect_column(data, (ray_angle));
-	if (d_i_l > d_i_c)
-	{
-		wall_size = floor(GRID * window.dpp / d_i_c);
-		if (ray_angle < 90 || ray_angle > 270)
-			data->hit = 1;
-		if (ray_angle > 90 && ray_angle < 270)
-			data->hit = 2;
-	}
-	else
-	{
-		wall_size = floor(GRID * window.dpp / d_i_l);
-		if (ray_angle > 0 && ray_angle < 180)
-			data->hit = 3;
-		if (ray_angle > 180 && ray_angle < 360)
-			data->hit = 4;
-	}
+	d_i_l = ft_check_intersect_line(data, ray_angle);
+	d_i_c = ft_check_intersect_column(data, ray_angle);
 	if (floor(ray_angle) == 0)
 		data->hit = 1;
 	if (floor(ray_angle) == 180)
@@ -59,87 +42,94 @@ double ft_ray_lenght(t_window window, int ray_nb, t_data *data)
 		data->hit = 3;
 	if (floor(ray_angle) == 270)
 		data->hit = 4;	
-	printf ("wall_size %.f, wall_hit %d\n", wall_size, data->hit);
-	return (wall_size);
-}
-
-double ft_check_intersect_line(t_data *data, double ray_angle)
-{
-	t_point A;
-	double dist;
-	double 	yA;
-	double	xA;
-
-	yA = GRID;
-	if (ray_angle >= 359 || ray_angle <= 1 || (ray_angle >= 179 && ray_angle <= 181))
-		return (10000);
-	else if (ray_angle > 1 && ray_angle < 179)
+	if (d_i_l.dist > d_i_c.dist)
 	{
-		A.y = (floor(data->Py/GRID) * GRID) - 0.0000001;
-		yA = -yA;
-	}
-	else if (ray_angle > 181 && ray_angle < 359)
-		A.y = (floor(data->Py/GRID) * GRID) + GRID;
-	else 
-		printf("error ray_angle: %f\n", ray_angle);
-	A.x = data->Px + (((data->Py - A.y) / sin(ray_angle * DEG_CONV)) * cos(ray_angle * DEG_CONV));
-	xA = -cos(ray_angle * DEG_CONV) * (yA / sin(ray_angle * DEG_CONV));
-	while (data->map[(int)floor(A.y/GRID)][(int)floor(A.x/GRID)] == 0)
-	{
-		if (A.x < 0 || A.y < 0)
-			return (10000);
-		A.x = A.x + xA;
-		A.y = A.y + yA;
-	}
-	printf("Px %.2f, Py%.2f, RA %.3f, DIL A.x : %.1f, A.y : %.1f, xA %.1f, yA %.1f -> ", data->Px, data->Py, ray_angle, A.x, A.y, xA, yA);
-	dist = fabs(((data->Py - A.y) / (sin(ray_angle * DEG_CONV))) * cos((data->dir - ray_angle) * DEG_CONV));
-	printf("dil %.5f\n", dist);
-	return (dist);
-}
-
-double ft_check_intersect_column(t_data *data, double ray_angle)
-{
-	t_point B;
-	double dist;
-	double  yB;
-	double  xB;
-
-	xB = GRID;
-	if ((ray_angle >= 89 && ray_angle <= 91) || (ray_angle <= 271 && ray_angle >= 269))
-		return (10000);
-	else if ((ray_angle >= 0 && ray_angle < 90) || (ray_angle > 270 && ray_angle < 360))
-		B.x = (floor((data->Px/GRID)) * GRID) + GRID;
-	else if (ray_angle > 90  && ray_angle < 270 )
-	{
-		B.x = (floor((data->Px/GRID)) * GRID) - 0.0000001;
-		xB = -xB;
+		data->wall_size = floor(GRID * window.dpp / d_i_c.dist);
+		if (ray_angle < 90 || ray_angle > 270)
+			data->hit = 1;
+		if (ray_angle > 90 && ray_angle < 270)
+			data->hit = 2;
+		return (d_i_c);
 	}
 	else
-	printf("Error wrong angle (%f) of camera", ray_angle);
-	yB = -sin(ray_angle * DEG_CONV) * (xB /cos(ray_angle * DEG_CONV));
-	B.y = data->Py + (((data->Px - B.x) / cos(ray_angle * DEG_CONV)) * sin(ray_angle * DEG_CONV));
-	while (data->map[(int)(B.y/GRID)][(int)(B.x/GRID)] == 0)
 	{
-		if (B.x < 0 || B.y < 0)  
-			return (10000);
-		B.x = B.x + xB;
-		B.y = B.y + yB;
+		data->wall_size = floor(GRID * window.dpp / d_i_l.dist);
+		if (ray_angle > 0 && ray_angle < 180)
+			data->hit = 3;
+		if (ray_angle > 180 && ray_angle < 360)
+			data->hit = 4;
+		return (d_i_l);
 	}
-	printf("Px %.2f, Py %.2f RA %.3f, DIC B.x : %.1f, B.y : %.1f, xB %.1f, yB %.1f ->",data->Px, data->Py, ray_angle, B.x, B.y, xB, yB);
-	dist = fabs(((data->Px - B.x) / cos((ray_angle * DEG_CONV))) * cos((data->dir - ray_angle) * DEG_CONV));
-	printf("dic %.5f\n", dist);
-	return (dist);
 }
 
-int	ft_get_wall(t_data *data)
+t_cross ft_check_intersect_line(t_data *data, double ray_angle)
 {
-	if (data->hit == 1)
-		return (LEFT_PIXEL);
-	if (data->hit == 2)
-		return (RIGHT_PIXEL);
-	if (data->hit == 3)
-		return (BOT_PIXEL);
-	if (data->hit == 4)
-		return (TOP_PIXEL);
-	return (0);
+	t_cross A;
+
+	A.delta.y = GRID;
+	if (ray_angle >= 359 || ray_angle <= 1 || (ray_angle >= 179 && ray_angle <= 181))
+	{
+		A.dist = 10000;
+		return (A);
+	}
+	else if (ray_angle > 1 && ray_angle < 179)
+	{
+		A.cross.y = (floor(data->Py/GRID) * GRID) - 0.001;
+		A.delta.y = -A.delta.y;
+	}
+	else if (ray_angle > 181 && ray_angle < 359)
+		A.cross.y = (floor(data->Py/GRID) * GRID) + GRID;
+	else 
+		printf("error ray_angle: %f\n", ray_angle);
+	A.cross.x = data->Px + (((data->Py - A.cross.y) / sin(ray_angle * DEG_CONV)) * cos(ray_angle * DEG_CONV));
+	A.delta.x = -cos(ray_angle * DEG_CONV) * (A.delta.y / sin(ray_angle * DEG_CONV));
+	while (data->map[(int)floor(A.cross.y/GRID)][(int)floor(A.cross.x/GRID)] == 0)
+	{
+		if (A.cross.x < 0 || A.cross.y < 0)
+		{
+			A.dist = 10000;
+			return (A);
+		}
+		A.cross.x = A.cross.x + A.delta.x;
+		A.cross.y = A.cross.y + A.delta.y;
+	}
+	A.dist = fabs(((data->Py - A.cross.y) / sin(ray_angle * DEG_CONV)) * cos((data->dir - ray_angle) * DEG_CONV));
+	return (A);
+}
+
+t_cross ft_check_intersect_column(t_data *data, double ray_angle)
+{
+	t_cross B;
+
+	B.delta.x = GRID;
+	if ((ray_angle >= 89 && ray_angle <= 91) || (ray_angle <= 271 && ray_angle >= 269))
+	{
+		B.dist = 10000;
+		return (B);
+	}
+	else if ((ray_angle >= 0 && ray_angle < 89) || (ray_angle > 271 && ray_angle < 360))
+	{
+		B.cross.x = (floor(data->Px/GRID) * GRID) + GRID;
+	}
+	else if (ray_angle > 91  && ray_angle < 269 )
+	{
+		B.cross.x = (floor(data->Px/GRID) * GRID) - 0.001;
+		B.delta.x = -B.delta.x;
+	}
+	else
+		printf("Error wrong angle (%f) of camera", ray_angle);
+	B.cross.y = data->Py + (((data->Px - B.cross.x) / cos(ray_angle * DEG_CONV)) * sin(ray_angle * DEG_CONV));
+	B.delta.y = -sin(ray_angle * DEG_CONV) * (B.delta.x /cos(ray_angle * DEG_CONV));
+	while (data->map[(int)(B.cross.y/GRID)][(int)(B.cross.x/GRID)] == 0)
+	{
+		if (B.cross.x < 0 || B.cross.y < 0)  
+		{
+			B.dist = 10000;
+			return (B);
+		}
+		B.cross.x = B.cross.x + B.delta.x;
+		B.cross.y = B.cross.y + B.delta.y;
+	}
+	B.dist = fabs(((data->Px - B.cross.x) / cos(ray_angle * DEG_CONV)) * cos((data->dir - ray_angle) * DEG_CONV));
+	return (B);
 }
