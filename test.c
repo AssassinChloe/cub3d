@@ -33,23 +33,6 @@ int render_rect(t_img *img, t_rect rect)
 	return (0);
 }
 
-void	render_background(t_img *img, int color)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < WIN_HEIGHT)
-	{
-		j = 0;
-		while (j < WIN_WIDTH)
-		{
-			img_pix_put(img, j++, i, color);
-		}
-		++i;
-	}
-}
-
 int	render(t_data *data)
 {
 	int i;
@@ -57,24 +40,25 @@ int	render(t_data *data)
 	t_window window;
 	int start_h;
 	t_cross cross;
-	t_img	tex;
-    	char    *relative_path = "texture.xpm";
-    	int     tex_width;
-    	int     tex_height;
+	t_tex east;
+	t_tex west;
+	t_tex north;
+	t_tex south;
 
 	ft_init_window(&window);
-	tex.mlx_img = mlx_xpm_file_to_image(data->mlx_ptr, relative_path, &tex_width, &tex_height);
-	tex.addr = mlx_get_data_addr(tex.mlx_img, &tex.bpp, &tex.line_len, &tex.endian);
+	ft_init_texture(data, "east.xpm", &east);
+	ft_init_texture(data, "west.xpm", &west);
+	ft_init_texture(data, "north.xpm", &north);
+	ft_init_texture(data, "south.xpm", &south);
 	i = 0;
 	if (data->win_ptr == NULL)
 		return (1);
-	render_background(&data->img, WHITE_PIXEL);
-	render_rect(&data->img, (t_rect){0, 0, WIN_WIDTH, (WIN_HEIGHT/2), RED_PIXEL});
+	render_rect(&data->img, (t_rect){0, 0, WIN_WIDTH, (WIN_HEIGHT/2), SKY_PIXEL});
+	render_rect(&data->img, (t_rect){0, (WIN_HEIGHT/2), WIN_WIDTH, (WIN_HEIGHT/2), FLOOR_PIXEL});
 	while (i < WIN_WIDTH)
 	{
 		cross = ft_ray_lenght(window, i, data);
-		printf("wall: %f, x: %f, y: %f\n", data->wall_size, cross.cross.x, cross.cross.y);
-		ft_texture(data, tex, cross, i);
+		ft_texture(data, ft_get_tex(data, &east, &west, &north, &south), cross, i);
 		i++;
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
@@ -104,10 +88,11 @@ int	main(void)
 
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
-
+//	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);
 	mlx_loop(data.mlx_ptr);
 
 	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
 	mlx_destroy_display(data.mlx_ptr);
 	free(data.mlx_ptr);
+	printf("fermeture\n");
 }

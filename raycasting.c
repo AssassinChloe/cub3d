@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/04/20 20:05:53 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/04/27 19:04:00 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,29 @@ t_cross ft_ray_lenght(t_window window, int ray_nb, t_data *data)
 	d_i_l = ft_check_intersect_line(data, ray_angle);
 	d_i_c = ft_check_intersect_column(data, ray_angle);
 	if (floor(ray_angle) == 0)
-		data->hit = 1;
+		data->hit = 0;
 	if (floor(ray_angle) == 180)
-		data->hit = 2;
+		data->hit = 1;
 	if (floor(ray_angle) == 90)
-		data->hit = 3;
+		data->hit = 2;
 	if (floor(ray_angle) == 270)
-		data->hit = 4;	
+		data->hit = 3;	
 	if (d_i_l.dist > d_i_c.dist)
 	{
 		data->wall_size = floor(GRID * window.dpp / d_i_c.dist);
 		if (ray_angle < 90 || ray_angle > 270)
-			data->hit = 1;
+			data->hit = 0;
 		if (ray_angle > 90 && ray_angle < 270)
-			data->hit = 2;
+			data->hit = 1;
 		return (d_i_c);
 	}
 	else
 	{
 		data->wall_size = floor(GRID * window.dpp / d_i_l.dist);
 		if (ray_angle > 0 && ray_angle < 180)
-			data->hit = 3;
+			data->hit = 2;
 		if (ray_angle > 180 && ray_angle < 360)
-			data->hit = 4;
+			data->hit = 3;
 		return (d_i_l);
 	}
 }
