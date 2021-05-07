@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/05 16:52:01 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/07 17:13:28 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct	s_point
 typedef struct	s_sprite
 {
 	t_point	coord;
+	int	hit;
 	double	dist;
 	double	size;
 }		t_sprite;
@@ -114,7 +115,7 @@ typedef struct s_data
 
 
 void	ft_init_window(t_window *window);
-t_cross	ft_ray_lenght(t_window window, int ray_nb, t_data *data);
+void	ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross);
 void	ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A);
 void	ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B);
 int	ft_get_wall(t_data *data);

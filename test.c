@@ -47,7 +47,7 @@ int	render(t_data *data)
 	render_rect(&data->img, (t_rect){0, (WIN_HEIGHT/2), WIN_WIDTH, (WIN_HEIGHT/2), FLOOR_PIXEL});
 	while (i < WIN_WIDTH)
 	{
-		cross = ft_ray_lenght(window, i, data);
+		ft_ray_lenght(window, i, data, &cross);
 		data->wall_size = floor(GRID * window.dpp / cross.dist);
 		ft_texture(data, ft_get_tex(data), cross, i);
 		while (cross.i >= 1)

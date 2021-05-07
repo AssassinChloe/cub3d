@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 17:36:03 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/05 16:47:03 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/07 17:52:56 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int ft_sprite(t_data *data, t_cross S, int i)
 		start_h = 0;
 	}
 	ratio = S.sprite[S.i].size / data->tab[4].height;
-	if (data->hit == 0 || data->hit == 1)	
+	if (S.sprite[S.i].hit == 0 || S.sprite[S.i].hit == 1)	
 		stripe = floor(S.sprite[S.i].coord.y - (floor(S.sprite[S.i].coord.y / GRID) * GRID));
 	else
 		stripe = floor(S.sprite[S.i].coord.x - (floor(S.sprite[S.i].coord.x / GRID) * GRID));

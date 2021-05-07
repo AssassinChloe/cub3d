@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/06 16:35:19 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/07 17:20:12 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,17 @@ void	ft_get_hit(t_data *data, double ray_angle, t_cross *d_i_l, t_cross *d_i_c)
 	}
 }
 
-t_cross ft_ray_lenght(t_window window, int ray_nb, t_data *data)
+void ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross)
 {
 	double ray_angle;
 	t_cross d_i_l;
 	t_cross d_i_c;
-
+	int	i;
+	int	j;
+	int	k;
+	i = 0;
+	j = 0;
+	k = 0;
 	ray_angle = ((data->dir + 30) - (window.sub_ray_angle * ray_nb));
 	if (ray_angle >= 360)
 		ray_angle -= 360;
@@ -54,9 +59,92 @@ t_cross ft_ray_lenght(t_window window, int ray_nb, t_data *data)
 	ft_check_intersect_column(data, ray_angle, &d_i_c);
 	ft_get_hit(data, ray_angle, &d_i_l, &d_i_c);	
 	if (d_i_l.dist > d_i_c.dist)
-		return(d_i_c);
+	{
+		cross->cross = d_i_c.cross;
+		cross->dist = d_i_c.dist;
+	}
 	else
-		return(d_i_l);	
+	{
+		cross->cross = d_i_l.cross;
+		cross->dist = d_i_l.dist;
+	}
+
+	while (i < d_i_l.i && j < d_i_c.i)
+	{
+		if (d_i_l.sprite[i].dist > d_i_c.sprite[j].dist && ((int)(d_i_l.sprite[i].coord.x/GRID) == (int)(d_i_c.sprite[j].coord.x/GRID) && (int)(d_i_l.sprite[i].coord.y/GRID) == (int)(d_i_c.sprite[j].coord.y)))
+		{
+			cross->sprite[k].dist = d_i_c.sprite[j].dist;
+			cross->sprite[k].coord = d_i_c.sprite[j].coord;
+			if (ray_angle < 90 || ray_angle > 270)
+				cross->sprite[k].hit = 0;
+			if (ray_angle > 90 && ray_angle < 270)
+				cross->sprite[k].hit = 1;
+			i++;
+			j++;
+			k++;
+		}
+		else if (d_i_l.sprite[i].dist < d_i_c.sprite[j].dist && ((int)(d_i_l.sprite[i].coord.x/GRID) == (int)(d_i_c.sprite[j].coord.x/GRID) && (int)(d_i_l.sprite[i].coord.y/GRID) == (int)(d_i_c.sprite[j].coord.y)))
+		{
+			cross->sprite[k].dist = d_i_l.sprite[i].dist;
+			cross->sprite[k].coord = d_i_l.sprite[i].coord;
+			if (ray_angle > 0 && ray_angle < 180)
+				cross->sprite[k].hit = 2;
+			if (ray_angle > 180 && ray_angle < 360)
+				cross->sprite[k].hit = 3;
+			i++;
+			j++;
+			k++;
+		}
+		else
+		{
+			if (d_i_l.sprite[i].dist > d_i_c.sprite[j].dist)
+			{
+				cross->sprite[k].dist = d_i_c.sprite[j].dist;
+				cross->sprite[k].coord = d_i_c.sprite[j].coord;
+				if (ray_angle < 90 || ray_angle > 270)
+					cross->sprite[k].hit = 0;
+				if (ray_angle > 90 && ray_angle < 270)
+					cross->sprite[k].hit = 1;
+				j++;
+				k++;
+			}
+			else
+			{
+				cross->sprite[k].dist = d_i_l.sprite[i].dist;
+				cross->sprite[k].coord = d_i_l.sprite[i].coord;
+				if (ray_angle > 0 && ray_angle < 180)
+					cross->sprite[k].hit = 2;
+				if (ray_angle > 180 && ray_angle < 360)
+					cross->sprite[k].hit = 3;
+				i++;
+				k++;
+			}
+
+		}
+	}
+	while (i < d_i_l.i)
+	{
+		cross->sprite[k].dist = d_i_l.sprite[i].dist;
+		cross->sprite[k].coord = d_i_l.sprite[i].coord;
+		if (ray_angle > 0 && ray_angle < 180)
+			cross->sprite[k].hit = 2;
+		if (ray_angle > 180 && ray_angle < 360)
+			cross->sprite[k].hit = 3;
+		i++;
+		k++;
+	}
+	while (j < d_i_c.i)
+	{
+		cross->sprite[k].dist = d_i_c.sprite[j].dist;
+		cross->sprite[k].coord = d_i_c.sprite[j].coord;
+		if (ray_angle < 90 || ray_angle > 270)
+			cross->sprite[k].hit = 0;
+		if (ray_angle > 90 && ray_angle < 270)
+			cross->sprite[k].hit = 1;
+		j++;
+		k++;
+	}
+	cross->i = k;
 }
 
 void ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A)
