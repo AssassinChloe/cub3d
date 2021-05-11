@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 17:36:03 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/10 19:10:50 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/11 12:30:53 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int ft_sprite(t_data *data, t_cross S, int i)
 {	
 	int	stripe;
-	double ratio;
+	double ratio_h;
+	double ratio_w;
 	int	start_h; 
 	int	j;
 	int 	y;
@@ -30,15 +31,13 @@ int ft_sprite(t_data *data, t_cross S, int i)
 		j = -start_h;
 		start_h = 0;
 	}
-	ratio = S.sprite[S.i].size / data->tab[4].height;
-	if (S.sprite[S.i].hit == 0 || S.sprite[S.i].hit == 1)	
-		stripe = floor(S.sprite[S.i].coord.y - (floor(S.sprite[S.i].coord.y / GRID) * GRID));
-	else
-		 stripe = floor(S.sprite[S.i].coord.x - (floor(S.sprite[S.i].coord.x / GRID) * GRID));
+	ratio_h = S.sprite[S.i].size / data->tab[4].height;
+	ratio_w = GRID / data->tab[4].width;
+	stripe = floor(((S.sprite[S.i].coord.y - (floor(S.sprite[S.i].coord.y / GRID) * GRID)) + (S.sprite[S.i].coord.x - (floor(S.sprite[S.i].coord.x / GRID) * GRID))) / ratio_w);
 
 		while (j < S.sprite[S.i].size && k < WIN_HEIGHT)
 		{
-			y = (int)(j / ratio);
+			y = (int)(j / ratio_h);
 			color = img_pix_get(&data->tab[4].img, stripe, y);
 			if (color != 0)
 				img_pix_put(&data->img, i, (start_h + k), color);
@@ -47,4 +46,3 @@ int ft_sprite(t_data *data, t_cross S, int i)
 		}
 	return (0);
 }
-
