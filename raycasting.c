@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/07 17:20:12 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/10 19:12:14 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross)
 	int	i;
 	int	j;
 	int	k;
+	int sdir;
+	double sray;
 	i = 0;
 	j = 0;
 	k = 0;
@@ -71,7 +73,7 @@ void ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross)
 
 	while (i < d_i_l.i && j < d_i_c.i)
 	{
-		if (d_i_l.sprite[i].dist > d_i_c.sprite[j].dist && ((int)(d_i_l.sprite[i].coord.x/GRID) == (int)(d_i_c.sprite[j].coord.x/GRID) && (int)(d_i_l.sprite[i].coord.y/GRID) == (int)(d_i_c.sprite[j].coord.y)))
+		if (d_i_l.sprite[i].dist > d_i_c.sprite[j].dist && ((int)(d_i_l.sprite[i].coord.x/GRID) == (int)(d_i_c.sprite[j].coord.x/GRID) && (int)(d_i_l.sprite[i].coord.y/GRID) == (int)(d_i_c.sprite[j].coord.y/GRID)))
 		{
 			cross->sprite[k].dist = d_i_c.sprite[j].dist;
 			cross->sprite[k].coord = d_i_c.sprite[j].coord;
@@ -83,7 +85,7 @@ void ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross)
 			j++;
 			k++;
 		}
-		else if (d_i_l.sprite[i].dist < d_i_c.sprite[j].dist && ((int)(d_i_l.sprite[i].coord.x/GRID) == (int)(d_i_c.sprite[j].coord.x/GRID) && (int)(d_i_l.sprite[i].coord.y/GRID) == (int)(d_i_c.sprite[j].coord.y)))
+		else if (d_i_l.sprite[i].dist < d_i_c.sprite[j].dist && ((int)(d_i_l.sprite[i].coord.x/GRID) == (int)(d_i_c.sprite[j].coord.x/GRID) && (int)(d_i_l.sprite[i].coord.y/GRID) == (int)(d_i_c.sprite[j].coord.y/GRID)))
 		{
 			cross->sprite[k].dist = d_i_l.sprite[i].dist;
 			cross->sprite[k].coord = d_i_l.sprite[i].coord;
@@ -145,6 +147,39 @@ void ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross)
 		k++;
 	}
 	cross->i = k;
+	i = 0;
+	while (i < cross->i)
+	{
+		if (data->dir >= 315 || data->dir < 45 /*cross->sprite[i].hit == 0*/)
+		{
+			sdir = 0;
+			sray = (sdir + 30) - (window.sub_ray_angle * ray_nb);
+			cross->sprite[i].dist = fabs((data->Px - cross->sprite[i].coord.x) / cos(sray * DEG_CONV) * cos((sdir - sray) * DEG_CONV));
+		}
+		else if (data->dir >= 45 && data->dir < 135 /*cross->sprite[i].hit == 2*/)
+		{
+			sdir = 90;
+			sray = (sdir + 30) - (window.sub_ray_angle * ray_nb);
+			cross->sprite[i].dist = fabs((data->Py - cross->sprite[i].coord.y) / sin(sray * DEG_CONV) * cos((sdir - sray) * DEG_CONV));
+		}
+		else if (data->dir >= 135 && data->dir < 225 /*cross->sprite[i].hit == 1*/)
+		{
+			sdir = 180;
+			sray = (sdir + 30) - (window.sub_ray_angle * ray_nb);
+			cross->sprite[i].dist = fabs((data->Px - cross->sprite[i].coord.x) / cos(sray * DEG_CONV) * cos((sdir - sray) * DEG_CONV));
+		}
+		else if (data->dir >= 225 && data->dir < 315 /*cross->sprite[i].hit == 3*/)
+		{
+			sdir = 270;
+			sray = (sdir + 30) - (window.sub_ray_angle * ray_nb);
+			cross->sprite[i].dist = fabs((data->Py - cross->sprite[i].coord.y) / sin(sray * DEG_CONV) * cos((sdir - sray) * DEG_CONV));
+		}
+		else
+		{
+			printf("plop");
+		}
+		i++;
+	}
 }
 
 void ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A)
@@ -222,6 +257,7 @@ void ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B)
 		{
 			B->sprite[B->i].coord.x = B->cross.x;
 			B->sprite[B->i].coord.y = B->cross.y;
+
 			B->sprite[B->i].dist = fabs(((data->Px - B->sprite[B->i].coord.x) / cos(ray_angle * DEG_CONV)) * cos((data->dir - ray_angle) * DEG_CONV));
 			B->i++;
 		}

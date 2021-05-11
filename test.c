@@ -54,6 +54,7 @@ int	render(t_data *data)
 		{
 			cross.i--;
 			cross.sprite[cross.i].size = floor(GRID * window.dpp / cross.sprite[cross.i].dist);
+			printf("hit %d, size %.f, dist %.f, x: %.2f, y: %.2f\n",cross.sprite[cross.i].hit, cross.sprite[cross.i].size, cross.sprite[cross.i].dist, cross.sprite[cross.i].coord.x, cross.sprite[cross.i].coord.y);
 			ft_sprite(data, cross, i);
 		}
 		i++;
