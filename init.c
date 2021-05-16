@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/10 15:53:16 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/15 18:04:01 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,22 @@ void	ft_init_map(t_data *data)
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
                                    {1,1,1,1,1,1,1,1,1,1,1,1,1}};
+	int k;
 	j = 0;
+	k = 0;
 	while (j < MAPX)
 	{
 		i = 0;
 		while (i < MAPY)
 		{
 			data->map[i][j] = initmap[i][j];
+			if (data->map[i][j] == 2)
+			{
+				data->sprite_list[k].coord.x = (j * 64) + 32;
+				data->sprite_list[k].coord.y = (i * 64) + 32;
+				data->sprite_list[k].is_visible = 0;
+				k++;
+			}
 			i++;
 		}
 		j++; 

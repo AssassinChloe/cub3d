@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/07 17:13:28 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/15 18:02:31 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct	s_sprite
 {
 	t_point	coord;
 	int	hit;
+	int	is_visible;
 	double	dist;
 	double	size;
 }		t_sprite;
@@ -66,7 +67,7 @@ typedef struct	s_sprite
 typedef struct		s_cross
 {
 	t_point		cross;
-	t_point		delta;	
+	t_point		delta;
 	double		dist;
 	int		i;
 	t_sprite	sprite[10];
@@ -109,6 +110,7 @@ typedef struct s_data
 	int	dir;
 	int	hit;
 	int	map[MAPY][MAPX];
+	t_sprite sprite_list[(MAPY - 2) * (MAPX - 2)]
 	double	wall_size;
 	t_tex	tab[6];
 } t_data;
