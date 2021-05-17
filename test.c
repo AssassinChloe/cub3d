@@ -38,6 +38,8 @@ int	render(t_data *data)
 	int i;
 	t_window window;
 	t_cross cross;
+	double deltax;
+	double deltay;
 	
 	ft_init_window(&window);
 	i = 0;
@@ -50,12 +52,35 @@ int	render(t_data *data)
 		ft_ray_lenght(window, i, data, &cross);
 		data->wall_size = floor(GRID * window.dpp / cross.dist);
 		ft_texture(data, ft_get_tex(data), cross, i);
-		while (cross.i >= 1)
+		i++;
+	}
+	i = 0;
+	/*while (cross.i >= 1 && cross.sprite[cross.i].dist < cross.dist)
+	{
+		cross.i--;
+		cross.sprite[cross.i].size = floor(GRID * window.dpp / cross.sprite[cross.i].dist);
+		ft_sprite(data, cross, i);
+		}*/
+	while(i < data->nbs)
+	{
+		if (data->spritel[i].is_visible == 1)
 		{
-			cross.i--;
-			cross.sprite[cross.i].size = floor(GRID * window.dpp / cross.sprite[cross.i].dist);
-			printf("hit %d, size %.f, dist %.f, x: %.2f, y: %.2f\n",cross.sprite[cross.i].hit, cross.sprite[cross.i].size, cross.sprite[cross.i].dist, cross.sprite[cross.i].coord.x, cross.sprite[cross.i].coord.y);
-			ft_sprite(data, cross, i);
+			deltax = data->Px - data->spritel[i].coord.x;
+			deltay = data->Py - data->spritel[i].coord.y;
+			data->spritel[i].dist = hypot(deltax, deltay);
+			data->spritel[i].size = floor(GRID * window.dpp / data->spritel[i].dist);
+			data->spritel[i].angle = (atan(fabs(deltay / deltax)) * (180 / PI));
+			if (deltax < 0 && deltay > 0) 
+				data->spritel[i].angle = 0 + data->spritel[i].angle;
+			else if (deltax > 0 && deltay > 0)
+				data->spritel[i].angle = 180 - data->spritel[i].angle;
+			else if (deltax > 0 && deltay < 0)
+				data->spritel[i].angle = 180 - data->spritel[i].angle;
+			else 
+				data->spritel[i].angle = 360 - data->spritel[i].angle;
+			printf("dir %d, sangle %f\n", data->dir, data->spritel[i].angle);
+			ft_sprite(data, i);
+			data->spritel[i].is_visible = 0;
 		}
 		i++;
 	}

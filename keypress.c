@@ -87,7 +87,7 @@ int	handle_keypress(int keysym, t_data *data)
 	}
 	delta_x = (cos(data->dir * DEG_CONV) * 7);
 	delta_y = (-sin(data->dir * DEG_CONV) * 7);
-	if (keysym == XK_z && data->map[(int)(data->Py + floor(delta_y))/GRID][(int)(data->Px + floor(delta_x))/GRID] != 1)
+	if ((keysym == XK_z || keysym == XK_w)  && data->map[(int)(data->Py + floor(delta_y))/GRID][(int)(data->Px + floor(delta_x))/GRID] != 1)
 	{ 
 		data->Px += floor(delta_x);
 		data->Py += floor(delta_y);
@@ -97,7 +97,7 @@ int	handle_keypress(int keysym, t_data *data)
 		data->Px -= floor(delta_x);
 		data->Py -= floor(delta_y);
 	}
-	if (keysym == XK_q && data->map[(int)(data->Py - floor(delta_x))/GRID][(int)(data->Px + floor(delta_y))/GRID] != 1)
+	if ((keysym == XK_q || keysym == XK_a) && data->map[(int)(data->Py - floor(delta_x))/GRID][(int)(data->Px + floor(delta_y))/GRID] != 1)
 	{
 		data->Px += floor(delta_y);
 		data->Py -= floor(delta_x);

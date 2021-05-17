@@ -31,7 +31,7 @@ void	ft_init_map(t_data *data)
 	int initmap[MAPY][MAPX] = {{1,1,1,1,1,1,1,1,1,1,1,1,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
-                                   {1,0,0,0,0,0,0,0,0,0,0,0,1},
+                                   {1,0,0,1,1,1,1,0,0,0,0,0,1},
                                    {1,0,0,0,0,2,0,0,0,0,0,0,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -50,13 +50,14 @@ void	ft_init_map(t_data *data)
 			data->map[i][j] = initmap[i][j];
 			if (data->map[i][j] == 2)
 			{
-				data->sprite_list[k].coord.x = (j * 64) + 32;
-				data->sprite_list[k].coord.y = (i * 64) + 32;
-				data->sprite_list[k].is_visible = 0;
+				data->spritel[k].coord.x = (j * 64) + 32;
+				data->spritel[k].coord.y = (i * 64) + 32;
+				data->spritel[k].is_visible = 0;
 				k++;
 			}
 			i++;
 		}
 		j++; 
 	}
+	data->nbs = k;
 }
