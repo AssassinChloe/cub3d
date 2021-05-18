@@ -67,3 +67,28 @@ int ft_sprite(t_data *data, int i)
 	return (0);
 }
 
+void	ft_sort_sprite(t_data *data)
+{
+	int i;
+	int j;
+	t_sprite swp;
+
+	i = 0;
+	while (i < data->nbs)
+	{
+		j = 0;
+		while (j < data->nbs)
+		{
+			if (data->spritel[i].dist > data->spritel[j].dist)
+			{
+				swp = data->spritel[i];
+				data->spritel[i] = data->spritel[j];
+				data->spritel[j] = swp;
+			}
+			j++;
+		}
+		i++;
+	}
+
+
+}

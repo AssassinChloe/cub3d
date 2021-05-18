@@ -72,6 +72,15 @@ int	render(t_data *data)
 				data->spritel[i].angle = 180 + data->spritel[i].angle;
 			else 
 				data->spritel[i].angle = 360 - data->spritel[i].angle;
+		}
+		i++;
+	}
+	ft_sort_sprite(data);
+	i = 0;
+	while (i < data->nbs)
+	{
+		if (data->spritel[i].is_visible == 1)
+		{	
 			ft_sprite(data, i);
 			data->spritel[i].is_visible = 0;
 		}

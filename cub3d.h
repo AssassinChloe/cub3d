@@ -130,4 +130,5 @@ int	ft_texture(t_data *data, t_tex *tex, t_cross wall, int i);
 int	ft_quit(t_data *data);
 t_tex	ft_init_texture(t_data *data, char *relative_path);
 int	ft_sprite(t_data *data, int i);
+void	ft_sort_sprite(t_data *data);
 #endif
