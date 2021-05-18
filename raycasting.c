@@ -159,7 +159,6 @@ void ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A)
 {
 	int i;
 
-	i = 0;
 	//A->i = 0;
 	A->delta.y = GRID;
 	if (ray_angle >= 359 || ray_angle <= 1 || (ray_angle >= 179 && ray_angle <= 181))
@@ -188,6 +187,7 @@ void ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A)
 		}
 		if (data->map[(int)(A->cross.y/GRID)][(int)(A->cross.x/GRID)] == 2)
 		{
+			i = 0;
 			while (i < data->nbs)
 			{
 				if (data->spritel[i].coord.x == ((floor(A->cross.x/GRID) * GRID) + (GRID/2)) && data->spritel[i].coord.y == ((floor(A->cross.y/GRID) * GRID) + (GRID/2)))
@@ -210,7 +210,6 @@ void ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B)
 {
 	int i;
 	
-	i = 0;
 	//B->i = 0;
 	B->delta.x = GRID;
 	if ((ray_angle >= 89 && ray_angle <= 91) || (ray_angle <= 271 && ray_angle >= 269))
@@ -241,6 +240,7 @@ void ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B)
 		}
 		if (data->map[(int)(B->cross.y/GRID)][(int)(B->cross.x/GRID)] == 2)
 		{
+			i = 0;
 			while (i < data->nbs)
 			{
 				if (data->spritel[i].coord.x == ((floor(B->cross.x/GRID) * GRID) + (GRID/2)) && data->spritel[i].coord.y == ((floor(B->cross.y/GRID) * GRID) + (GRID/2)))

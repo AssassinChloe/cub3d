@@ -75,10 +75,9 @@ int	render(t_data *data)
 			else if (deltax > 0 && deltay > 0)
 				data->spritel[i].angle = 180 - data->spritel[i].angle;
 			else if (deltax > 0 && deltay < 0)
-				data->spritel[i].angle = 180 - data->spritel[i].angle;
+				data->spritel[i].angle = 180 + data->spritel[i].angle;
 			else 
 				data->spritel[i].angle = 360 - data->spritel[i].angle;
-			printf("dir %d, sangle %f\n", data->dir, data->spritel[i].angle);
 			ft_sprite(data, i);
 			data->spritel[i].is_visible = 0;
 		}

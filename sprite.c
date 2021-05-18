@@ -27,9 +27,9 @@ int ft_sprite(t_data *data, int i)
 	int 	x;
 	int color;
 
-	j = 0;
 	stripe = 0;
 	l = 0;
+	start_w = 0;
 	ratio = data->spritel[i].size / data->tab[4].height;
 	ratio_w = data->spritel[i].size / data->tab[4].width;
 	/*if (S.sprite[S.i].hit == 0 || S.sprite[S.i].hit == 1)
@@ -39,7 +39,11 @@ int ft_sprite(t_data *data, int i)
 	else
 		 stripe = floor(S.sprite[S.i].coord.x - (floor(S.sprite[S.i].coord.x / GRID) * GRID));
 	*/
-	start_w = ((WIN_WIDTH / 60) * (data->dir - data->spritel[i].angle + 30)) - (data->spritel[i].size / 2);
+	l = data->dir - data->spritel[i].angle;
+	if (l >= 60)
+		l = data->dir + data->spritel[i].angle - 360;
+	start_w = ((WIN_WIDTH / 60) * (l + 30)) - (data->spritel[i].size / 2);
+	l = 0;
 	if (start_w < 0)
 	{
 		stripe = -start_w;
@@ -48,7 +52,8 @@ int ft_sprite(t_data *data, int i)
 	while (stripe < data->spritel[i].size && l < WIN_WIDTH)
 	{
 		x = (int)(stripe / ratio_w);
-		k = 0;	
+		k = 0;
+		j = 0;	
 		start_h = (int)((WIN_HEIGHT/2) - (data->spritel[i].size/2));
 		if (start_h < 0)
 		{
@@ -58,17 +63,16 @@ int ft_sprite(t_data *data, int i)
 		while (j < data->spritel[i].size && k < WIN_HEIGHT)
 		{
 			y = (int)(j / ratio);
-			//color = img_pix_get(&data->tab[4].img, x, y);
-			color = 5;
+			color = img_pix_get(&data->tab[4].img, x, y);
 			if (color != 0)
-				img_pix_put(&data->img, (start_w + l), (start_h + k), color);
+				img_pix_put(&data->img, (start_w + l) , (start_h + k), color);
 			j++;
 			k++;
 		}
 		stripe++;
 		l++;
 	}
-	printf("start %d, stripe %d, ratio %.2f\n", start_w, stripe, ratio_w);
+	printf("start %d, stripe %d, size %.2f, ratio %.2f\nx %d, l %d, dir %d, sa %.2f\n", start_w, stripe, data->spritel[i].size, ratio_w, x, l, data->dir, data->spritel[i].angle);
 	return (0);
 }
 
