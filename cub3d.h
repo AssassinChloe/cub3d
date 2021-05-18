@@ -58,7 +58,6 @@ typedef struct	s_point
 typedef struct	s_sprite
 {
 	t_point	coord;
-	//int	hit;
 	int	is_visible;
 	double	dist;
 	double	size;
@@ -70,8 +69,6 @@ typedef struct		s_cross
 	t_point		cross;
 	t_point		delta;
 	double		dist;
-	//int		i;
-	//t_sprite	sprite[10];
 }			t_cross;
 
 typedef struct s_img
@@ -132,6 +129,5 @@ void	img_pix_put(t_img *img, int x, int y, int color);
 int	ft_texture(t_data *data, t_tex *tex, t_cross wall, int i);
 int	ft_quit(t_data *data);
 t_tex	ft_init_texture(t_data *data, char *relative_path);
-//int	ft_sprite(t_data *data, t_cross S, int i);
 int	ft_sprite(t_data *data, int i);
 #endif

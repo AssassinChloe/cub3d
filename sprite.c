@@ -7,7 +7,6 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 17:36:03 by cassassi          #+#    #+#             */
 /*   Updated: 2021/05/15 17:44:09 by cassassi         ###   ########.fr       */
-/*   Updated: 2021/05/11 12:30:53 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +31,6 @@ int ft_sprite(t_data *data, int i)
 	start_w = 0;
 	ratio = data->spritel[i].size / data->tab[4].height;
 	ratio_w = data->spritel[i].size / data->tab[4].width;
-	/*if (S.sprite[S.i].hit == 0 || S.sprite[S.i].hit == 1)
-	{
-		stripe = floor(((S.sprite[S.i].coord.y - (floor(S.sprite[S.i].coord.y / GRID) * GRID)) + (S.sprite[S.i].coord.x - (floor(S.sprite[S.i].coord.x / GRID) * GRID))) * ratio_w);
-	stripe = floor(S.sprite[S.i].coord.y - (floor(S.sprite[S.i].coord.y / GRID) * GRID));
-	else
-		 stripe = floor(S.sprite[S.i].coord.x - (floor(S.sprite[S.i].coord.x / GRID) * GRID));
-	*/
 	l = data->dir - data->spritel[i].angle;
 	if (l >= 60)
 		l = data->dir + data->spritel[i].angle - 360;
@@ -72,7 +64,6 @@ int ft_sprite(t_data *data, int i)
 		stripe++;
 		l++;
 	}
-	printf("start %d, stripe %d, size %.2f, ratio %.2f\nx %d, l %d, dir %d, sa %.2f\n", start_w, stripe, data->spritel[i].size, ratio_w, x, l, data->dir, data->spritel[i].angle);
 	return (0);
 }
 

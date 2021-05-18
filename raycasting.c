@@ -44,14 +44,6 @@ void ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross)
 	double ray_angle;
 	t_cross d_i_l;
 	t_cross d_i_c;
-	/*int	i;
-	int	j;
-	int	k;
-	int sdir;
-	double sray;
-	i = 0;
-	j = 0;
-	k = 0;*/
 	ray_angle = ((data->dir + 30) - (window.sub_ray_angle * ray_nb));
 	if (ray_angle >= 360)
 		ray_angle -= 360;
@@ -70,96 +62,12 @@ void ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross)
 		cross->cross = d_i_l.cross;
 		cross->dist = d_i_l.dist;
 	}
-
-/*	while (i < d_i_l.i && j < d_i_c.i)
-	{
-		if (d_i_l.sprite[i].dist > d_i_c.sprite[j].dist && ((int)(d_i_l.sprite[i].coord.x/GRID) == (int)(d_i_c.sprite[j].coord.x/GRID) && (int)(d_i_l.sprite[i].coord.y/GRID) == (int)(d_i_c.sprite[j].coord.y/GRID)))
-		{
-			cross->sprite[k].dist = d_i_c.sprite[j].dist;
-			cross->sprite[k].coord = d_i_c.sprite[j].coord;
-			if (ray_angle < 90 || ray_angle > 270)
-				cross->sprite[k].hit = 0;
-			if (ray_angle > 90 && ray_angle < 270)
-				cross->sprite[k].hit = 1;
-			i++;
-			j++;
-			k++;
-		}
-		else if (d_i_l.sprite[i].dist < d_i_c.sprite[j].dist && ((int)(d_i_l.sprite[i].coord.x/GRID) == (int)(d_i_c.sprite[j].coord.x/GRID) && (int)(d_i_l.sprite[i].coord.y/GRID) == (int)(d_i_c.sprite[j].coord.y/GRID)))
-		{
-			cross->sprite[k].dist = d_i_l.sprite[i].dist;
-			cross->sprite[k].coord = d_i_l.sprite[i].coord;
-			if (ray_angle > 0 && ray_angle < 180)
-				cross->sprite[k].hit = 2;
-			if (ray_angle > 180 && ray_angle < 360)
-				cross->sprite[k].hit = 3;
-			i++;
-			j++;
-			k++;
-		}
-		else
-		{
-			if (d_i_l.sprite[i].dist > d_i_c.sprite[j].dist)
-			{
-				cross->sprite[k].dist = d_i_c.sprite[j].dist;
-				cross->sprite[k].coord = d_i_c.sprite[j].coord;
-				if (ray_angle < 90 || ray_angle > 270)
-					cross->sprite[k].hit = 0;
-				if (ray_angle > 90 && ray_angle < 270)
-					cross->sprite[k].hit = 1;
-				j++;
-				k++;
-			}
-			else
-			{
-				cross->sprite[k].dist = d_i_l.sprite[i].dist;
-				cross->sprite[k].coord = d_i_l.sprite[i].coord;
-				if (ray_angle > 0 && ray_angle < 180)
-					cross->sprite[k].hit = 2;
-				if (ray_angle > 180 && ray_angle < 360)
-					cross->sprite[k].hit = 3;
-				i++;
-				k++;
-			}
-
-		}
-	}
-	while (i < d_i_l.i)
-	{
-		cross->sprite[k].dist = d_i_l.sprite[i].dist;
-		cross->sprite[k].coord = d_i_l.sprite[i].coord;
-		if (ray_angle > 0 && ray_angle < 180)
-			cross->sprite[k].hit = 2;
-		if (ray_angle > 180 && ray_angle < 360)
-			cross->sprite[k].hit = 3;
-		i++;
-		k++;
-	}
-	while (j < d_i_c.i)
-	{
-		cross->sprite[k].dist = d_i_c.sprite[j].dist;
-		cross->sprite[k].coord = d_i_c.sprite[j].coord;
-		if (ray_angle < 90 || ray_angle > 270)
-			cross->sprite[k].hit = 0;
-		if (ray_angle > 90 && ray_angle < 270)
-			cross->sprite[k].hit = 1;
-		j++;
-		k++;
-	}
-	cross->i = k;
-	i = 0;
-	while (i < cross->i)
-	{
-		cross->sprite[i].dist = sqrt(((data->Px - cross->sprite[i].coord.x)*(data->Px - cross->sprite[i].coord.x))+((data->Py - cross->sprite[i].coord.y)*(data->Py - cross->sprite[i].coord.y)));
-		i++;
-	}*/
 }
 
 void ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A)
 {
 	int i;
 
-	//A->i = 0;
 	A->delta.y = GRID;
 	if (ray_angle >= 359 || ray_angle <= 1 || (ray_angle >= 179 && ray_angle <= 181))
 	{
@@ -194,11 +102,6 @@ void ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A)
 					data->spritel[i].is_visible = 1;
 				i++;
 			}
-			/*A->sprite[A->i].coord.x = A->cross.x;
-			A->sprite[A->i].coord.y = A->cross.y;
-			A->sprite[A->i].dist = fabs(((data->Py - A->sprite[A->i].coord.y) / sin(ray_angle * DEG_CONV)) * cos((data->dir - ray_angle) * DEG_CONV));
-			A->i++;*/
-
 		}
 		A->cross.x = A->cross.x + A->delta.x;
 		A->cross.y = A->cross.y + A->delta.y;
@@ -210,7 +113,6 @@ void ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B)
 {
 	int i;
 	
-	//B->i = 0;
 	B->delta.x = GRID;
 	if ((ray_angle >= 89 && ray_angle <= 91) || (ray_angle <= 271 && ray_angle >= 269))
 	{
@@ -247,11 +149,6 @@ void ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B)
 				data->spritel[i].is_visible = 1;
 				i++;
 			}
-			/*B->sprite[B->i].coord.x = B->cross.x;
-			B->sprite[B->i].coord.y = B->cross.y;
-
-			B->sprite[B->i].dist = fabs(((data->Px - B->sprite[B->i].coord.x) / cos(ray_angle * DEG_CONV)) * cos((data->dir - ray_angle) * DEG_CONV));
-			B->i++;*/
 		}
 		B->cross.x = B->cross.x + B->delta.x;
 		B->cross.y = B->cross.y + B->delta.y;

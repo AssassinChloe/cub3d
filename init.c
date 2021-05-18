@@ -53,6 +53,8 @@ void	ft_init_map(t_data *data)
 				data->spritel[k].coord.x = (j * 64) + 32;
 				data->spritel[k].coord.y = (i * 64) + 32;
 				data->spritel[k].is_visible = 0;
+				data->spritel[k].dist = -1;
+				data->spritel[k].size = -1;
 				k++;
 			}
 			i++;

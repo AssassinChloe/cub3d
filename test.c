@@ -55,12 +55,6 @@ int	render(t_data *data)
 		i++;
 	}
 	i = 0;
-	/*while (cross.i >= 1 && cross.sprite[cross.i].dist < cross.dist)
-	{
-		cross.i--;
-		cross.sprite[cross.i].size = floor(GRID * window.dpp / cross.sprite[cross.i].dist);
-		ft_sprite(data, cross, i);
-		}*/
 	while(i < data->nbs)
 	{
 		if (data->spritel[i].is_visible == 1)
