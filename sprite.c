@@ -14,55 +14,69 @@
 
 int ft_sprite(t_data *data, int i)
 {	
-	int	stripe;
+	double	stripe;
 	double ratio;
 	double	ratio_w;
 	int	start_h; 
-	int	start_w;
+	double	start_w;
 	int	j;
 	int 	y;
 	int	k;
 	int	l;
 	int 	x;
 	int color;
+	int color2;
+	double deltaa;
 
 	stripe = 0;
 	l = 0;
 	start_w = 0;
 	ratio = data->spritel[i].size / data->tab[4].height;
 	ratio_w = data->spritel[i].size / data->tab[4].width;
-	l = data->dir - data->spritel[i].angle;
-	if (l >= 60)
-		l = data->dir + data->spritel[i].angle - 360;
-	start_w = ((WIN_WIDTH / 60) * (l + 30)) - (data->spritel[i].size / 2);
+	deltaa = data->dir - data->spritel[i].angle;
+	if (deltaa >= 60)
+		deltaa = deltaa - 360;
+	if (deltaa <= -60)
+		deltaa = 360 + deltaa;
+	start_w = ((WIN_WIDTH / 60) * (deltaa + 30))  - (data->spritel[i].size / 2);
+	printf("I = %d : start_x %.1f, dir %d, s_ang %.1f, l %.2f\n", i, start_w, data->dir, data->spritel[i].angle, deltaa);
 	l = 0;
 	if (start_w < 0)
 	{
 		stripe = -start_w;
 		start_w = 0;	
 	}
-	while (stripe < data->spritel[i].size && l < WIN_WIDTH)
+	while (stripe < data->spritel[i].size && (start_w + l) <= WIN_WIDTH)
 	{
 		x = (int)(stripe / ratio_w);
 		k = 0;
 		j = 0;	
-		start_h = (int)((WIN_HEIGHT/2) - (data->spritel[i].size/2));
+		start_h = (((WIN_HEIGHT/2) - (data->spritel[i].size/2) + 10));
 		if (start_h < 0)
 		{
 			j = -start_h;
-			start_h = 0;
+			start_h = 15;
 		}
-		while (j < data->spritel[i].size && k < WIN_HEIGHT)
+		color2 = img_pix_get(&data->img, (start_w +l), ((start_h - 15) + k));
+		if (color2 == SKY_PIXEL)
 		{
-			y = (int)(j / ratio);
-			color = img_pix_get(&data->tab[4].img, x, y);
-			if (color != 0)
-				img_pix_put(&data->img, (start_w + l) , (start_h + k), color);
-			j++;
-			k++;
+			while (j < data->spritel[i].size && k < (WIN_HEIGHT - 15))
+			{
+				y = (int)(j / ratio);
+				color = img_pix_get(&data->tab[4].img, x, y);
+				if (color != 0)
+					img_pix_put(&data->img, (start_w + l) , (start_h + k), color);
+				j++;
+				k++;
+			}
+			stripe++;
+			l++;
 		}
-		stripe++;
-		l++;
+		else
+		{
+			stripe++;
+			l++;
+		}
 	}
 	return (0);
 }

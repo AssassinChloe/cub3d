@@ -61,17 +61,18 @@ int	render(t_data *data)
 		{
 			deltax = data->Px - data->spritel[i].coord.x;
 			deltay = data->Py - data->spritel[i].coord.y;
-			data->spritel[i].dist = hypot(deltax, deltay);
-			data->spritel[i].size = floor(GRID * window.dpp / data->spritel[i].dist);
 			data->spritel[i].angle = (atan(fabs(deltay / deltax)) * (180 / PI));
-			if (deltax < 0 && deltay > 0) 
+			if (deltax < 0 && deltay >= 0) 
 				data->spritel[i].angle = 0 + data->spritel[i].angle;
-			else if (deltax > 0 && deltay > 0)
+			else if (deltax >= 0 && deltay >= 0)
 				data->spritel[i].angle = 180 - data->spritel[i].angle;
-			else if (deltax > 0 && deltay < 0)
+			else if (deltax >= 0 && deltay < 0)
 				data->spritel[i].angle = 180 + data->spritel[i].angle;
 			else 
 				data->spritel[i].angle = 360 - data->spritel[i].angle;
+			//data->spritel[i].dist = fabs(deltax/cos(data->spritel[i].angle * DEG_CONV));
+			data->spritel[i].dist = hypot(deltax, deltay);
+			data->spritel[i].size = floor(GRID * window.dpp / data->spritel[i].dist);
 		}
 		i++;
 	}

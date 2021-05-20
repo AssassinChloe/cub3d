@@ -75,34 +75,34 @@ int	handle_keypress(int keysym, t_data *data)
 	}
 	if (keysym == XK_Right)
 	{
-		data->dir -= 7;
+		data->dir -= 5;
 		if (data->dir < 0)
 			data->dir += 360;
 	}
 	if (keysym == XK_Left)
 	{
-		data->dir += 7;
+		data->dir += 5;
 		if (data->dir >= 360)
 			data->dir -= 360;
 	}
 	delta_x = (cos(data->dir * DEG_CONV) * 7);
 	delta_y = (-sin(data->dir * DEG_CONV) * 7);
-	if ((keysym == XK_z || keysym == XK_w)  && data->map[(int)(data->Py + floor(delta_y))/GRID][(int)(data->Px + floor(delta_x))/GRID] != 1)
+	if ((keysym == XK_z || keysym == XK_w)  && data->map[(int)(data->Py + floor(delta_y * 3))/GRID][(int)(data->Px + floor(delta_x * 3))/GRID] == 0)
 	{ 
 		data->Px += floor(delta_x);
 		data->Py += floor(delta_y);
 	}
-	if (keysym == XK_s && data->map[(int)(data->Py - floor(delta_y))/GRID][(int)(data->Px - floor(delta_x))/GRID] != 1)
+	if (keysym == XK_s && data->map[(int)(data->Py - floor(delta_y * 3))/GRID][(int)(data->Px - floor(delta_x * 3))/GRID] == 0)
 	{
 		data->Px -= floor(delta_x);
 		data->Py -= floor(delta_y);
 	}
-	if ((keysym == XK_q || keysym == XK_a) && data->map[(int)(data->Py - floor(delta_x))/GRID][(int)(data->Px + floor(delta_y))/GRID] != 1)
+	if ((keysym == XK_q || keysym == XK_a) && data->map[(int)(data->Py - floor(delta_x))/GRID][(int)(data->Px + floor(delta_y))/GRID] == 0)
 	{
 		data->Px += floor(delta_y);
 		data->Py -= floor(delta_x);
 	}
-	if (keysym == XK_d && data->map[(int)(data->Py + floor(delta_x))/GRID][(int)(data->Px - floor(delta_y))/GRID] != 1)
+	if (keysym == XK_d && data->map[(int)(data->Py + floor(delta_x))/GRID][(int)(data->Px - floor(delta_y))/GRID] == 0)
 	{
 		data->Px -= floor(delta_y);
 		data->Py += floor(delta_x);

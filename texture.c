@@ -50,7 +50,7 @@ int ft_texture(t_data *data, t_tex *tex, t_cross wall, int i)
 
 	k = 0;
 	j = 0;
-	start_h = (int)((WIN_HEIGHT/2) - (data->wall_size/2));
+	start_h = ((WIN_HEIGHT/2) - (data->wall_size/2));
 	if (start_h < 0)
 	{
 		j = -start_h;
@@ -61,7 +61,7 @@ int ft_texture(t_data *data, t_tex *tex, t_cross wall, int i)
 		stripe = floor(wall.cross.y - (floor(wall.cross.y / GRID) * GRID));
 	else
 		stripe = floor(wall.cross.x - (floor(wall.cross.x / GRID) * GRID));
-	while (j < data->wall_size && k < WIN_HEIGHT)
+	while (j <= data->wall_size && k <= WIN_HEIGHT)
 	{
 		y = (int)(j / ratio);
 		img_pix_put(&data->img, i, (start_h + k), img_pix_get(&tex->img, stripe, y));
