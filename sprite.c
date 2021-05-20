@@ -18,7 +18,7 @@ int ft_sprite(t_data *data, int i)
 	double ratio;
 	double	ratio_w;
 	int	start_h; 
-	double	start_w;
+	int	start_w;
 	int	j;
 	int 	y;
 	int	k;
@@ -31,6 +31,7 @@ int ft_sprite(t_data *data, int i)
 	stripe = 0;
 	l = 0;
 	start_w = 0;
+
 	ratio = data->spritel[i].size / data->tab[4].height;
 	ratio_w = data->spritel[i].size / data->tab[4].width;
 	deltaa = data->dir - data->spritel[i].angle;
@@ -39,7 +40,6 @@ int ft_sprite(t_data *data, int i)
 	if (deltaa <= -60)
 		deltaa = 360 + deltaa;
 	start_w = ((WIN_WIDTH / 60) * (deltaa + 30))  - (data->spritel[i].size / 2);
-	printf("I = %d : start_x %.1f, dir %d, s_ang %.1f, l %.2f\n", i, start_w, data->dir, data->spritel[i].angle, deltaa);
 	l = 0;
 	if (start_w < 0)
 	{
@@ -51,16 +51,16 @@ int ft_sprite(t_data *data, int i)
 		x = (int)(stripe / ratio_w);
 		k = 0;
 		j = 0;	
-		start_h = (((WIN_HEIGHT/2) - (data->spritel[i].size/2) + 10));
+		start_h = ((WIN_HEIGHT/2) - (data->spritel[i].size/2));
 		if (start_h < 0)
 		{
 			j = -start_h;
-			start_h = 15;
+			start_h = 0;
 		}
-		color2 = img_pix_get(&data->img, (start_w +l), ((start_h - 15) + k));
+		color2 = ft_check_for_wall(data, start_w, l, start_h, i);
 		if (color2 == SKY_PIXEL)
 		{
-			while (j < data->spritel[i].size && k < (WIN_HEIGHT - 15))
+			while (j < data->spritel[i].size && k < WIN_HEIGHT)
 			{
 				y = (int)(j / ratio);
 				color = img_pix_get(&data->tab[4].img, x, y);
@@ -69,18 +69,23 @@ int ft_sprite(t_data *data, int i)
 				j++;
 				k++;
 			}
-			stripe++;
-			l++;
 		}
-		else
-		{
-			stripe++;
-			l++;
-		}
+		stripe++;
+		l++;
 	}
 	return (0);
 }
 
+int	ft_check_for_wall(t_data *data, int start_w, int l, int start_h, int i)
+{
+	int color;
+	
+	if ((start_h - 1) > 0)
+		color = img_pix_get(&data->img, (start_w + l), (start_h - 1));
+	else 
+		color = img_pix_get(&data->img, (start_w + l), 0);
+	return (color);
+}
 void	ft_sort_sprite(t_data *data)
 {
 	int i;
