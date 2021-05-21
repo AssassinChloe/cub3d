@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/21 14:26:51 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/21 15:53:32 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(void)
 		mlx_destroy_image(data.mlx_ptr, data.tab[i].img.mlx_img);
 		i++;
 	}
+	free(tab);
 	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
 	mlx_destroy_display(data.mlx_ptr);
 	free(data.mlx_ptr);
