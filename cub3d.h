@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/21 14:27:02 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/21 17:46:53 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <X11/keysym.h>
 # include <math.h>
 # include <string.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <fcntl.h>
 # define MLX_ERROR 1
 
 # ifndef WIN_WIDTH
@@ -112,9 +115,11 @@ typedef struct s_data
 	int	nbs;
 	double	wall_size;
 	t_tex	tab[6];
+	int	test;
 } t_data;
 
-
+int	ft_check_arg(int argc, char **argv);
+int	ft_parse_cub(char *file, t_data *data);
 void	ft_init_window(t_window *window);
 void	ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross);
 void	ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A);

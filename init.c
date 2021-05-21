@@ -6,11 +6,47 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/15 18:04:01 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/21 17:23:04 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n <= 0)
+		return (0);
+	while ((unsigned char)s1[i] == (unsigned char)s2[i] && s1[i] != '\0'
+			&& s2[i] != '\0' && i < (n - 1))
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+int	ft_check_arg(int argc, char**argv)
+{
+	int i;
+	int j;
+	if (argc > 3 || argc < 2)
+	{
+		printf("mauvais nombre d'argument\n");
+		return (1);
+	}
+	j = 0;
+	while (argv[1][j])
+		j++;
+	i = ft_strncmp(".cub", (argv[1] + (j - 4)), 5); 
+	if (argc == 3 && i == 0)
+		i = ft_strncmp("--save", argv[2], 7);
+	if (i != 0)
+	{
+		printf("mauvais argument\n");
+		return (1);
+	}
+	return (0);
+}
 
 void	ft_init_data(t_data *data)
 {

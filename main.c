@@ -6,18 +6,25 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/21 15:53:32 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/21 17:47:32 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_data	data;
-       	int i = 0;	
 	t_tex *tab;
-	
+       	int i;
+
+	i = ft_check_arg(argc, argv);
+	if (i != 0)
+		return (0);
+	i = ft_parse_cub(argv[1], &data);
+	printf("%d\n", data.test);
+	if (i != 0)
+		return (0);
 	tab = (t_tex *)malloc(sizeof(t_tex) * 6);
 	ft_init_data(&data);
 	if (data.mlx_ptr == NULL)
