@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/15 18:02:31 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/21 14:27:02 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,13 @@ void	ft_init_data(t_data *data);
 void	ft_init_map(t_data *data);
 int	img_pix_get(t_img *img, int x, int y);
 t_tex	*ft_get_tex(t_data *data);
-void	img_pix_put(t_img *img, int x, int y, int color);
+void	ft_pix_to_img(t_img *img, int x, int y, int color);
 int	ft_texture(t_data *data, t_tex *tex, t_cross wall, int i);
 int	ft_quit(t_data *data);
 t_tex	ft_init_texture(t_data *data, char *relative_path);
 int	ft_sprite(t_data *data, int i);
 void	ft_sort_sprite(t_data *data);
 int	ft_check_for_wall(t_data *data, int start_w, int l, int start_h, int i);
+int	ft_render(t_data *data);
+int	ft_render_rect(t_img *img, t_rect rect);
 #endif

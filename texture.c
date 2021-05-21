@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 19:15:18 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/06 15:50:12 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/21 14:23:12 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int ft_texture(t_data *data, t_tex *tex, t_cross wall, int i)
 	while (j <= data->wall_size && k <= WIN_HEIGHT)
 	{
 		y = (int)(j / ratio);
-		img_pix_put(&data->img, i, (start_h + k), img_pix_get(&tex->img, stripe, y));
+		ft_pix_to_img(&data->img, i, (start_h + k), img_pix_get(&tex->img, stripe, y));
 		j++;
 		k++;
 	}

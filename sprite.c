@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 17:36:03 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/15 17:44:09 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/21 15:23:35 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int ft_sprite(t_data *data, int i)
 		x = (int)(stripe / ratio_w);
 		k = 0;
 		j = 0;	
-		start_h = ((WIN_HEIGHT/2) - (data->spritel[i].size/2));
+		start_h = ((WIN_HEIGHT/2) - (data->spritel[i].size/2) + 5);
 		if (start_h < 0)
 		{
 			j = -start_h;
@@ -65,7 +65,7 @@ int ft_sprite(t_data *data, int i)
 				y = (int)(j / ratio);
 				color = img_pix_get(&data->tab[4].img, x, y);
 				if (color != 0)
-					img_pix_put(&data->img, (start_w + l) , (start_h + k), color);
+					ft_pix_to_img(&data->img, (start_w + l) , (start_h + k), color);
 				j++;
 				k++;
 			}
@@ -79,9 +79,11 @@ int ft_sprite(t_data *data, int i)
 int	ft_check_for_wall(t_data *data, int start_w, int l, int start_h, int i)
 {
 	int color;
+
+	color = i;
 	
-	if ((start_h - 1) > 0)
-		color = img_pix_get(&data->img, (start_w + l), (start_h - 1));
+	if ((start_h - 6) >= 0)
+		color = img_pix_get(&data->img, (start_w + l), (start_h - 6));
 	else 
 		color = img_pix_get(&data->img, (start_w + l), 0);
 	return (color);
@@ -108,6 +110,4 @@ void	ft_sort_sprite(t_data *data)
 		}
 		i++;
 	}
-
-
 }
