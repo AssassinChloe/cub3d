@@ -6,20 +6,12 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/12 18:42:05 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/24 01:07:45 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void ft_init_window(t_window *window)
-{
-	window->width = WIN_WIDTH;
-	window->height = WIN_HEIGHT;
-	window->fov_angle = 60;
-	window->dpp = ((window->width/2) / (tan((window->fov_angle/2)*DEG_CONV)));
-	window->sub_ray_angle = (window->fov_angle / window->width);
-}
 
 void	ft_get_hit(t_data *data, double ray_angle, t_cross *d_i_l, t_cross *d_i_c)
 {
@@ -39,12 +31,12 @@ void	ft_get_hit(t_data *data, double ray_angle, t_cross *d_i_l, t_cross *d_i_c)
 	}
 }
 
-void ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross)
+void ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross)
 {
 	double ray_angle;
 	t_cross d_i_l;
 	t_cross d_i_c;
-	ray_angle = ((data->dir + 30) - (window.sub_ray_angle * ray_nb));
+	ray_angle = ((data->dir + 30) - (data->win.sub_ray_angle * ray_nb));
 	if (ray_angle >= 360)
 		ray_angle -= 360;
 	if (ray_angle < 0)

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/21 17:46:53 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/24 01:20:29 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,16 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <fcntl.h>
-# define MLX_ERROR 1
+# include "../get_next_line/get_next_line.h"
+# include "../libft/libft.h"
 
-# ifndef WIN_WIDTH
-#  define WIN_WIDTH  1000
-# endif
-# ifndef WIN_HEIGHT
-#  define WIN_HEIGHT 800 
-# endif
+# define WIN_HEIGHT 600
+# define WIN_WIDTH 800
+# define MLX_ERROR 1
 # define PI 3.14159265
 # define GRID 64 
 # define DEG_CONV PI/180
 # define SKY_PIXEL 0x00BBE8FF
-# define LEFT_PIXEL 0x005E6F6A
-# define RIGHT_PIXEL 0x008B6F6A
-# define BOT_PIXEL 0x007F6F6A
-# define TOP_PIXEL 0x008D6F5A
 # define FLOOR_PIXEL 0x001A6927
 # define MAPX 13
 # define MAPY 11
@@ -105,6 +99,7 @@ typedef struct s_data
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
+	t_window win;
 	int	cur_img;
 	double	Px;
 	double	Py;
@@ -120,8 +115,7 @@ typedef struct s_data
 
 int	ft_check_arg(int argc, char **argv);
 int	ft_parse_cub(char *file, t_data *data);
-void	ft_init_window(t_window *window);
-void	ft_ray_lenght(t_window window, int ray_nb, t_data *data, t_cross *cross);
+void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross);
 void	ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A);
 void	ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B);
 int	ft_get_wall(t_data *data);
@@ -139,4 +133,5 @@ void	ft_sort_sprite(t_data *data);
 int	ft_check_for_wall(t_data *data, int start_w, int l, int start_h, int i);
 int	ft_render(t_data *data);
 int	ft_render_rect(t_img *img, t_rect rect);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 #endif

@@ -1,4 +1,4 @@
-R 600 800 
+R 800 600 
 NO ./img/north.xpm
 SO ./img/south.xpm
 EA ./img/east.xpm

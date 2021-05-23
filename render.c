@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:03:42 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/21 15:09:05 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/24 01:09:47 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,10 @@ int 	ft_render_rect(t_img *img, t_rect rect)
 int	ft_render(t_data *data)
 {
 	int i;
-	t_window window;
 	t_cross cross;
 	double deltax;
 	double deltay;
 
-	ft_init_window(&window);
 	i = 0;
 	if (data->win_ptr == NULL)
 		return (1);
@@ -52,8 +50,8 @@ int	ft_render(t_data *data)
 	ft_render_rect(&data->img, (t_rect){0, (WIN_HEIGHT/2), WIN_WIDTH, (WIN_HEIGHT/2), FLOOR_PIXEL});
 	while (i < WIN_WIDTH)
 	{
-		ft_ray_lenght(window, i, data, &cross);
-		data->wall_size = floor(GRID * window.dpp / cross.dist);
+		ft_ray_lenght(i, data, &cross);
+		data->wall_size = floor(GRID * data->win.dpp / cross.dist);
 		ft_texture(data, ft_get_tex(data), cross, i);
 		i++;
 	}
@@ -73,9 +71,8 @@ int	ft_render(t_data *data)
 				data->spritel[i].angle = 180 + data->spritel[i].angle;
 			else
 				data->spritel[i].angle = 360 - data->spritel[i].angle;
-			//data->spritel[i].dist = fabs(deltax/cos(data->spritel[i].angle * DEG_CONV));
 			data->spritel[i].dist = hypot(deltax, deltay);
-			data->spritel[i].size = floor(GRID * window.dpp / data->spritel[i].dist);
+			data->spritel[i].size = floor(GRID * data->win.dpp / data->spritel[i].dist);
 		}
 		i++;
 	}
