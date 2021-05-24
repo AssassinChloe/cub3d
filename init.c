@@ -6,24 +6,11 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/24 01:18:43 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/24 17:41:13 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	if (n <= 0)
-		return (0);
-	while ((unsigned char)s1[i] == (unsigned char)s2[i] && s1[i] != '\0'
-			&& s2[i] != '\0' && i < (n - 1))
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
 
 int	ft_check_arg(int argc, char**argv)
 {
@@ -48,9 +35,21 @@ int	ft_check_arg(int argc, char**argv)
 	return (0);
 }
 
+void	ft_init_parse(t_parse *parse)
+{
+	parse->res = 0;
+	parse->south = 0;
+	parse->west = 0;
+	parse->east = 0;
+	parse->north = 0;
+	parse->ceil = 0;
+	parse->floor = 0;
+	parse->sprite = 0;
+	parse->map = 0;
+
+}
 void	ft_init_data(t_data *data)
 {
-
 	data->Px = 197;
 	data->Py = 294;
 	data->dir = 235;

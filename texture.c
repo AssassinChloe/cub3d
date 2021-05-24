@@ -6,16 +6,16 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 19:15:18 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/21 14:23:12 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/24 17:33:13 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_tex	ft_init_texture(t_data *data, char *relative_path)
+t_tex	ft_init_texture(t_data *data, char *path)
 {
 	t_tex tex;
-       	tex.img.mlx_img = mlx_xpm_file_to_image(data->mlx_ptr, relative_path, &tex.width, &tex.height);
+       	tex.img.mlx_img = mlx_xpm_file_to_image(data->mlx_ptr, path, &tex.width, &tex.height);
 	tex.img.addr = mlx_get_data_addr(tex.img.mlx_img, &tex.img.bpp, &tex.img.line_len, &tex.img.endian);
 	return (tex);
 }
@@ -28,10 +28,11 @@ t_tex	*ft_get_tex(t_data *data)
 		return (&data->tab[1]);
 	if (data->hit == 2)
 		return (&data->tab[2]);
-	if (data->hit == 3)
+	else 
+	//if (data->hit == 3)
 		return (&data->tab[3]);
-	else
-		return (&data->tab[5]);
+	/*else
+		return (&data->tab[5]);*/
 }
 
 int	img_pix_get(t_img *img, int x, int y)

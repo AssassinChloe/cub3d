@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/21 17:47:32 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/24 17:40:45 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,21 @@
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	t_tex *tab;
-       	int i;
+	t_parse parse;
+       	int	i;
 
-	i = ft_check_arg(argc, argv);
-	if (i != 0)
-		return (0);
-	i = ft_parse_cub(argv[1], &data);
-	printf("%d\n", data.test);
-	if (i != 0)
-		return (0);
-	tab = (t_tex *)malloc(sizeof(t_tex) * 6);
 	ft_init_data(&data);
 	if (data.mlx_ptr == NULL)
 		return (MLX_ERROR);
-	tab[0] = ft_init_texture(&data, "img/east.xpm");
-	tab[1] = ft_init_texture(&data, "img/west.xpm");
-	tab[2] = ft_init_texture(&data, "img/north.xpm");
-	tab[3] = ft_init_texture(&data, "img/south.xpm");
-	tab[4] = ft_init_texture(&data, "img/sprite.xpm");
-	tab[5] = ft_init_texture(&data, "img/other.xpm");
-
-	while (i < 6)
-	{
-		data.tab[i] = tab[i];
-		i++;
-	}
+	printf("parsing\n");
+	i = ft_check_arg(argc, argv);
+	if (i != 0)
+		return (0);
+	i = ft_parse_cub(argv[1], &data, &parse);
+	if (i < 0)
+		return (0);
+	if (i != 0)
+		return (0);
 	printf("initialisation\n");
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "my window");
 	if (data.win_ptr == NULL)
@@ -58,12 +47,11 @@ int	main(int argc, char **argv)
 //	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);
 	mlx_loop(data.mlx_ptr);
 	i = 0;
-	while (i < 6)
+	while (i < 5)
 	{
 		mlx_destroy_image(data.mlx_ptr, data.tab[i].img.mlx_img);
 		i++;
 	}
-	free(tab);
 	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
 	mlx_destroy_display(data.mlx_ptr);
 	free(data.mlx_ptr);

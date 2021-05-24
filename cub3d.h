@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/24 01:20:29 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/24 17:01:46 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,23 @@
 # define MAPX 13
 # define MAPY 11
 
+typedef struct	s_parse
+{
+		int res;
+		int south;
+		char *so;
+		int west;
+		char *we;
+		int east;
+		char *ea;
+		int north;
+		char *no;
+		int ceil;
+		int floor;
+		int sprite;
+		char *sp;
+		int map;
+}		t_parse;
 typedef struct	s_window
 {
 	double	width;
@@ -109,12 +126,12 @@ typedef struct s_data
 	t_sprite spritel[(MAPY - 2) * (MAPX - 2)];
 	int	nbs;
 	double	wall_size;
-	t_tex	tab[6];
+	t_tex	tab[5];
 	int	test;
 } t_data;
 
 int	ft_check_arg(int argc, char **argv);
-int	ft_parse_cub(char *file, t_data *data);
+int	ft_parse_cub(char *file, t_data *data, t_parse *parse);
 void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross);
 void	ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A);
 void	ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B);
@@ -134,4 +151,5 @@ int	ft_check_for_wall(t_data *data, int start_w, int l, int start_h, int i);
 int	ft_render(t_data *data);
 int	ft_render_rect(t_img *img, t_rect rect);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_init_parse(t_parse *parse);
 #endif
