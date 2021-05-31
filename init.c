@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/24 17:41:13 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/31 16:52:16 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ int	ft_check_arg(int argc, char**argv)
 	return (0);
 }
 
-void	ft_init_parse(t_parse *parse)
+void	ft_init_parse(t_data *data)
 {
-	parse->res = 0;
-	parse->south = 0;
-	parse->west = 0;
-	parse->east = 0;
-	parse->north = 0;
-	parse->ceil = 0;
-	parse->floor = 0;
-	parse->sprite = 0;
-	parse->map = 0;
+	data->parse.res = 0;
+	data->parse.south = 0;
+	data->parse.west = 0;
+	data->parse.east = 0;
+	data->parse.north = 0;
+	data->parse.ceil = 0;
+	data->parse.floor = 0;
+	data->parse.sprite = 0;
+	data->parse.map = 0;
 
 }
 void	ft_init_data(t_data *data)

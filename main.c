@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/24 17:40:45 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/31 16:40:36 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	t_parse parse;
        	int	i;
 
 	ft_init_data(&data);
@@ -25,7 +24,7 @@ int	main(int argc, char **argv)
 	i = ft_check_arg(argc, argv);
 	if (i != 0)
 		return (0);
-	i = ft_parse_cub(argv[1], &data, &parse);
+	i = ft_parse_cub(argv[1], &data);
 	if (i < 0)
 		return (0);
 	if (i != 0)

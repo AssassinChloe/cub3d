@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/24 17:01:46 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/31 16:50:05 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ typedef struct	s_parse
 		int north;
 		char *no;
 		int ceil;
+		int ceil_color;
 		int floor;
+		int floor_color;
 		int sprite;
 		char *sp;
 		int map;
@@ -127,11 +129,11 @@ typedef struct s_data
 	int	nbs;
 	double	wall_size;
 	t_tex	tab[5];
-	int	test;
+	t_parse	parse;
 } t_data;
 
 int	ft_check_arg(int argc, char **argv);
-int	ft_parse_cub(char *file, t_data *data, t_parse *parse);
+int	ft_parse_cub(char *file, t_data *data);
 void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross);
 void	ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A);
 void	ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B);
@@ -151,5 +153,5 @@ int	ft_check_for_wall(t_data *data, int start_w, int l, int start_h, int i);
 int	ft_render(t_data *data);
 int	ft_render_rect(t_img *img, t_rect rect);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
-void	ft_init_parse(t_parse *parse);
+void	ft_init_parse(t_data *data);
 #endif
