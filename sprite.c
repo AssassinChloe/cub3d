@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 17:36:03 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/21 15:23:35 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/05/31 22:13:14 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int ft_sprite(t_data *data, int i)
 			start_h = 0;
 		}
 		color2 = ft_check_for_wall(data, start_w, l, start_h, i);
-		if (color2 == SKY_PIXEL)
+		if (color2 == data->parse.ceil_color)
 		{
 			while (j < data->spritel[i].size && k < WIN_HEIGHT)
 			{
