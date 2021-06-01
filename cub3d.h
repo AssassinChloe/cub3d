@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/31 16:50:05 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/01 16:44:17 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,4 +154,5 @@ int	ft_render(t_data *data);
 int	ft_render_rect(t_img *img, t_rect rect);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_init_parse(t_data *data);
+void	ft_free_tab(char **tab, int i);
 #endif

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 17:36:03 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/31 22:13:14 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/01 17:36:19 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int ft_sprite(t_data *data, int i)
 			{
 				y = (int)(j / ratio);
 				color = img_pix_get(&data->tab[4].img, x, y);
-				if (color != 0)
+				if (color)
 					ft_pix_to_img(&data->img, (start_w + l) , (start_h + k), color);
 				j++;
 				k++;
@@ -88,6 +88,7 @@ int	ft_check_for_wall(t_data *data, int start_w, int l, int start_h, int i)
 		color = img_pix_get(&data->img, (start_w + l), 0);
 	return (color);
 }
+
 void	ft_sort_sprite(t_data *data)
 {
 	int i;
