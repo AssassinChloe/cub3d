@@ -1,4 +1,4 @@
-R 800 600 
+R 5224 5453 
 NO ./img/spaceship/wall_1.xpm
 SO ./img/spaceship/wall_2.xpm
 EA ./img/spaceship/wall_3.xpm

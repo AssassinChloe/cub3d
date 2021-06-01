@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/01 16:44:17 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/01 18:38:33 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
 
-# define WIN_HEIGHT 600
-# define WIN_WIDTH 800
 # define MLX_ERROR 1
 # define PI 3.14159265
 # define GRID 64 
@@ -63,6 +61,8 @@ typedef struct	s_window
 	double 	fov_angle;
 	double 	dpp;
 	double 	sub_ray_angle;
+	int	screenw;
+	int 	screenh;
 }		t_window;
 
 typedef struct	s_point
@@ -155,4 +155,5 @@ int	ft_render_rect(t_img *img, t_rect rect);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_init_parse(t_data *data);
 void	ft_free_tab(char **tab, int i);
+void	ft_init_win(t_data *data);
 #endif

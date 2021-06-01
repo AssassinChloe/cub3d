@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/31 16:52:16 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/01 18:31:16 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,16 @@ void	ft_init_data(t_data *data)
 	data->dir = 235;
 	data->hit = 0;
 	data->mlx_ptr = mlx_init();
-	data->win.width = WIN_WIDTH;
-	data->win.height = WIN_HEIGHT;
+	ft_init_map(data);
+
+}
+
+void	ft_init_win(t_data *data)
+{
 	data->win.fov_angle = 60;
 	data->win.dpp = ((data->win.width/2) / (tan((data->win.fov_angle/2)*DEG_CONV)));
 	data->win.sub_ray_angle = (data->win.fov_angle / data->win.width);
-	ft_init_map(data);
-
+	
 }
 
 void	ft_init_map(t_data *data)

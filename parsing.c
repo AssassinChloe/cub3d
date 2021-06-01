@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/01 16:40:29 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/01 18:36:09 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	get_rgb(char *str)
 	int	g;
 	int	b;
 	char	**rgb;
+
 	rgb = ft_split(str, ',');
 	if (!(rgb))
 		return (-1);
@@ -71,6 +72,7 @@ int	ft_check_line(t_data *data, char *line)
 {
 	char	**info;
 	int	i;
+	int	j;
 
 	i = 0;
 	info = ft_split(line, ' ');
@@ -80,18 +82,27 @@ int	ft_check_line(t_data *data, char *line)
 		i++;
 	if (i == 3 && ft_strncmp(info[0], "R", 2) == 0 && data->parse.res == 0)
 	{
-		data->win.width = ft_atoi(info[1]);
-		if (data->win.width <= 0 || data->win.width >= 1920)
+		j = ft_atoi(info[1]);
+		if (j <= 0)
 		{
 			ft_free_tab(info, i);
 			return (-1);
 		}
-		data->win.height = ft_atoi(info[2]);
-		if (data->win.height <= 0 || data->win.height >= 1080)
+		else if (j > data->win.screenw)
+			data->win.width = data->win.screenw;
+		else
+			data->win.width = j;
+		j = ft_atoi(info[2]);
+		if (j <= 0 )
 		{
+			data->win.height = data->win.screenh;
 			ft_free_tab(info, i);
 			return (-1);
 		}
+		else if (j >= data->win.screenh)
+			data->win.height = data->win.screenh;
+		else
+			data->win.height = j;
 		data->parse.res = 1;
 		ft_free_tab(info, i);
 	}
@@ -160,6 +171,17 @@ int	ft_check_line(t_data *data, char *line)
 		data->parse.ceil = 1;
 		ft_free_tab(info, i);
 		return (0);
+	}
+	else if (i == 1)
+	{
+		j = 0;
+		while (info[0])
+		{
+			if (info[0][j] != '0' && info[0][j] != '1' && info[0][j] != '2' && info[0][j] != 'W' &&	info[0][j] != 'E' && info[0][j] != 'S' && info[0][j] != 'N' && info[0][j] != ' ')
+			       printf("invalid map char");
+			return (0);
+		}
+
 	}
 	else
 		printf("parsing tbc\n");

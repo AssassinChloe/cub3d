@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/31 16:40:36 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/01 18:27:50 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char **argv)
        	int	i;
 
 	ft_init_data(&data);
+	mlx_get_screen_size(data.mlx_ptr, &data.win.screenw, &data.win.screenh);
 	if (data.mlx_ptr == NULL)
 		return (MLX_ERROR);
 	printf("parsing\n");
@@ -25,19 +26,18 @@ int	main(int argc, char **argv)
 	if (i != 0)
 		return (0);
 	i = ft_parse_cub(argv[1], &data);
-	if (i < 0)
-		return (0);
 	if (i != 0)
 		return (0);
+	ft_init_win(&data);
 	printf("initialisation\n");
-	data.win_ptr = mlx_new_window(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "my window");
+	data.win_ptr = mlx_new_window(data.mlx_ptr, data.win.width, data.win.height, "my window");
 	if (data.win_ptr == NULL)
 	{
 		free(data.win_ptr);
 		return (MLX_ERROR);
 	}
 	
-	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	data.img.mlx_img = mlx_new_image(data.mlx_ptr, data.win.width, data.win.height);
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp,
 			&data.img.line_len, &data.img.endian);
 

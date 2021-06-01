@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:03:42 by cassassi          #+#    #+#             */
-/*   Updated: 2021/05/31 16:49:09 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/01 18:37:42 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int	ft_render(t_data *data)
 	i = 0;
 	if (data->win_ptr == NULL)
 		return (1);
-	ft_render_rect(&data->img, (t_rect){0, 0, WIN_WIDTH, (WIN_HEIGHT/2), data->parse.ceil_color});
-	ft_render_rect(&data->img, (t_rect){0, (WIN_HEIGHT/2), WIN_WIDTH, (WIN_HEIGHT/2), data->parse.floor_color});
-	while (i < WIN_WIDTH)
+	ft_render_rect(&data->img, (t_rect){0, 0, data->win.width, (data->win.height/2), data->parse.ceil_color});
+	ft_render_rect(&data->img, (t_rect){0, (data->win.height/2), data->win.width, (data->win.height/2), data->parse.floor_color});
+	while (i < data->win.width)
 	{
 		ft_ray_lenght(i, data, &cross);
 		data->wall_size = floor(GRID * data->win.dpp / cross.dist);
