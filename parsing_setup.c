@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 13:35:08 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/03 15:14:04 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/03 17:04:48 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ int	ft_check_for_tex(t_data *data, char **info)
 {
 	int ret;
 	
-	if (ft_strncmp(info[0], "EA", 3) == 0 && data->parse.east == 0)
+	if (ft_strncmp(info[0], "EA", 3) == 0 && data->parse.tex[0] == 0)
 		ret = ft_set_tex(data, info);
-	else if (ft_strncmp(info[0], "WE", 3) == 0 && data->parse.west == 0)
+	else if (ft_strncmp(info[0], "WE", 3) == 0 && data->parse.tex[1] == 0)
 		ret = ft_set_tex(data, info);
-	else if (ft_strncmp(info[0], "NO", 3) == 0 && data->parse.north == 0)
+	else if (ft_strncmp(info[0], "NO", 3) == 0 && data->parse.tex[2] == 0)
 		ret = ft_set_tex(data, info);
-	else if (ft_strncmp(info[0], "SO", 3) == 0 && data->parse.south == 0)
+	else if (ft_strncmp(info[0], "SO", 3) == 0 && data->parse.tex[3] == 0)
 		ret = ft_set_tex(data, info);
-	else if (ft_strncmp(info[0], "S", 2) == 0 && data->parse.sprite == 0)
+	else if (ft_strncmp(info[0], "S", 2) == 0 && data->parse.tex[4] == 0)
 		ret = ft_set_tex(data, info);
 	else if (ft_strncmp(info[0], "F", 2) == 0 && data->parse.floor == 0)
 		ret = ft_set_color(data, info);
@@ -84,28 +84,28 @@ int	ft_set_tex(t_data *data, char **info)
 {
 	if (ft_strncmp(info[0], "EA", 3) == 0)
 	{
-		data->tab[0] = ft_init_texture(data, info[1]);
-		data->parse.east = 1;
+		data->parse.tex_path[0] = ft_strdup(info[1]);	
+		data->parse.tex[0] = 1;
 	}
 	else if (ft_strncmp(info[0], "WE", 3) == 0)
 	{
-		data->tab[1] = ft_init_texture(data, info[1]);
-		data->parse.west = 1;
+		data->parse.tex_path[1] = ft_strdup(info[1]);	
+		data->parse.tex[1] = 1;
 	}
 	else if (ft_strncmp(info[0], "NO", 3) == 0)
 	{
-		data->tab[2] = ft_init_texture(data, info[1]);
-		data->parse.north = 1;
+		data->parse.tex_path[2] = ft_strdup(info[1]);	
+		data->parse.tex[2] = 1;
 	}
 	else if (ft_strncmp(info[0], "SO", 3) == 0)
 	{
-		data->tab[3] = ft_init_texture(data, info[1]);
-		data->parse.south = 1;
+		data->parse.tex_path[3] = ft_strdup(info[1]);	
+		data->parse.tex[3] = 1;
 	}
 	else
 	{
-		data->tab[4] = ft_init_texture(data, info[1]);
-		data->parse.sprite = 1;
+		data->parse.tex_path[4] = ft_strdup(info[1]);	
+		data->parse.tex[4] = 1;
 	}
 	return (0);
 }

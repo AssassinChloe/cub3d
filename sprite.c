@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 17:36:03 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/01 18:22:45 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/03 17:03:33 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int ft_sprite(t_data *data, int i)
 	l = 0;
 	start_w = 0;
 
-	ratio = data->spritel[i].size / data->tab[4].height;
-	ratio_w = data->spritel[i].size / data->tab[4].width;
+	ratio = data->spritel[i].size / data->tex[4].height;
+	ratio_w = data->spritel[i].size / data->tex[4].width;
 	deltaa = data->dir - data->spritel[i].angle;
 	if (deltaa >= 60)
 		deltaa = deltaa - 360;
@@ -63,7 +63,7 @@ int ft_sprite(t_data *data, int i)
 			while (j < data->spritel[i].size && k < data->win.height )
 			{
 				y = (int)(j / ratio);
-				color = img_pix_get(&data->tab[4].img, x, y);
+				color = img_pix_get(&data->tex[4].img, x, y);
 				if (color)
 					ft_pix_to_img(&data->img, (start_w + l) , (start_h + k), color);
 				j++;
