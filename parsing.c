@@ -6,12 +6,22 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/01 18:36:09 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/03 15:32:02 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "../get_next_line/get_next_line.h"
+
+int	ft_tab_len(char **tab)
+{
+	int i;
+
+	i = 0;
+	while(tab[i])
+		i++;
+	return (i);
+}
 
 int	create_rgb(int r, int g, int b)
 {
@@ -21,42 +31,30 @@ int	create_rgb(int r, int g, int b)
 int	get_rgb(char *str)
 {
 	int	i;
-	int	r;
-	int	g;
-	int	b;
-	char	**rgb;
+	int	rgb[3];
+	char	**color;
 
-	rgb = ft_split(str, ',');
-	if (!(rgb))
+	color = ft_split(str, ',');
+	if (!(color))
 		return (-1);
-	i = 0;
-	while (rgb[i])
-		i++;
+	i = ft_tab_len(color); 
 	if (i != 3)
 	{
-		ft_free_tab(rgb, 3);
+		ft_free_tab(color, i);
 		return (-1);
 	}
-	r = ft_atoi(rgb[0]);
-	if (r < 0 || r > 255)
+	while (i > 0)
 	{
-		ft_free_tab(rgb, 3);
-		return (-1);
+		i--;
+		rgb[i] = ft_atoi(color[i]);
+		if (rgb[i] < 0 || rgb[i] > 255)
+		{
+			ft_free_tab(color, 3);
+			return (-1);
+		}
 	}
-	g = ft_atoi(rgb[1]);
-	if (g < 0 || g > 255)
-	{
-		ft_free_tab(rgb, 3);
-		return (-1);
-	}
-	b = ft_atoi(rgb[2]);
-	if (b < 0 || b > 255)
-	{
-		ft_free_tab(rgb, 3);
-		return (-1);
-	}
-	ft_free_tab(rgb, 3);
-	return (create_rgb(r, g, b));
+	ft_free_tab(color, 3);
+	return (create_rgb(rgb[0], rgb[1], rgb[2]));
 }
 void	ft_free_tab(char **tab, int i)
 {
@@ -72,160 +70,54 @@ int	ft_check_line(t_data *data, char *line)
 {
 	char	**info;
 	int	i;
-	int	j;
+	int	ret;
 
 	i = 0;
+	ret = 0;
 	info = ft_split(line, ' ');
 	if (!(info))
 		return (-1);
 	while (info[i])
 		i++;
 	if (i == 3 && ft_strncmp(info[0], "R", 2) == 0 && data->parse.res == 0)
-	{
-		j = ft_atoi(info[1]);
-		if (j <= 0)
-		{
-			ft_free_tab(info, i);
-			return (-1);
-		}
-		else if (j > data->win.screenw)
-			data->win.width = data->win.screenw;
-		else
-			data->win.width = j;
-		j = ft_atoi(info[2]);
-		if (j <= 0 )
-		{
-			data->win.height = data->win.screenh;
-			ft_free_tab(info, i);
-			return (-1);
-		}
-		else if (j >= data->win.screenh)
-			data->win.height = data->win.screenh;
-		else
-			data->win.height = j;
-		data->parse.res = 1;
-		ft_free_tab(info, i);
-	}
-	else if (i == 2 && ft_strncmp(info[0], "EA", 3) == 0
-			&& data->parse.east == 0)
-	{
-		data->tab[0] = ft_init_texture(data, info[1]);
-		data->parse.east = 1;
-		ft_free_tab(info, i);
-		return (0);
-	}
-	else if (i == 2 && ft_strncmp(info[0], "WE", 3) == 0
-			&& data->parse.west == 0)
-	{
-		data->tab[1] = ft_init_texture(data, info[1]);
-		data->parse.west = 1;
-		ft_free_tab(info, i);
-		return (0);
-	}
-	else if (i == 2 && ft_strncmp(info[0], "NO", 3) == 0
-			&& data->parse.north == 0)
-	{
-		data->tab[2] = ft_init_texture(data, info[1]);
-		data->parse.north = 1;
-		ft_free_tab(info, i);
-		return (0);
-	}
-	else if (i == 2 && ft_strncmp(info[0], "SO", 3) == 0
-			&& data->parse.south == 0)
-	{
-		data->tab[3] = ft_init_texture(data, info[1]);
-		data->parse.south = 1;
-		ft_free_tab(info, i);
-		return (0);
-	}
-	else if (i == 2 && ft_strncmp(info[0], "S", 2) == 0
-			&& data->parse.sprite == 0)
-	{
-		data->tab[4] = ft_init_texture(data, info[1]);
-		data->parse.sprite = 1;
-		ft_free_tab(info, i);
-		return (0);
-	}
-	else if (i == 2 && ft_strncmp(info[0], "F", 2) == 0
-			&& data->parse.floor == 0)
-	{
-		data->parse.floor_color = get_rgb(info[1]);
-		if (data->parse.floor_color < 0)
-		{
-			ft_free_tab(info, i);
-			return (-1);
-		}
-		data->parse.floor = 1;
-		ft_free_tab(info, i);
-		return (0);
-	}
-	else if (i == 2 && ft_strncmp(info[0], "C", 2) == 0
-			&& data->parse.ceil == 0)
-	{
-		data->parse.ceil_color = get_rgb(info[1]);
-		if (data->parse.ceil_color < 0)
-		{
-			ft_free_tab(info, i);
-			return (-1);
-		}
-		data->parse.ceil = 1;
-		ft_free_tab(info, i);
-		return (0);
-	}
-	else if (i == 1)
-	{
-		j = 0;
-		while (info[0])
-		{
-			if (info[0][j] != '0' && info[0][j] != '1' && info[0][j] != '2' && info[0][j] != 'W' &&	info[0][j] != 'E' && info[0][j] != 'S' && info[0][j] != 'N' && info[0][j] != ' ')
-			       printf("invalid map char");
-			return (0);
-		}
-
-	}
-	else
-		printf("parsing tbc\n");
-	return (0);
+		ret = ft_get_res(data, info);
+	if (i == 2)
+		ret = ft_check_for_tex(data, info);
+	ft_free_tab(info, i);
+	return (ret);
 }
 
 int	ft_parse_cub(char *file, t_data *data)
 {
 	int fd;
-	int buf;
+	int gnl;
 	int ret;
 	char *line;
 
-	buf = 1;
+	gnl = 1;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-	{
-		printf("erreur open\n");
-		return (1);
-	}
+		return (-1);
 	ft_init_parse(data);
-	while (buf > 0)
+	while (gnl > 0)
 	{
-		buf = get_next_line(fd, &line);
+		gnl = get_next_line(fd, &line);
 		ret = ft_check_line(data, line);
 		if (ret == -1)
 		{
 			printf("invalid data in .cub file\n");
+			if (close(fd) < 0)
+				printf("close error\n");
 			return (-1);
 		}
 		free(line);
 		line = NULL;
 	}
-	if (ret == 0)
-	{
-		free(line);
-		line = NULL;
-	}
-	if (ret < 0)
+	free(line);
+	line = NULL;
+	if (gnl < 0)
 		printf("erreur gnl \n");
-	if ((ret = close(fd)) < 0)
-	{
-		printf("erreur close\n");
-		return (1);
-	}
+	if (close(fd) < 0)
+		return (-1);
 	return (0);
 }

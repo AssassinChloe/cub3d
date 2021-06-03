@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/01 18:38:33 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/03 15:15:29 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,4 +156,10 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_init_parse(t_data *data);
 void	ft_free_tab(char **tab, int i);
 void	ft_init_win(t_data *data);
+int	ft_set_tex(t_data *data, char **info);
+int	ft_set_color(t_data *data, char **info);
+int	ft_check_for_tex(t_data *data, char **info);
+int	ft_get_res(t_data *data, char **info);
+int	ft_tab_len(char **tab);
+int	get_rgb(char *str);
 #endif
