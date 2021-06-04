@@ -1,38 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_setup.c                                    :+:      :+:    :+:   */
+/*   parsing_texture.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 13:35:08 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 14:22:49 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/04 17:45:41 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	ft_get_res(t_data *data, char **info)
-{
-	int j;
-
-	j = ft_atoi(info[1]);
-	if (j <= 0)
-		return (-1);
-	else if (j > data->win.screenw)
-		data->win.width = data->win.screenw;
-	else
-		data->win.width = j;
-	j = ft_atoi(info[2]);
-	if (j <= 0 )
-		return (-1);
-	else if (j >= data->win.screenh)
-		data->win.height = data->win.screenh;
-	else
-		data->win.height = j;
-	data->parse.res = 1;
-	return (0);
-}
 
 int	ft_check_for_tex(t_data *data, char **info)
 {
@@ -53,6 +31,40 @@ int	ft_check_for_tex(t_data *data, char **info)
 	else
 		ret = -1;
 	return (ret);
+}
+
+int	create_rgb(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
+}
+
+int	get_rgb(char *str)
+{
+	int	i;
+	int	rgb[3];
+	char	**color;
+
+	color = ft_split(str, ',');
+	if (!(color))
+		return (-1);
+	i = ft_tab_len(color); 
+	if (i != 3)
+	{
+		ft_free_tab(color, i);
+		return (-1);
+	}
+	while (i > 0)
+	{
+		i--;
+		rgb[i] = ft_atoi(color[i]);
+		if (rgb[i] < 0 || rgb[i] > 255)
+		{
+			ft_free_tab(color, 3);
+			return (-1);
+		}
+	}
+	ft_free_tab(color, 3);
+	return (create_rgb(rgb[0], rgb[1], rgb[2]));
 }
 
 int	ft_set_color(t_data *data, char **info)

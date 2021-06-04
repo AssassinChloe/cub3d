@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 17:18:42 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/04 18:30:03 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,4 +148,5 @@ void	ft_go_front(t_data *data, double delta_x, double delta_y);
 void	ft_go_back(t_data *data, double delta_x, double delta_y);
 void	ft_go_left(t_data *data, double delta_x, double delta_y);
 void	ft_go_right(t_data *data, double delta_x, double delta_y);
+int	ft_check_if_map(t_data *data, char *line);
 #endif

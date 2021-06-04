@@ -6,12 +6,11 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/03 15:32:02 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/04 17:35:39 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "../get_next_line/get_next_line.h"
 
 int	ft_tab_len(char **tab)
 {
