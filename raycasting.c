@@ -6,44 +6,44 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 14:21:39 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/04 17:19:16 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 
-void	ft_get_hit(t_data *data, double ray_angle, t_cross *d_i_l, t_cross *d_i_c)
+void	ft_get_hit(t_data *data, double r_a, t_cross *d_i_l, t_cross *d_i_c)
 {
 	if (d_i_l->dist > d_i_c->dist)
 	{
-		if (ray_angle < 90 || ray_angle > 270)
+		if (r_a < 90 || r_a > 270)
 			data->hit = 0;
-		if (ray_angle > 90 && ray_angle < 270)
+		if (r_a > 90 && r_a < 270)
 			data->hit = 1;
 	}
 	else
 	{
-		if (ray_angle > 0 && ray_angle < 180)
+		if (r_a > 0 && r_a < 180)
 			data->hit = 2;
-		if (ray_angle > 180 && ray_angle < 360)
+		if (r_a > 180 && r_a < 360)
 			data->hit = 3;
 	}
 }
 
 void ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross)
 {
-	double ray_angle;
+	double r_a;
 	t_cross d_i_l;
 	t_cross d_i_c;
-	ray_angle = ((data->dir + 30) - (data->win.sub_ray_angle * ray_nb));
-	if (ray_angle >= 360)
-		ray_angle -= 360;
-	if (ray_angle < 0)
-		ray_angle += 360;
-	ft_check_intersect_line(data, ray_angle, &d_i_l);
-	ft_check_intersect_column(data, ray_angle, &d_i_c);
-	ft_get_hit(data, ray_angle, &d_i_l, &d_i_c);	
+	r_a = ((data->dir + 30) - (data->win.sub_ray_angle * ray_nb));
+	if (r_a >= 360)
+		r_a -= 360;
+	if (r_a < 0)
+		r_a += 360;
+	ft_check_intersect_line(data, r_a, &d_i_l);
+	ft_check_intersect_column(data, r_a, &d_i_c);
+	ft_get_hit(data, r_a, &d_i_l, &d_i_c);	
 	if (d_i_l.dist > d_i_c.dist)
 	{
 		cross->cross = d_i_c.cross;
@@ -55,69 +55,86 @@ void ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross)
 		cross->dist = d_i_l.dist;
 	}
 }
-
-void ft_check_intersect_line(t_data *data, double ray_angle, t_cross *A)
+int	set_params_dil(t_data *data, double r_a, t_cross *dil)
 {
-	A->delta.y = GRID;
-	if (ray_angle >= 359 || ray_angle <= 1 || (ray_angle >= 179 && ray_angle <= 181))
+	dil->delta.y = GRID;
+	if (r_a >= 359 || r_a <= 1 || (r_a >= 179 && r_a <= 181))
 	{
-		A->dist = 10000;
-		return ;
+		dil->dist = 10000;
+		return (-1);
 	}
-	else if (ray_angle > 1 && ray_angle < 179)
+	else if (r_a > 1 && r_a < 179)
 	{
-		A->cross.y = (floor(data->Py/GRID) * GRID) - 0.001;
-		A->delta.y = -A->delta.y;
+		dil->cross.y = (floor(data->Py/GRID) * GRID) - 0.001;
+		dil->delta.y = -dil->delta.y;
 	}
-	else if (ray_angle > 181 && ray_angle < 359)
-		A->cross.y = (floor(data->Py/GRID) * GRID) + GRID;
 	else 
-		printf("error ray_angle: %f\n", ray_angle);
-	A->cross.x = data->Px + (((data->Py - A->cross.y) / sin(ray_angle * DEG_CONV)) * cos(ray_angle * DEG_CONV));
-	A->delta.x = -cos(ray_angle * DEG_CONV) * (A->delta.y / sin(ray_angle * DEG_CONV));
-	while (data->map[(int)(A->cross.y/GRID)][(int)(A->cross.x/GRID)] == 0)
-	{
-		if (A->cross.x < 0 || A->cross.y < 0 || A->cross.x > ((MAPX + 1) * GRID) || A->cross.y > ((MAPY + 1) * GRID))
-		{
-			A->dist = 10000;
-			return ;
-		}
-		A->cross.x = A->cross.x + A->delta.x;
-		A->cross.y = A->cross.y + A->delta.y;
-	}
-	A->dist = fabs(((data->Py - A->cross.y) / sin(ray_angle * DEG_CONV)) * cos((data->dir - ray_angle) * DEG_CONV));
+		dil->cross.y = (floor(data->Py/GRID) * GRID) + GRID;
+	return (0);
 }
 
-void ft_check_intersect_column(t_data *data, double ray_angle, t_cross *B)
+void	ft_check_intersect_line(t_data *data, double r_a, t_cross *dil)
 {
-	B->delta.x = GRID;
-	if ((ray_angle >= 89 && ray_angle <= 91) || (ray_angle <= 271 && ray_angle >= 269))
-	{
-		B->dist = 10000;
+	if (set_params_dil(data, r_a, dil) < 0)
 		return ;
-	}
-	else if ((ray_angle >= 0 && ray_angle < 89) || (ray_angle > 271 && ray_angle < 360))
+	dil->cross.x = data->Px + (((data->Py - dil->cross.y) /
+		sin(r_a * DEG)) * cos(r_a * DEG));
+	dil->delta.x = -cos(r_a * DEG) * (dil->delta.y / sin(r_a * DEG));
+	while (data->map[(int)(dil->cross.y/GRID)]
+			[(int)(dil->cross.x/GRID)] == 0)
 	{
-		B->cross.x = (floor(data->Px/GRID) * GRID) + GRID;
-	}
-	else if (ray_angle > 91  && ray_angle < 269 )
-	{
-		B->cross.x = (floor(data->Px/GRID) * GRID) - 0.001;
-		B->delta.x = -B->delta.x;
-	}
-	else
-		printf("Error wrong angle (%f) of camera", ray_angle);
-	B->cross.y = data->Py + (((data->Px - B->cross.x) / cos(ray_angle * DEG_CONV)) * sin(ray_angle * DEG_CONV));
-	B->delta.y = -sin(ray_angle * DEG_CONV) * (B->delta.x /cos(ray_angle * DEG_CONV));
-	while (data->map[(int)(B->cross.y/GRID)][(int)(B->cross.x/GRID)] == 0 )
-	{
-		if (B->cross.x < 0 || B->cross.y < 0 || B->cross.x > ((MAPX + 1) * GRID) || B->cross.y > ((MAPY + 1) * GRID))
+		if (dil->cross.x < 0 || dil->cross.y < 0
+|| dil->cross.x > ((MAPX + 1) * GRID) || dil->cross.y > ((MAPY + 1) * GRID))
 		{
-			B->dist = 10000;
+			dil->dist = 10000;
 			return ;
 		}
-		B->cross.x = B->cross.x + B->delta.x;
-		B->cross.y = B->cross.y + B->delta.y;
+		dil->cross.x = dil->cross.x + dil->delta.x;
+		dil->cross.y = dil->cross.y + dil->delta.y;
 	}
-	B->dist = fabs(((data->Px - B->cross.x) / cos(ray_angle * DEG_CONV)) * cos((data->dir - ray_angle) * DEG_CONV));
+	dil->dist = fabs(((data->Py - dil->cross.y) / sin(r_a * DEG))
+			* cos((data->dir - r_a) * DEG));
+}
+
+int	set_params_dic(t_data *data, double r_a, t_cross *dic)
+{
+	dic->delta.x = GRID;
+	if ((r_a >= 89 && r_a <= 91) || (r_a <= 271 && r_a >= 269))
+	{
+		dic->dist = 10000;
+		return (-1);
+	}
+	else if ((r_a >= 0 && r_a < 89) || (r_a > 271 && r_a < 360))
+	{
+		dic->cross.x = (floor(data->Px/GRID) * GRID) + GRID;
+	}
+	else
+	{
+		dic->cross.x = (floor(data->Px/GRID) * GRID) - 0.001;
+		dic->delta.x = -dic->delta.x;
+	}
+	return (0);
+
+}
+void ft_check_intersect_column(t_data *data, double r_a, t_cross *dic)
+{
+	if (set_params_dic(data, r_a, dic) < 0)
+		return ;
+	dic->cross.y = data->Py + (((data->Px - dic->cross.x) /
+			cos(r_a * DEG)) * sin(r_a * DEG));
+	dic->delta.y = -sin(r_a * DEG) * (dic->delta.x / cos(r_a * DEG));
+	while (data->map[(int)(dic->cross.y/GRID)]
+			[(int)(dic->cross.x/GRID)] == 0 )
+	{
+		if (dic->cross.x < 0 || dic->cross.y < 0
+|| dic->cross.x > ((MAPX + 1) * GRID) || dic->cross.y > ((MAPY + 1) * GRID))
+		{
+			dic->dist = 10000;
+			return ;
+		}
+		dic->cross.x = dic->cross.x + dic->delta.x;
+		dic->cross.y = dic->cross.y + dic->delta.y;
+	}
+	dic->dist = fabs(((data->Px - dic->cross.x) / cos(r_a * DEG))
+			* cos((data->dir - r_a) * DEG));
 }

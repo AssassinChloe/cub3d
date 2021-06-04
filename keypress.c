@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:45:15 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 15:19:21 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/04 17:19:00 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	handle_keypress(int keysym, t_data *data)
 		ft_turn_right(data);
 	if (keysym == XK_Left)
 		ft_turn_left(data);
-	delta_x = (cos(data->dir * DEG_CONV) * 7);
-	delta_y = (-sin(data->dir * DEG_CONV) * 7);
+	delta_x = (cos(data->dir * DEG) * 7);
+	delta_y = (-sin(data->dir * DEG) * 7);
 	if (keysym == XK_z || keysym == XK_w)
 		ft_go_front(data, delta_x, delta_y);	
 	if (keysym == XK_s)

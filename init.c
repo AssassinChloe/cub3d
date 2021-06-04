@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 13:29:58 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/04 17:14:32 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,8 @@ int	ft_init_data(t_data *data, char *arg)
 
 void	ft_init_win(t_data *data)
 {
-	data->win.fov_angle = 60;
-	data->win.dpp = ((data->win.width/2) / (tan((data->win.fov_angle/2)*DEG_CONV)));
-	data->win.sub_ray_angle = (data->win.fov_angle / data->win.width);
+	data->win.dpp = ((data->win.width/2) / (tan((FOV/2)*DEG)));
+	data->win.sub_ray_angle = (FOV / data->win.width);
 }
 
 void	ft_init_map(t_data *data)
