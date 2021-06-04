@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 13:22:51 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/04 15:36:31 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@
 # define PI 3.14159265
 # define GRID 64 
 # define DEG_CONV PI/180
-# define SKY_PIXEL 0x00BBE8FF
-# define FLOOR_PIXEL 0x001A6927
 # define MAPX 13
 # define MAPY 11
 
@@ -142,4 +140,10 @@ int	ft_get_res(t_data *data, char **info);
 int	ft_tab_len(char **tab);
 int	get_rgb(char *str);
 void    ft_destroy(t_data *data);
+void	ft_turn_right(t_data *data);
+void	ft_turn_left(t_data *data);
+void	ft_go_front(t_data *data, double delta_x, double delta_y);
+void	ft_go_back(t_data *data, double delta_x, double delta_y);
+void	ft_go_left(t_data *data, double delta_x, double delta_y);
+void	ft_go_right(t_data *data, double delta_x, double delta_y);
 #endif
