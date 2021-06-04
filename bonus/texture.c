@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 19:15:18 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 14:30:59 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/03 17:08:24 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_init_texture(t_data *data)
 	int i;
 	
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
        		data->tex[i].img.mlx_img = mlx_xpm_file_to_image(data->mlx_ptr, data->parse.tex_path[i], &data->tex[i].width, &data->tex[i].height);
 		data->tex[i].img.addr = mlx_get_data_addr(data->tex[i].img.mlx_img, &data->tex[i].img.bpp, &data->tex[i].img.line_len, &data->tex[i].img.endian);

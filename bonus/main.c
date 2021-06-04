@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 14:28:24 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/03 17:01:08 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int argc, char **argv)
 	mlx_loop(data.mlx_ptr);
 	ft_destroy(&data);
 	free(data.mlx_ptr);
-	return (0);
 }
 
 void	ft_destroy(t_data *data)
@@ -43,7 +42,7 @@ void	ft_destroy(t_data *data)
 	int i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->tex[i].img.mlx_img);
 		free(data->parse.tex_path[i]);

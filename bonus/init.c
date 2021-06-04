@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 13:29:58 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/03 17:10:17 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_init_parse(t_data *data)
 
 	i = 0;
 	data->parse.res = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		data->parse.tex[i] = 0;
 		data->parse.tex_path[i] = NULL;
@@ -67,6 +67,7 @@ int	ft_init_data(t_data *data, char *arg)
 	ft_init_win(data);
 	ft_init_map(data);
 	return (0);
+
 }
 
 void	ft_init_win(t_data *data)
@@ -74,6 +75,7 @@ void	ft_init_win(t_data *data)
 	data->win.fov_angle = 60;
 	data->win.dpp = ((data->win.width/2) / (tan((data->win.fov_angle/2)*DEG_CONV)));
 	data->win.sub_ray_angle = (data->win.fov_angle / data->win.width);
+	
 }
 
 void	ft_init_map(t_data *data)
@@ -81,25 +83,37 @@ void	ft_init_map(t_data *data)
 	int i;
 	int j;
 	int initmap[MAPY][MAPX] = {{1,1,1,1,1,1,1,1,1,1,1,1,1},
-                                   {1,0,1,0,0,0,0,0,0,0,1,0,1},
+                                   {1,2,1,2,0,0,0,0,0,2,1,2,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
+                                   {1,0,0,0,0,0,0,2,0,0,0,0,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
                                    {1,0,0,0,0,0,0,0,0,0,0,0,1},
-                                   {1,0,0,0,0,0,0,0,0,0,0,0,1},
-                                   {1,0,1,0,0,0,0,0,0,0,1,0,1},
+                                   {1,2,1,2,0,0,0,0,0,2,1,2,1},
                                    {1,1,1,1,1,1,1,1,1,1,1,1,1}};
+	int k;
 	j = 0;
+	k = 0;
 	while (j < MAPX)
 	{
 		i = 0;
 		while (i < MAPY)
 		{
 			data->map[i][j] = initmap[i][j];
+			if (data->map[i][j] == 2)
+			{
+				data->spritel[k].coord.x = (j * 64) + 32;
+				data->spritel[k].coord.y = (i * 64) + 32;
+				data->spritel[k].is_visible = 0;
+				data->spritel[k].dist = -1;
+				data->spritel[k].size = -1;
+				k++;
+			}
 			i++;
 		}
 		j++; 
 	}
+	data->nbs = k;
 }

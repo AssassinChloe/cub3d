@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 13:35:08 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 14:22:49 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/03 17:04:48 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	ft_check_for_tex(t_data *data, char **info)
 	else if (ft_strncmp(info[0], "NO", 3) == 0 && data->parse.tex[2] == 0)
 		ret = ft_set_tex(data, info);
 	else if (ft_strncmp(info[0], "SO", 3) == 0 && data->parse.tex[3] == 0)
+		ret = ft_set_tex(data, info);
+	else if (ft_strncmp(info[0], "S", 2) == 0 && data->parse.tex[4] == 0)
 		ret = ft_set_tex(data, info);
 	else if (ft_strncmp(info[0], "F", 2) == 0 && data->parse.floor == 0)
 		ret = ft_set_color(data, info);
@@ -101,6 +103,9 @@ int	ft_set_tex(t_data *data, char **info)
 		data->parse.tex[3] = 1;
 	}
 	else
-		return (-1);
+	{
+		data->parse.tex_path[4] = ft_strdup(info[1]);	
+		data->parse.tex[4] = 1;
+	}
 	return (0);
 }

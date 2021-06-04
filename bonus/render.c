@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:03:42 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 14:23:09 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/01 18:37:42 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	ft_render(t_data *data)
 {
 	int i;
 	t_cross cross;
+	double deltax;
+	double deltay;
 
 	i = 0;
 	if (data->win_ptr == NULL)
@@ -51,6 +53,38 @@ int	ft_render(t_data *data)
 		ft_ray_lenght(i, data, &cross);
 		data->wall_size = floor(GRID * data->win.dpp / cross.dist);
 		ft_texture(data, ft_get_tex(data), cross, i);
+		i++;
+	}
+	i = 0;
+	while(i < data->nbs)
+	{
+		if (data->spritel[i].is_visible == 1)
+		{
+			deltax = data->Px - data->spritel[i].coord.x;
+			deltay = data->Py - data->spritel[i].coord.y;
+			data->spritel[i].angle = (atan(fabs(deltay / deltax)) * (180 / PI));
+			if (deltax < 0 && deltay >= 0)
+				data->spritel[i].angle = 0 + data->spritel[i].angle;
+			else if (deltax >= 0 && deltay >= 0)
+				data->spritel[i].angle = 180 - data->spritel[i].angle;
+			else if (deltax >= 0 && deltay < 0)
+				data->spritel[i].angle = 180 + data->spritel[i].angle;
+			else
+				data->spritel[i].angle = 360 - data->spritel[i].angle;
+			data->spritel[i].dist = hypot(deltax, deltay);
+			data->spritel[i].size = floor(GRID * data->win.dpp / data->spritel[i].dist);
+		}
+		i++;
+	}
+	ft_sort_sprite(data);
+	i = 0;
+	while (i < data->nbs)
+	{
+		if (data->spritel[i].is_visible == 1)
+		{
+			ft_sprite(data, i);
+			data->spritel[i].is_visible = 0;
+		}
 		i++;
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);

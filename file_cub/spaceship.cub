@@ -4,7 +4,6 @@ SO ./img/spaceship/wall_2.xpm
 EA ./img/spaceship/wall_3.xpm
 WE ./img/spaceship/wall_4.xpm
 
-S ./img/spaceship/sprite.xpm
 F 102,102,153
 C 128,128,128
 

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 13:22:51 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/03 17:01:00 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,15 @@
 
 typedef struct	s_parse
 {
-	int	res;
-	int	tex[4];
-	char	*tex_path[4];
-	int	ceil;
-	int	ceil_color;
-	int	floor;
-	int	floor_color;
-	int	map;
+		int	res;
+		int	tex[5];
+		char	*tex_path[5];
+		int	ceil;
+		int	ceil_color;
+		int	floor;
+		int	floor_color;
+		int	map;
 }		t_parse;
-
 typedef struct	s_window
 {
 	double	width;
@@ -64,30 +63,39 @@ typedef struct	s_point
 	double 	y;
 }		t_point;
 
-typedef struct	s_cross
+typedef struct	s_sprite
 {
-	t_point	cross;
-	t_point	delta;
+	t_point	coord;
+	int	is_visible;
 	double	dist;
-}		t_cross;
+	double	size;
+	double	angle;
+}		t_sprite;
 
-typedef struct	s_img
+typedef struct		s_cross
+{
+	t_point		cross;
+	t_point		delta;
+	double		dist;
+}			t_cross;
+
+typedef struct s_img
 {
 	void	*mlx_img;
 	char	*addr;
 	int	bpp;
 	int	line_len;
 	int	endian;
-} 		t_img;
+} t_img;
 
-typedef struct	s_rect
+typedef struct s_rect
 {
 	int	x;
 	int	y;
 	int	width;
 	int	height;
 	int	color;
-}		t_rect;
+} t_rect;
 
 typedef struct	s_tex
 {
@@ -103,13 +111,16 @@ typedef struct s_data
 	void	*win_ptr;
 	t_img	img;
 	t_window win;
+	int	cur_img;
 	double	Px;
 	double	Py;
 	int	dir;
 	int	hit;
 	int	map[MAPY][MAPX];
+	t_sprite spritel[(MAPY - 2) * (MAPX - 2)];
+	int	nbs;
 	double	wall_size;
-	t_tex	tex[4];
+	t_tex	tex[5];
 	t_parse	parse;
 } t_data;
 
@@ -128,6 +139,8 @@ void	ft_pix_to_img(t_img *img, int x, int y, int color);
 int	ft_texture(t_data *data, t_tex *tex, t_cross wall, int i);
 int	ft_quit(t_data *data);
 void	ft_init_texture(t_data *data);
+int	ft_sprite(t_data *data, int i);
+void	ft_sort_sprite(t_data *data);
 int	ft_check_for_wall(t_data *data, int start_w, int l, int start_h, int i);
 int	ft_render(t_data *data);
 int	ft_render_rect(t_img *img, t_rect rect);

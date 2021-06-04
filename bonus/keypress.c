@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:45:15 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 14:19:30 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/04/29 18:13:01 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ int	handle_keypress(int keysym, t_data *data)
 	double delta_y;
 	
 	if (keysym == XK_Escape)
+	{
 		ft_quit(data);
+	}
 	if (keysym == XK_Right)
 	{
 		data->dir -= 5;
@@ -85,12 +87,12 @@ int	handle_keypress(int keysym, t_data *data)
 	}
 	delta_x = (cos(data->dir * DEG_CONV) * 7);
 	delta_y = (-sin(data->dir * DEG_CONV) * 7);
-	if ((keysym == XK_z || keysym == XK_w)  && data->map[(int)(data->Py + floor(delta_y))/GRID][(int)(data->Px + floor(delta_x))/GRID] == 0)
+	if ((keysym == XK_z || keysym == XK_w)  && data->map[(int)(data->Py + floor(delta_y * 3))/GRID][(int)(data->Px + floor(delta_x * 3))/GRID] == 0)
 	{ 
 		data->Px += floor(delta_x);
 		data->Py += floor(delta_y);
 	}
-	if (keysym == XK_s && data->map[(int)(data->Py - floor(delta_y))/GRID][(int)(data->Px - floor(delta_x))/GRID] == 0)
+	if (keysym == XK_s && data->map[(int)(data->Py - floor(delta_y * 3))/GRID][(int)(data->Px - floor(delta_x * 3))/GRID] == 0)
 	{
 		data->Px -= floor(delta_x);
 		data->Py -= floor(delta_y);
