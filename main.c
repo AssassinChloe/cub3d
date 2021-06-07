@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 18:42:03 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/07 14:55:22 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,21 @@
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	printf("test\n");
-	if (ft_check_arg(argc, argv) < 0)
+	int fd;
+	fd = ft_check_arg(argc, argv);
+	if (fd < 0)
 		return (-1);
-	printf("test\n");
-	if (ft_init_data(&data, argv[1]) < 0)
+	if (ft_init_data(&data, fd) < 0)
 		return (-1);
-	printf("test\n");
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.win.width, data.win.height, "my window");
 	if (data.win_ptr == NULL)
 	{
 		free(data.win_ptr);
 		return (MLX_ERROR);
 	}
-	printf("test\n");
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, data.win.width, data.win.height);
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp,
 			&data.img.line_len, &data.img.endian);
-	printf("test\n");
 	ft_init_texture(&data);
 	mlx_loop_hook(data.mlx_ptr, &ft_render, &data);
 	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);

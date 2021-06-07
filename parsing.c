@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 18:45:00 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/07 14:56:55 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ int	ft_check_line(t_data *data, char *line)
 	return (ret);
 }
 
-int	ft_parse_cub(char *file, t_data *data)
+int	ft_parse_cub(t_data *data, int fd)
 {
-	int fd;
 	int gnl;
 	int ret;
 	char *line;
@@ -63,16 +62,14 @@ int	ft_parse_cub(char *file, t_data *data)
 	gnl = 1;
 	is_map = 0;
 	map_y = 0;
-	map = (char **)malloc(sizeof(char *) * 50);
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (-1);
+	map = (char **)malloc(sizeof(char *) * 20);
 	ft_init_parse(data);
-	while (gnl > 0 && is_map == 0)
+	while (gnl > 0)
 	{
+		is_map = 2;
 		gnl = get_next_line(fd, &line);
-		is_map = ft_check_if_map(data, line);
-		if (is_map == 0)
+		is_map = ft_check_if_map(data, line, map_y);
+		if (is_map == 0 && data->parse.map == 0)
 		{
 			ret = ft_check_line(data, line);
 			if (ret == -1)
@@ -85,20 +82,31 @@ int	ft_parse_cub(char *file, t_data *data)
 				return (-1);
 			}
 		}
+		else if (is_map == 1)
+		{
+			data->parse.map = 1;
+			map[map_y] = ft_strdup(line);
+			map_y++;
+		}
+		else
+		{
+			printf("something went wrong");
+			free(line);
+			line = NULL;
+			if (close(fd) < 0)
+				printf("close error\n");
+			return (-1);
+		}
 		free(line);
 		line = NULL;
 	}
-	while (gnl > 0 && is_map == 1)
+	map[map_y] = NULL;
+	map_y = 0;
+	while (map[map_y] != NULL)
 	{
-		map[map_y] = ft_strdup(line);
-		printf("map %2d = %s\n", map_y, map[map_y]);
-		gnl = get_next_line(fd, &line);
-		is_map = ft_check_if_map(data, line);
+		printf("%s\n", map[map_y]);
 		map_y++;
-
 	}
-	free(line);
-	line = NULL;
 	if (gnl < 0)
 		printf("erreur gnl \n");
 	if (close(fd) < 0)
@@ -106,27 +114,29 @@ int	ft_parse_cub(char *file, t_data *data)
 	return (0);
 }
 
-int 	ft_check_if_map(t_data *data, char *line)
+int 	ft_check_if_map(t_data *data, char *line, int y)
 {
 	int	i;
 
 	i = 0;
-	data->dir = 90;
+	if (line[i] == '\0')
+		return (0);
 	while (line[i])
 	{
-		if (line[i] == '1' || line[i] == ' ' || line[i] == 0)
+		if (line[i] == '1' || line[i] == ' ' || line[i] == '0')
 			i++;
-	/*	else if (line[i] == 'W' || line[i] == 'S' || line[i] == 'E' || line[i] == 'N')
+		else if ((line[i] == 'W' || line[i] == 'S' || line[i] == 'E' ||
+			  line[i] == 'N') && data->parse.map == 1)
 		{
 			if (data->dir < 0)
-			{
-				printf("set player dir here\n");
-				data->dir = 90;
-			}
+				ft_init_player(data, line[i], i, y);
 			else
+			{
+				printf("multiple players\n");
 				return (-1);
+			}
 			i++;
-		}*/
+		}
 		else
 			return (0);
 	}

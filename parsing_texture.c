@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 13:35:08 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 17:45:41 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/07 12:00:30 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_set_tex(t_data *data, char **info)
 {
 	if (ft_strncmp(info[0], "EA", 3) == 0)
 	{
-		data->parse.tex_path[0] = ft_strdup(info[1]);	
+		data->parse.tex_path[0] = ft_strdup(info[1]);
 		data->parse.tex[0] = 1;
 	}
 	else if (ft_strncmp(info[0], "WE", 3) == 0)

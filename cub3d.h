@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/04 18:30:03 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/07 14:56:34 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@
 # include "../libft/libft.h"
 
 # define MLX_ERROR 1
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
 # define FOV 60
 # define PI 3.14159265
 # define GRID 64 
 # define DEG PI/180
-# define MAPX 13
+# define MAPX 18
 # define MAPY 11
 
 typedef struct	s_parse
 {
-	int	res;
 	int	tex[4];
 	char	*tex_path[4];
 	int	ceil;
@@ -52,8 +53,6 @@ typedef struct	s_window
 	double 	height;
 	double 	dpp;
 	double 	sub_ray_angle;
-	int	screenw;
-	int 	screenh;
 }		t_window;
 
 typedef struct	s_point
@@ -112,7 +111,7 @@ typedef struct s_data
 } t_data;
 
 int	ft_check_arg(int argc, char **argv);
-int	ft_parse_cub(char *file, t_data *data);
+int	ft_parse_cub(t_data *data, int fd);
 void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross);
 void	ft_check_intersect_line(t_data *data, double r_a, t_cross *dil);
 int	set_params_dil(t_data *data, double r_a, t_cross *dil);
@@ -120,8 +119,9 @@ void	ft_check_intersect_column(t_data *data, double r_a, t_cross *dic);
 int	set_params_dic(t_data *data, double r_a, t_cross *dic);
 int	ft_get_wall(t_data *data);
 int	handle_keypress(int keysym, t_data *data);
-int	ft_init_data(t_data *data, char *arg);
+int	ft_init_data(t_data *data, int fd);
 void	ft_init_map(t_data *data);
+void	ft_init_player(t_data *data, char dir, int x, int y);
 int	img_pix_get(t_img *img, int x, int y);
 t_tex	*ft_get_tex(t_data *data);
 void	ft_pix_to_img(t_img *img, int x, int y, int color);
@@ -148,5 +148,5 @@ void	ft_go_front(t_data *data, double delta_x, double delta_y);
 void	ft_go_back(t_data *data, double delta_x, double delta_y);
 void	ft_go_left(t_data *data, double delta_x, double delta_y);
 void	ft_go_right(t_data *data, double delta_x, double delta_y);
-int	ft_check_if_map(t_data *data, char *line);
+int	ft_check_if_map(t_data *data, char *line, int y);
 #endif
