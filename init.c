@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/07 14:52:02 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:40:21 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	ft_init_data(t_data *data, int fd)
 	data->Py = 0;
 	data->dir = -1;
 	data->hit = 0;
+	data->parsing = 0;
+	data->map.size_y = 0;
 	data->mlx_ptr = mlx_init();
 	if (data->mlx_ptr == NULL)
 		return (-1);
@@ -79,7 +81,7 @@ void	ft_init_win(t_data *data)
 	data->win.sub_ray_angle = (FOV / data->win.width);
 }
 
-void	ft_init_player(t_data *data, char dir, int x, int y)
+void	ft_init_player(t_data *data, char dir, int x)
 {
 	if (dir == 'E')
 		data->dir = 0;
@@ -89,8 +91,10 @@ void	ft_init_player(t_data *data, char dir, int x, int y)
 		data->dir = 180;
 	else
 		data->dir = 270;
-	data->Px = x * GRID + (GRID/2);
-	data->Py = y * GRID + (GRID/2);
+	data->map.player.x = x;
+	data->map.player.y = data->map.size_y;
+	data->Px = (data->map.player.x / GRID) + (GRID/2);
+	data->Py = (data->map.player.y / GRID) + (GRID/2);
 }
 
 void	ft_init_map(t_data *data)

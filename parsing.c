@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/07 14:56:55 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:46:45 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,68 +53,66 @@ int	ft_check_line(t_data *data, char *line)
 
 int	ft_parse_cub(t_data *data, int fd)
 {
-	int gnl;
-	int ret;
-	char *line;
+	int	gnl;
+	int	ret;
+	char	*line;
 	int	is_map;
-	int map_y;
-	char **map;
+	char	**map;
+
 	gnl = 1;
 	is_map = 0;
-	map_y = 0;
 	map = (char **)malloc(sizeof(char *) * 20);
+	if(!map)
+		return(-1);
 	ft_init_parse(data);
 	while (gnl > 0)
 	{
 		is_map = 2;
 		gnl = get_next_line(fd, &line);
-		is_map = ft_check_if_map(data, line, map_y);
+		is_map = ft_check_if_map(data, line);
 		if (is_map == 0 && data->parse.map == 0)
 		{
 			ret = ft_check_line(data, line);
 			if (ret == -1)
 			{
-				printf("invalid data in .cub file\n");
-				free(line);
-				line = NULL;
-				if (close(fd) < 0)
-					printf("close error\n");
-				return (-1);
+				data->parsing = -1;
 			}
 		}
 		else if (is_map == 1)
 		{
 			data->parse.map = 1;
-			map[map_y] = ft_strdup(line);
-			map_y++;
+			map[data->map.size_y] = ft_strdup(line);
+			data->map.size_y++;
 		}
 		else
 		{
-			printf("something went wrong");
-			free(line);
-			line = NULL;
-			if (close(fd) < 0)
-				printf("close error\n");
-			return (-1);
+			data->parsing = -1;
 		}
 		free(line);
 		line = NULL;
 	}
-	map[map_y] = NULL;
-	map_y = 0;
-	while (map[map_y] != NULL)
+	map[data->map.size_y] = NULL;
+	free(line);
+	line = NULL;
+	if (gnl < 0 || data->parsing < 0 || close(fd) < 0)
 	{
-		printf("%s\n", map[map_y]);
-		map_y++;
+		printf("something went wrong");
+		if (close(fd) < 0)
+		{
+			printf("close error");
+			return (-1);
+		}
+		ft_free_tab(map, data->map.size_y);
+		return (-1);
 	}
-	if (gnl < 0)
-		printf("erreur gnl \n");
+	ft_check_map_validity(data, map);
+	
 	if (close(fd) < 0)
 		return (-1);
 	return (0);
 }
 
-int 	ft_check_if_map(t_data *data, char *line, int y)
+int 	ft_check_if_map(t_data *data, char *line)
 {
 	int	i;
 
@@ -129,7 +127,7 @@ int 	ft_check_if_map(t_data *data, char *line, int y)
 			  line[i] == 'N') && data->parse.map == 1)
 		{
 			if (data->dir < 0)
-				ft_init_player(data, line[i], i, y);
+				ft_init_player(data, line[i], i);
 			else
 			{
 				printf("multiple players\n");

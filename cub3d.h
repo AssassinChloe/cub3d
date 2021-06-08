@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/07 14:56:34 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:22:54 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@
 # define PI 3.14159265
 # define GRID 64 
 # define DEG PI/180
-# define MAPX 18
-# define MAPY 11
 
 typedef struct	s_parse
 {
@@ -94,7 +92,14 @@ typedef struct	s_tex
 	char	*path;
 }		t_tex;
 
-typedef struct s_data
+typedef	struct	s_map
+{
+	int	size_x;
+	int	size_y;
+	t_point	player;
+}		t_map;
+
+typedef struct	s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -104,10 +109,11 @@ typedef struct s_data
 	double	Py;
 	int	dir;
 	int	hit;
-	int	map[MAPY][MAPX];
+	int	parsing;
 	double	wall_size;
 	t_tex	tex[4];
 	t_parse	parse;
+	t_map	map;
 } t_data;
 
 int	ft_check_arg(int argc, char **argv);
