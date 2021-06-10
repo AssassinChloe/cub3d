@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/08 14:22:54 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/10 12:23:45 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <fcntl.h>
-# include "../libft/get_next_line.h"
-# include "../libft/libft.h"
+# include "libft/get_next_line.h"
+# include "libft/libft.h"
 
 # define MLX_ERROR 1
 # define WIN_WIDTH 800

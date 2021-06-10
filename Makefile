@@ -6,7 +6,7 @@
 #    By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/21 15:07:28 by cassassi          #+#    #+#              #
-#    Updated: 2021/06/04 17:43:23 by cassassi         ###   ########.fr        #
+#    Updated: 2021/06/10 12:23:11 by cassassi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,22 +21,22 @@ FLAGS 	= -c -Wall -Wextra -Werror
 
 INC	= -I cub3d.h 
 
-LIB	= -lm -lX11 -lXext -lmlx ../libft/libft.a
+LIB	= -lm -lX11 -lXext -lmlx libft/libft.a
 
 OBJS = $(SRCS:.c=.o)
 
 $(NAME):	$(OBJS)
-			$(MAKE) -C ../libft
+			$(MAKE) -C libft
 			$(CC) $(FLAGS) $(INCLUDES) $(SRCS)
 			$(CC) -o $(NAME) $(OBJS) $(LIB)
 all : 		$(NAME)
 
 clean :
-			$(MAKE) clean -C ../libft
+			$(MAKE) clean -C libft
 			rm -rf $(OBJS)
 
 fclean : 	clean
-			$(MAKE) fclean -C ../libft
+			$(MAKE) fclean -C libft
 			rm -rf $(NAME)
 
 re : 		fclean all
