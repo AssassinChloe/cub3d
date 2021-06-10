@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/10 12:23:45 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/10 18:56:21 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define PI 3.14159265
 # define GRID 64 
 # define DEG PI/180
+# define MAPY 11
+# define MAPX 18
 
 typedef struct	s_parse
 {
@@ -68,7 +70,7 @@ typedef struct	s_cross
 
 typedef struct	s_img
 {
-	void	*mlx_img;
+	void	*img;
 	char	*addr;
 	int	bpp;
 	int	line_len;
@@ -88,7 +90,7 @@ typedef struct	s_tex
 {
 	int	width;
 	int	height;
-	t_img	img;
+	t_img	xpm;
 	char	*path;
 }		t_tex;
 
@@ -103,7 +105,7 @@ typedef struct	s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	t_img	img;
+	t_img	mlx_img;
 	t_window win;
 	double	Px;
 	double	Py;
@@ -113,7 +115,8 @@ typedef struct	s_data
 	double	wall_size;
 	t_tex	tex[4];
 	t_parse	parse;
-	t_map	map;
+	t_map	mapi;
+	int	map[MAPY][MAPX];
 } t_data;
 
 int	ft_check_arg(int argc, char **argv);
@@ -127,7 +130,7 @@ int	ft_get_wall(t_data *data);
 int	handle_keypress(int keysym, t_data *data);
 int	ft_init_data(t_data *data, int fd);
 void	ft_init_map(t_data *data);
-void	ft_init_player(t_data *data, char dir, int x, int y);
+void	ft_init_player(t_data *data, char dir, int x);
 int	img_pix_get(t_img *img, int x, int y);
 t_tex	*ft_get_tex(t_data *data);
 void	ft_pix_to_img(t_img *img, int x, int y, int color);
@@ -154,5 +157,5 @@ void	ft_go_front(t_data *data, double delta_x, double delta_y);
 void	ft_go_back(t_data *data, double delta_x, double delta_y);
 void	ft_go_left(t_data *data, double delta_x, double delta_y);
 void	ft_go_right(t_data *data, double delta_x, double delta_y);
-int	ft_check_if_map(t_data *data, char *line, int y);
+int	ft_check_if_map(t_data *data, char *line);
 #endif
