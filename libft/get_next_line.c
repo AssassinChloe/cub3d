@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 20:54:27 by cassassi          #+#    #+#             */
-/*   Updated: 2021/02/11 23:41:48 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/10 17:42:49 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	gnl_check_nl(char *file)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (file[i])
@@ -37,12 +37,14 @@ int	gnl_read_file(int fd, char **file)
 		(*file) = malloc(sizeof(char) * BUFFER_SIZE + 1);
 		if (!(*file))
 			return (-2);
-		if ((ret = read(fd, (*file), BUFFER_SIZE)) == -1)
+		ret = read(fd, (*file), BUFFER_SIZE);
+		if (ret == -1)
 			return (ret);
 		(*file)[ret] = '\0';
 	}
-	while (gnl_check_nl(*file) == 0 && (ret = read(fd, save, BUFFER_SIZE)) != 0)
+	while (gnl_check_nl(*file) == 0 && ret != 0)
 	{
+		ret = read(fd, save, BUFFER_SIZE);
 		if (ret == -1)
 			return (ret);
 		save[ret] = '\0';
@@ -54,7 +56,7 @@ int	gnl_read_file(int fd, char **file)
 
 int	gnl_write_line(char **file, char **line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((*file)[i] != '\n' && (*file)[i])
@@ -76,7 +78,7 @@ int	gnl_write_line(char **file, char **line)
 
 int	get_next_line(int fd, char **line)
 {
-	static char *file = NULL;
+	static char	*file = NULL;
 	int			ret;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || !(line))

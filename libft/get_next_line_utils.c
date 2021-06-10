@@ -6,15 +6,15 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 20:59:08 by cassassi          #+#    #+#             */
-/*   Updated: 2021/02/11 23:36:16 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/10 17:44:35 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		gnl_strlen(char *str)
+int	gnl_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -22,7 +22,7 @@ int		gnl_strlen(char *str)
 	return (i);
 }
 
-int		gnl_strtrim(char **file, char **line)
+int	gnl_strtrim(char **file, char **line)
 {
 	int		i;
 	int		j;
@@ -49,7 +49,7 @@ int		gnl_strtrim(char **file, char **line)
 	return (0);
 }
 
-int		gnl_strjoin(char **file, char *save)
+int	gnl_strjoin(char **file, char *save)
 {
 	int		i;
 	int		j;

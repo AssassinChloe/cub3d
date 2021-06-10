@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 16:22:00 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/10 13:02:51 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/10 15:01:34 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,10 @@ static char	**ft_free_tab(char **tab, int j)
 	{
 		j--;
 		free(tab[j]);
-		free(tab);
-		return (NULL);
 	}
+	free(tab);
+	tab = NULL;
+	return (tab);
 }
 
 char	**ft_split(const char *s, char c)

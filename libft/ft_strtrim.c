@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 17:30:45 by cassassi          #+#    #+#             */
-/*   Updated: 2020/11/30 12:52:05 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/10 17:35:08 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_ischarset(char c, char *set)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (set[j])
@@ -26,7 +26,7 @@ static int	ft_ischarset(char c, char *set)
 	return (0);
 }
 
-char		*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char			*trim;
 	unsigned int	i;
