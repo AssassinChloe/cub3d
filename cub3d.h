@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/10 18:56:21 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/11 18:16:14 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,23 @@ typedef	struct	s_map
 	t_point	player;
 }		t_map;
 
+typedef struct	s_key
+{
+	int	forward;
+	int	backward;
+	int	left;
+	int	right;
+	int	rot_left;
+	int	rot_right;
+}	t_key;
+
 typedef struct	s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	mlx_img;
 	t_window win;
-	double	Px;
-	double	Py;
+	t_point pos;
 	int	dir;
 	int	hit;
 	int	parsing;
@@ -117,17 +126,20 @@ typedef struct	s_data
 	t_parse	parse;
 	t_map	mapi;
 	int	map[MAPY][MAPX];
+	t_key	key;
 } t_data;
 
 int	ft_check_arg(int argc, char **argv);
 int	ft_parse_cub(t_data *data, int fd);
 void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross);
 void	ft_check_intersect_line(t_data *data, double r_a, t_cross *dil);
+void	init_t_cross(t_cross *ray);
 int	set_params_dil(t_data *data, double r_a, t_cross *dil);
 void	ft_check_intersect_column(t_data *data, double r_a, t_cross *dic);
 int	set_params_dic(t_data *data, double r_a, t_cross *dic);
 int	ft_get_wall(t_data *data);
-int	handle_keypress(int keysym, t_data *data);
+int	keypress(int keycode, t_data *data);
+int	keyrelease(int keycode, t_data *data);
 int	ft_init_data(t_data *data, int fd);
 void	ft_init_map(t_data *data);
 void	ft_init_player(t_data *data, char dir, int x);
@@ -151,11 +163,11 @@ int	ft_get_res(t_data *data, char **info);
 int	ft_tab_len(char **tab);
 int	get_rgb(char *str);
 void    ft_destroy(t_data *data);
-void	ft_turn_right(t_data *data);
-void	ft_turn_left(t_data *data);
-void	ft_go_front(t_data *data, double delta_x, double delta_y);
-void	ft_go_back(t_data *data, double delta_x, double delta_y);
-void	ft_go_left(t_data *data, double delta_x, double delta_y);
-void	ft_go_right(t_data *data, double delta_x, double delta_y);
+void	ft_movement(t_data *data);
+void	ft_rotate(t_data *data);
+void	ft_move(t_data *data);
 int	ft_check_if_map(t_data *data, char *line);
+int	ft_check_map_validity(t_data *data, char **map);
+void 	ft_map_size(t_data *data, char **map);
+int	flood(t_data *data, int x, int y, char **map);
 #endif

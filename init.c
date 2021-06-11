@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/10 14:59:59 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/11 18:46:52 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	ft_check_arg(int argc, char**argv)
 {
-	int i;
-	int j;
-	int fd;
+	int	i;
+	int	j;
+	int	fd;
+
 	if (argc != 2)
 	{
 		printf("mauvais nombre d'argument\n");
@@ -25,7 +26,7 @@ int	ft_check_arg(int argc, char**argv)
 	j = 0;
 	while (argv[1][j])
 		j++;
-	i = ft_strncmp(".cub", (argv[1] + (j - 4)), 5); 
+	i = ft_strncmp(".cub", (argv[1] + (j - 4)), 5);
 	if (i != 0)
 	{
 		printf("mauvais argument\n");
@@ -39,7 +40,7 @@ int	ft_check_arg(int argc, char**argv)
 
 void	ft_init_parse(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 4)
@@ -57,11 +58,12 @@ void	ft_init_parse(t_data *data)
 
 int	ft_init_data(t_data *data, int fd)
 {
-	data->Px = 0;
-	data->Py = 0;
+	data->pos.x = 0;
+	data->pos.y = 0;
 	data->dir = -1;
 	data->hit = 0;
 	data->parsing = 0;
+	data->mapi.size_x = 0;
 	data->mapi.size_y = 0;
 	data->mlx_ptr = mlx_init();
 	if (data->mlx_ptr == NULL)
@@ -77,7 +79,7 @@ void	ft_init_win(t_data *data)
 {	
 	data->win.width = WIN_WIDTH;
 	data->win.height = WIN_HEIGHT;
-	data->win.dpp = ((data->win.width/2) / (tan((FOV/2)*DEG)));
+	data->win.dpp = ((data->win.width / 2) / (tan((FOV / 2) * DEG)));
 	data->win.sub_ray_angle = (FOV / data->win.width);
 }
 
@@ -93,8 +95,8 @@ void	ft_init_player(t_data *data, char dir, int x)
 		data->dir = 270;
 	data->mapi.player.x = x;
 	data->mapi.player.y = data->mapi.size_y;
-	data->Px = (data->mapi.player.x / GRID) + (GRID/2);
-	data->Py = (data->mapi.player.y / GRID) + (GRID/2);
+	data->pos.x = (data->mapi.player.x * GRID) + (GRID / 2);
+	data->pos.y = (data->mapi.player.y * GRID) + (GRID / 2);
 }
 
 void	ft_init_map(t_data *data)

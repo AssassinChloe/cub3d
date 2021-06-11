@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/10 19:00:11 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/11 17:43:18 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int argc, char **argv)
 			data.win.height, "my window");
 	if (data.win_ptr == NULL)
 	{
-		free(data.win_ptr);
 		return (MLX_ERROR);
 	}
 	data.mlx_img.img = mlx_new_image(data.mlx_ptr, data.win.width,
@@ -43,8 +42,9 @@ int	main(int argc, char **argv)
 			&data.mlx_img.bpp, &data.mlx_img.line_len,
 			&data.mlx_img.endian);
 	ft_init_texture(&data);
+	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &keypress, &data);
 	mlx_loop_hook(data.mlx_ptr, &ft_render, &data);
-	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
+	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &keyrelease, &data);
 	mlx_loop(data.mlx_ptr);
 	ft_destroy(&data);
 	free(data.mlx_ptr);

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/10 18:20:50 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/11 18:36:08 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross)
 	t_cross	d_i_l;
 	t_cross	d_i_c;
 
+	init_t_cross(cross);
 	r_a = ((data->dir + 30) - (data->win.sub_ray_angle * ray_nb));
 	if (r_a >= 360)
 		r_a -= 360;
@@ -56,29 +57,36 @@ void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross)
 	}
 }
 
+void	init_t_cross(t_cross *ray)
+{
+	ray->dist = 10000;
+	ray->cross.x = 0;
+	ray->cross.y = 0;
+	ray->delta.x = 0;
+	ray->delta.y = 0;
+}
+
 int	set_params_dil(t_data *data, double r_a, t_cross *dil)
 {
 	dil->delta.y = GRID;
 	if (r_a >= 359 || r_a <= 1 || (r_a >= 179 && r_a <= 181))
-	{
-		dil->dist = 10000;
 		return (-1);
-	}
 	else if (r_a > 1 && r_a < 179)
 	{
-		dil->cross.y = (floor(data->Py / GRID) * GRID) - 0.001;
+		dil->cross.y = (floor(data->pos.y / GRID) * GRID) - 0.001;
 		dil->delta.y = -dil->delta.y;
 	}
 	else
-		dil->cross.y = (floor(data->Py / GRID) * GRID) + GRID;
+		dil->cross.y = (floor(data->pos.y / GRID) * GRID) + GRID;
 	return (0);
 }
 
 void	ft_check_intersect_line(t_data *data, double r_a, t_cross *dil)
 {
+	init_t_cross(dil);
 	if (set_params_dil(data, r_a, dil) < 0)
 		return ;
-	dil->cross.x = data->Px + (((data->Py - dil->cross.y)
+	dil->cross.x = data->pos.x + (((data->pos.y - dil->cross.y)
 				/ sin(r_a * DEG)) * cos(r_a * DEG));
 	dil->delta.x = -cos(r_a * DEG) * (dil->delta.y / sin(r_a * DEG));
 	while (data->map[(int)(dil->cross.y / GRID)]
@@ -87,13 +95,10 @@ void	ft_check_intersect_line(t_data *data, double r_a, t_cross *dil)
 		if (dil->cross.x < 0 || dil->cross.y < 0
 			|| dil->cross.x > ((MAPX + 1) * GRID)
 			|| dil->cross.y > ((MAPY + 1) * GRID))
-		{
-			dil->dist = 10000;
 			return ;
-		}
 		dil->cross.x = dil->cross.x + dil->delta.x;
 		dil->cross.y = dil->cross.y + dil->delta.y;
 	}
-	dil->dist = fabs(((data->Py - dil->cross.y) / sin(r_a * DEG))
+	dil->dist = fabs(((data->pos.y - dil->cross.y) / sin(r_a * DEG))
 			* cos((data->dir - r_a) * DEG));
 }
