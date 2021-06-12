@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/11 18:16:14 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/12 13:55:15 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,9 @@ void	ft_movement(t_data *data);
 void	ft_rotate(t_data *data);
 void	ft_move(t_data *data);
 int	ft_check_if_map(t_data *data, char *line);
-int	ft_check_map_validity(t_data *data, char **map);
+void	ft_deal_with_is_map(t_data *data, char *line, char ***map, int is_map);
+int	ft_check_line(t_data *data, char *line);
+int	ft_check_map_validity(t_data *data, char ***map);
 void 	ft_map_size(t_data *data, char **map);
-int	flood(t_data *data, int x, int y, char **map);
+int	flood(t_data *data, int x, int y, char ***map);
 #endif

@@ -6,23 +6,24 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/11 19:13:33 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/12 14:01:44 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_check_map_validity(t_data *data, char **map)
+int	ft_check_map_validity(t_data *data, char ***map)
 {
 	int	x;
 	int	y;
-
-	ft_map_size(data, map);
+	
+	ft_map_size(data, *map);
 	y = data->mapi.player.y;
 	x = data->mapi.player.x;
+	(*map)[y][x] = '0'; 
 	if (flood(data, x, y, map) < 0)
 	{
-		printf("invalid map");
+		printf("invalid map\n");
 		return (-1);
 	}
 	return (0);
@@ -44,13 +45,13 @@ void 	ft_map_size(t_data *data, char **map)
 	}
 }
 
-int	flood(t_data *data, int x, int y, char **map)
+int	flood(t_data *data, int x, int y, char ***map)
 {
-	if (x < 0 || x > data->mapi.size_x || y < 0 || y > data->mapi.size_y)
+	if ((x < 0 || x >= data->mapi.size_x || y < 0 || y >= data->mapi.size_y) && ((*map)[y][x] != '1' && (*map)[y][x] != '0' && (*map)[y][x] != 'X'))
 		return (-1);
-	if ((int)map[y][x] == 48)
+	if ((*map)[y][x] == '0')
 	{
-		map[y][x] = map[y][x] + 40;
+		(*map)[y][x] = 'X';
 		if (flood(data, x + 1, y, map) < 0)
 			return (-1);
 		if (flood(data, x - 1, y, map) < 0)
@@ -63,7 +64,7 @@ int	flood(t_data *data, int x, int y, char **map)
 	return (0);
 }
 
-char	*ft_deal_with_is_map(t_data *data, char *line, int is_map)
+void	ft_deal_with_is_map(t_data *data, char *line, char ***map, int is_map)
 {
 	int	ret;
 
@@ -77,12 +78,13 @@ char	*ft_deal_with_is_map(t_data *data, char *line, int is_map)
 	else if (is_map == 1)
 	{
 		data->parse.map = 1;
+		(*map)[data->mapi.size_y] = ft_strdup(line);
 		data->mapi.size_y++;
-		return (ft_strdup(line));
+		return ;
 	}
 	else
 		data->parsing = -1;
-	return (NULL);
+	return ;
 }
 
 int 	ft_check_if_map(t_data *data, char *line)
