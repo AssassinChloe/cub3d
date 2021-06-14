@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 12:12:43 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 12:50:59 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_setup_params(t_data *data, int ac, char **av)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	
+
 	if (ft_setup_params(&data, argc, argv) < 0)
 		return (-1);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.win.width,

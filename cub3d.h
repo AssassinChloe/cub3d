@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 12:40:34 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 13:12:05 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@
 # define FOV 60
 # define PI 3.14159265
 # define GRID 64 
-# define DEG PI/180
+# define DEG (PI/180)
 
-typedef struct	s_parse
+typedef struct s_parse
 {
 	int	tex[4];
 	char	*tex_path[4];

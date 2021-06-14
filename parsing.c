@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 12:20:46 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 13:02:29 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,5 @@ int	ft_parse_cub(t_data *data, int fd)
 		return (ft_parsing_error(data));
 	if (ft_check_map_validity(data) < 0)
 		return (-1);
-	int i = 0;
-	while (data->map[i] != NULL)
-		printf("%s\n", data->map[i++]);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 12:32:02 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 12:59:14 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_check_map_validity(t_data *data)
 {
 	int	x;
 	int	y;
-	
+
 	data->floodfill = 0;
 	ft_map_size(data);
 	y = data->mapi.player.y;
@@ -49,27 +49,18 @@ void 	ft_map_size(t_data *data)
 
 void	flood(t_data *data, int x, int y)
 {
+	if (x < 0 || y < 0 || (data->map[y][x] != '1' && data->map[y][x] != '0'
+				&& data->map[y][x] != 'X'))
+		data->floodfill = -1;
 	if (data->floodfill == -1)
 		return ;
 	if (data->map[y][x] == '0')
 	{
 		data->map[y][x] = 'X';
-		if (data->map[y][x + 1] != '1' && data->map[y][x + 1] != '0' && data->map[y][x + 1] != 'X')
-			data->floodfill = -1;
-		else
-			flood(data, (x + 1), y);
-		if (x < 0 || (data->map[y][x - 1] != '1' && data->map[y][x - 1] != '0' && data->map[y][x - 1] != 'X'))
-			data->floodfill = -1;
-		else
-			flood(data, (x - 1), y);
-		if (data->map[y + 1][x] != '1' && data->map[y + 1][x] != '0' && data->map[y + 1][x] != 'X')
-			data->floodfill = -1;
-		else
-			flood(data, x, (y + 1));
-		if (y < 0 || (data->map[y - 1][x] != '1' && data->map[y -1][x] != '0' && data->map[y - 1][x] != 'X'))
-			data->floodfill = -1;
-		else
-			flood(data, x, (y - 1));
+		flood(data, (x + 1), y);
+		flood(data, (x - 1), y);
+		flood(data, x, (y + 1));
+		flood(data, x, (y - 1));
 	}
 }
 

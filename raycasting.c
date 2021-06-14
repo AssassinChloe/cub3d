@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 12:42:24 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 13:08:29 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	ft_check_intersect_line(t_data *data, double r_a, t_cross *dil)
 			[(int)(dil->cross.x / GRID)] == 'X')
 	{
 		if (dil->cross.x < 0 || dil->cross.y < 0
-		|| dil->cross.x > ((data->mapi.size_x + 1) * GRID)
-		|| dil->cross.y > ((data->mapi.size_y + 1) * GRID))
+			|| dil->cross.x > ((data->mapi.size_x + 1) * GRID)
+			|| dil->cross.y > ((data->mapi.size_y + 1) * GRID))
 			return ;
 		dil->cross.x = dil->cross.x + dil->delta.x;
 		dil->cross.y = dil->cross.y + dil->delta.y;
