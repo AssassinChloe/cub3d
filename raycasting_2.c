@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 18:19:06 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/11 12:20:06 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 12:40:12 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	ft_check_intersect_column(t_data *data, double r_a, t_cross *dic)
 				/ cos(r_a * DEG)) * sin(r_a * DEG));
 	dic->delta.y = -sin(r_a * DEG) * (dic->delta.x / cos(r_a * DEG));
 	while (data->map[(int)(dic->cross.y / GRID)]
-			[(int)(dic->cross.x / GRID)] == 0)
+			[(int)(dic->cross.x / GRID)] == 'X')
 	{
 		if (dic->cross.x < 0 || dic->cross.y < 0
-			|| dic->cross.x > ((MAPX + 1) * GRID)
-			|| dic->cross.y > ((MAPY + 1) * GRID))
+			|| dic->cross.x > ((data->mapi.size_x + 1) * GRID)
+			|| dic->cross.y > ((data->mapi.size_y + 1) * GRID))
 			return ;
 		dic->cross.x = dic->cross.x + dic->delta.x;
 		dic->cross.y = dic->cross.y + dic->delta.y;

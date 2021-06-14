@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/12 13:55:15 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 12:40:34 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@
 # define PI 3.14159265
 # define GRID 64 
 # define DEG PI/180
-# define MAPY 11
-# define MAPX 18
 
 typedef struct	s_parse
 {
@@ -121,11 +119,12 @@ typedef struct	s_data
 	int	dir;
 	int	hit;
 	int	parsing;
+	int	floodfill;
 	double	wall_size;
 	t_tex	tex[4];
 	t_parse	parse;
 	t_map	mapi;
-	int	map[MAPY][MAPX];
+	char	**map;
 	t_key	key;
 } t_data;
 
@@ -141,7 +140,6 @@ int	ft_get_wall(t_data *data);
 int	keypress(int keycode, t_data *data);
 int	keyrelease(int keycode, t_data *data);
 int	ft_init_data(t_data *data, int fd);
-void	ft_init_map(t_data *data);
 void	ft_init_player(t_data *data, char dir, int x);
 int	img_pix_get(t_img *img, int x, int y);
 t_tex	*ft_get_tex(t_data *data);
@@ -167,9 +165,9 @@ void	ft_movement(t_data *data);
 void	ft_rotate(t_data *data);
 void	ft_move(t_data *data);
 int	ft_check_if_map(t_data *data, char *line);
-void	ft_deal_with_is_map(t_data *data, char *line, char ***map, int is_map);
+void	ft_deal_with_is_map(t_data *data, char *line, int is_map);
 int	ft_check_line(t_data *data, char *line);
-int	ft_check_map_validity(t_data *data, char ***map);
-void 	ft_map_size(t_data *data, char **map);
-int	flood(t_data *data, int x, int y, char ***map);
+int	ft_check_map_validity(t_data *data);
+void 	ft_map_size(t_data *data);
+void	flood(t_data *data, int x, int y);
 #endif

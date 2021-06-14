@@ -6,22 +6,24 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/12 14:01:44 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 12:32:02 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_check_map_validity(t_data *data, char ***map)
+int	ft_check_map_validity(t_data *data)
 {
 	int	x;
 	int	y;
 	
-	ft_map_size(data, *map);
+	data->floodfill = 0;
+	ft_map_size(data);
 	y = data->mapi.player.y;
 	x = data->mapi.player.x;
-	(*map)[y][x] = '0'; 
-	if (flood(data, x, y, map) < 0)
+	data->map[y][x] = '0';
+	flood(data, x, y);
+	if (data->floodfill < 0)
 	{
 		printf("invalid map\n");
 		return (-1);
@@ -29,7 +31,7 @@ int	ft_check_map_validity(t_data *data, char ***map)
 	return (0);
 }
 
-void 	ft_map_size(t_data *data, char **map)
+void 	ft_map_size(t_data *data)
 {
 	int	len;
 	int	i;
@@ -38,33 +40,40 @@ void 	ft_map_size(t_data *data, char **map)
 	data->mapi.size_x = 0;
 	while (i < data->mapi.size_y)
 	{
-		len = ft_strlen(map[i]);
+		len = ft_strlen(data->map[i]);
 		if (len > data->mapi.size_x)
 			data->mapi.size_x = len;
 		i++;
 	}
 }
 
-int	flood(t_data *data, int x, int y, char ***map)
+void	flood(t_data *data, int x, int y)
 {
-	if ((x < 0 || x >= data->mapi.size_x || y < 0 || y >= data->mapi.size_y) && ((*map)[y][x] != '1' && (*map)[y][x] != '0' && (*map)[y][x] != 'X'))
-		return (-1);
-	if ((*map)[y][x] == '0')
+	if (data->floodfill == -1)
+		return ;
+	if (data->map[y][x] == '0')
 	{
-		(*map)[y][x] = 'X';
-		if (flood(data, x + 1, y, map) < 0)
-			return (-1);
-		if (flood(data, x - 1, y, map) < 0)
-			return (-1);
-		if (flood(data, x, y + 1, map) < 0)
-			return (-1);
-		if (flood(data, x, y - 1, map) < 0)
-			return (-1);
+		data->map[y][x] = 'X';
+		if (data->map[y][x + 1] != '1' && data->map[y][x + 1] != '0' && data->map[y][x + 1] != 'X')
+			data->floodfill = -1;
+		else
+			flood(data, (x + 1), y);
+		if (x < 0 || (data->map[y][x - 1] != '1' && data->map[y][x - 1] != '0' && data->map[y][x - 1] != 'X'))
+			data->floodfill = -1;
+		else
+			flood(data, (x - 1), y);
+		if (data->map[y + 1][x] != '1' && data->map[y + 1][x] != '0' && data->map[y + 1][x] != 'X')
+			data->floodfill = -1;
+		else
+			flood(data, x, (y + 1));
+		if (y < 0 || (data->map[y - 1][x] != '1' && data->map[y -1][x] != '0' && data->map[y - 1][x] != 'X'))
+			data->floodfill = -1;
+		else
+			flood(data, x, (y - 1));
 	}
-	return (0);
 }
 
-void	ft_deal_with_is_map(t_data *data, char *line, char ***map, int is_map)
+void	ft_deal_with_is_map(t_data *data, char *line, int is_map)
 {
 	int	ret;
 
@@ -78,7 +87,7 @@ void	ft_deal_with_is_map(t_data *data, char *line, char ***map, int is_map)
 	else if (is_map == 1)
 	{
 		data->parse.map = 1;
-		(*map)[data->mapi.size_y] = ft_strdup(line);
+		data->map[data->mapi.size_y] = ft_strdup(line);
 		data->mapi.size_y++;
 		return ;
 	}

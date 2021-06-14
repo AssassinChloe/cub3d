@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/11 18:46:52 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 12:32:51 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	ft_init_data(t_data *data, int fd)
 	if (ft_parse_cub(data, fd) < 0)
 		return (-1);
 	ft_init_win(data);
-	ft_init_map(data);
 	return (0);
 }
 
@@ -97,32 +96,4 @@ void	ft_init_player(t_data *data, char dir, int x)
 	data->mapi.player.y = data->mapi.size_y;
 	data->pos.x = (data->mapi.player.x * GRID) + (GRID / 2);
 	data->pos.y = (data->mapi.player.y * GRID) + (GRID / 2);
-}
-
-void	ft_init_map(t_data *data)
-{
-	int i;
-	int j;
-	int initmap[MAPY][MAPX] = {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                                   {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
-                                   {1,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,1},
-                                   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                                   {1,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,1},
-                                   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                                   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                                   {1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
-                                   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                                   {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
-                                   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
-	j = 0;
-	while (j < MAPX)
-	{
-		i = 0;
-		while (i < MAPY)
-		{
-			data->map[i][j] = initmap[i][j];
-			i++;
-		}
-		j++; 
-	}
 }

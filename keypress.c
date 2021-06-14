@@ -6,23 +6,16 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:45:15 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/11 18:33:57 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 12:08:14 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_quit(t_data *data)
-{
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	data->win_ptr = NULL;
-	return (0);
-}
-
 int	keypress(int keycode, t_data *data)
 {
 	if (keycode == XK_Escape)
-		ft_quit(data);
+		mlx_loop_end(data->mlx_ptr);
 	if (keycode == XK_Right)
 		data->key.rot_right = 1;
 	if (keycode == XK_Left)

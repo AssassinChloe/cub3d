@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/11 18:36:08 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/14 12:42:24 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross)
 
 void	init_t_cross(t_cross *ray)
 {
-	ray->dist = 10000;
+	ray->dist = 50000;
 	ray->cross.x = 0;
 	ray->cross.y = 0;
 	ray->delta.x = 0;
@@ -90,11 +90,11 @@ void	ft_check_intersect_line(t_data *data, double r_a, t_cross *dil)
 				/ sin(r_a * DEG)) * cos(r_a * DEG));
 	dil->delta.x = -cos(r_a * DEG) * (dil->delta.y / sin(r_a * DEG));
 	while (data->map[(int)(dil->cross.y / GRID)]
-			[(int)(dil->cross.x / GRID)] == 0)
+			[(int)(dil->cross.x / GRID)] == 'X')
 	{
 		if (dil->cross.x < 0 || dil->cross.y < 0
-			|| dil->cross.x > ((MAPX + 1) * GRID)
-			|| dil->cross.y > ((MAPY + 1) * GRID))
+		|| dil->cross.x > ((data->mapi.size_x + 1) * GRID)
+		|| dil->cross.y > ((data->mapi.size_y + 1) * GRID))
 			return ;
 		dil->cross.x = dil->cross.x + dil->delta.x;
 		dil->cross.y = dil->cross.y + dil->delta.y;
