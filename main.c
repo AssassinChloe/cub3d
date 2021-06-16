@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 13:47:45 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:12:30 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.win.width,
 			data.win.height, "my window");
 	if (data.win_ptr == NULL)
-		return (MLX_ERROR);
+		return (-1);
 	data.mlx_img.img = mlx_new_image(data.mlx_ptr, data.win.width,
 			data.win.height);
 	data.mlx_img.addr = mlx_get_data_addr(data.mlx_img.img,

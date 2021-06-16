@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 14:10:02 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:13:23 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define FOV 60
 # define GRID 64 
 # define DEG 0.01745329
-# define SPEED 3
+# define SPEED 2 
 
 typedef struct s_parse
 {
@@ -147,7 +147,6 @@ void	ft_pix_to_img(t_img *img, int x, int y, int color);
 int		ft_texture(t_data *data, t_tex *tex, t_cross wall, int i);
 int		ft_quit(t_data *data);
 void	ft_init_texture(t_data *data);
-int		ft_check_for_wall(t_data *data, int start_w, int l, int start_h, int i);
 int		ft_render(t_data *data);
 int		ft_render_rect(t_img *img, t_rect rect);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
