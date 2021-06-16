@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 14:13:23 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 18:53:13 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_tex
 
 typedef struct s_map
 {
+	int		get_size;
 	int		size_x;
 	int		size_y;
 	t_point	player;
@@ -128,7 +129,25 @@ typedef struct s_data
 }	t_data;
 
 int		ft_check_arg(int argc, char **argv);
-int		ft_parse_cub(t_data *data, int fd);
+int		ft_init_data(t_data *data, char *file);
+void	ft_init_parse(t_data *data);
+void	ft_init_win(t_data *data);
+void	ft_init_keys(t_data *data);
+int		ft_parse_cub(t_data *data, char *file);
+int		ft_parsing(t_data *data, char *line, char *file);
+void	ft_init_player(t_data *data, char dir, int x);
+int		ft_check_if_map(t_data *data, char *line);
+void	ft_deal_with_is_map(t_data *data, char *line, int is_map);
+int		ft_check_line(t_data *data, char *line);
+int		ft_check_map_validity(t_data *data);
+void	ft_map_size(t_data *data);
+void	flood(t_data *data, int x, int y);
+int		ft_init_texture(t_data *data);
+int		keypress(int keycode, t_data *data);
+int		keyrelease(int keycode, t_data *data);
+void	ft_movement(t_data *data);
+void	ft_rotate(t_data *data);
+void	ft_move(t_data *data);
 void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross);
 void	ft_check_intersect_line(t_data *data, double r_a, t_cross *dil);
 void	init_t_cross(t_cross *ray);
@@ -136,37 +155,19 @@ int		set_params_dil(t_data *data, double r_a, t_cross *dil);
 void	ft_check_intersect_column(t_data *data, double r_a, t_cross *dic);
 int		set_params_dic(t_data *data, double r_a, t_cross *dic);
 int		ft_get_wall(t_data *data);
-int		keypress(int keycode, t_data *data);
-int		keyrelease(int keycode, t_data *data);
-int		ft_init_data(t_data *data, int fd);
-void	init_keys(t_data *data);
-void	ft_init_player(t_data *data, char dir, int x);
 int		img_pix_get(t_img *img, int x, int y);
 t_tex	*ft_get_tex(t_data *data);
 void	ft_pix_to_img(t_img *img, int x, int y, int color);
 int		ft_texture(t_data *data, t_tex *tex, t_cross wall, int i);
 int		ft_quit(t_data *data);
-void	ft_init_texture(t_data *data);
 int		ft_render(t_data *data);
 int		ft_render_rect(t_img *img, t_rect rect);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-void	ft_init_parse(t_data *data);
 void	ft_free_tab(char **tab, int i);
-void	ft_init_win(t_data *data);
-int		ft_set_tex(t_data *data, char **info);
+int		ft_set_tex(t_data *data, char *info, int i);
 int		ft_set_color(t_data *data, char **info);
 int		ft_check_for_tex(t_data *data, char **info);
-int		ft_get_res(t_data *data, char **info);
 int		ft_tab_len(char **tab);
 int		get_rgb(char *str);
-void	ft_destroy(t_data *data);
-void	ft_movement(t_data *data);
-void	ft_rotate(t_data *data);
-void	ft_move(t_data *data);
-int		ft_check_if_map(t_data *data, char *line);
-void	ft_deal_with_is_map(t_data *data, char *line, int is_map);
-int		ft_check_line(t_data *data, char *line);
-int		ft_check_map_validity(t_data *data);
-void	ft_map_size(t_data *data);
-void	flood(t_data *data, int x, int y);
+int		ft_destroy(t_data *data);
+void	ft_destroy_texture(t_data *data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 13:40:58 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 18:24:52 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	ft_check_arg(int argc, char**argv)
 {
 	int	i;
 	int	j;
-	int	fd;
 
 	if (argc != 2)
 	{
@@ -32,10 +31,7 @@ int	ft_check_arg(int argc, char**argv)
 		printf("mauvais argument\n");
 		return (-1);
 	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	return (fd);
+	return (0);
 }
 
 void	ft_init_parse(t_data *data)
@@ -56,7 +52,7 @@ void	ft_init_parse(t_data *data)
 	data->parse.map = 0;
 }
 
-int	ft_init_data(t_data *data, int fd)
+int	ft_init_data(t_data *data, char *file)
 {
 	data->pos.x = 0;
 	data->pos.y = 0;
@@ -69,13 +65,14 @@ int	ft_init_data(t_data *data, int fd)
 	data->mapi.player.x = 0;
 	data->mapi.player.y = 0;
 	data->wall_size = 1;
-	init_keys(data);
+	ft_init_keys(data);
+	ft_init_parse(data);
+	ft_init_win(data);
 	data->mlx_ptr = mlx_init();
 	if (data->mlx_ptr == NULL)
 		return (-1);
-	if (ft_parse_cub(data, fd) < 0)
+	if (ft_parse_cub(data, file) < 0)
 		return (-1);
-	ft_init_win(data);
 	return (0);
 }
 

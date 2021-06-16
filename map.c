@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 12:59:14 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 18:42:54 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,18 @@ void	ft_deal_with_is_map(t_data *data, char *line, int is_map)
 	ret = 0;
 	if (is_map == 0 && data->parse.map == 0)
 	{
-		ret = ft_check_line(data, line);
-		if (ret == -1)
-			data->parsing = -1;
+		if (data->mapi.get_size == 0)
+		{
+			ret = ft_check_line(data, line);
+			if (ret == -1)
+				data->parsing = -1;
+		}
 	}
 	else if (is_map == 1)
 	{
 		data->parse.map = 1;
-		data->map[data->mapi.size_y] = ft_strdup(line);
+		if (data->mapi.get_size == 1)
+			data->map[data->mapi.size_y] = ft_strdup(line);
 		data->mapi.size_y++;
 		return ;
 	}
@@ -98,8 +102,9 @@ int 	ft_check_if_map(t_data *data, char *line)
 	{
 		if (line[i] == '1' || line[i] == ' ' || line[i] == '0')
 			i++;
-		else if ((line[i] == 'W' || line[i] == 'S' || line[i] == 'E'
-				|| line[i] == 'N') && data->parse.map == 1)
+		else if (data->mapi.get_size == 0 && (line[i] == 'W'
+			|| line[i] == 'S' || line[i] == 'E'|| line[i] == 'N')
+			&& data->parse.map == 1)
 		{
 			if (data->dir < 0)
 				ft_init_player(data, line[i], i);
@@ -110,6 +115,10 @@ int 	ft_check_if_map(t_data *data, char *line)
 			}
 			i++;
 		}
+		else if (data->mapi.get_size == 1 && (line[i] == 'W' ||
+			line[i] == 'S' || line[i] == 'E'|| line[i] == 'N')
+			&& data->parse.map == 1)
+			i++;
 		else
 			return (0);
 	}

@@ -6,12 +6,12 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:45:15 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 13:55:01 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 18:16:51 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-void	init_keys(t_data *data)
+void	ft_init_keys(t_data *data)
 {
 	data->key.forward = 0;
 	data->key.backward = 0;

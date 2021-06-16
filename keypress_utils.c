@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 14:05:21 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 14:02:57 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:48:36 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,22 @@ void	ft_move(t_data *data)
 	delta_y = -sin(data->dir * DEG) * SPEED;
 	if (data->key.forward == 1)
 	{
-		data->pos.x += floor(delta_x);
-		data->pos.y += floor(delta_y);
+		data->pos.x += delta_x;
+		data->pos.y += delta_y;
 	}
 	if (data->key.backward == 1)
 	{
-		data->pos.x -= floor(delta_x);
-		data->pos.y -= floor(delta_y);
+		data->pos.x -= delta_x;
+		data->pos.y -= delta_y;
 	}
 	if (data->key.left == 1)
 	{
-		data->pos.x += floor(delta_y);
-		data->pos.y -= floor(delta_x);
+		data->pos.x += delta_y;
+		data->pos.y -= delta_x;
 	}
 	if (data->key.right == 1)
 	{
-		data->pos.x -= floor(delta_y);
-		data->pos.y += floor(delta_x);
+		data->pos.x -= delta_y;
+		data->pos.y += delta_x;
 	}
 }
