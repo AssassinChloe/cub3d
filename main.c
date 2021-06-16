@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 12:50:59 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:47:45 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char **argv)
 
 	if (ft_setup_params(&data, argc, argv) < 0)
 		return (-1);
+	ft_init_texture(&data);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.win.width,
 			data.win.height, "my window");
 	if (data.win_ptr == NULL)
@@ -39,13 +40,13 @@ int	main(int argc, char **argv)
 	data.mlx_img.addr = mlx_get_data_addr(data.mlx_img.img,
 			&data.mlx_img.bpp, &data.mlx_img.line_len,
 			&data.mlx_img.endian);
-	ft_init_texture(&data);
 	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &keypress, &data);
 	mlx_loop_hook(data.mlx_ptr, &ft_render, &data);
 	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &keyrelease, &data);
 	mlx_loop(data.mlx_ptr);
 	ft_destroy(&data);
 	free(data.mlx_ptr);
+	data.mlx_ptr = NULL;
 	return (0);
 }
 
@@ -59,8 +60,10 @@ void	ft_destroy(t_data *data)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->tex[i].xpm.img);
 		free(data->parse.tex_path[i]);
+		data->parse.tex_path[i] = NULL;
 		i++;
 	}
+	ft_free_tab(data->map, data->mapi.size_y);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	data->win_ptr = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 18:19:06 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 12:40:12 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:53:51 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,19 @@ void	ft_check_intersect_column(t_data *data, double r_a, t_cross *dic)
 	dic->cross.y = data->pos.y + (((data->pos.x - dic->cross.x)
 				/ cos(r_a * DEG)) * sin(r_a * DEG));
 	dic->delta.y = -sin(r_a * DEG) * (dic->delta.x / cos(r_a * DEG));
+	if (dic->cross.x < 0 || dic->cross.y < 0
+		|| dic->cross.x >= (data->mapi.size_x * GRID)
+		|| dic->cross.y >= (data->mapi.size_y * GRID))
+		return ;
 	while (data->map[(int)(dic->cross.y / GRID)]
 			[(int)(dic->cross.x / GRID)] == 'X')
 	{
-		if (dic->cross.x < 0 || dic->cross.y < 0
-			|| dic->cross.x > ((data->mapi.size_x + 1) * GRID)
-			|| dic->cross.y > ((data->mapi.size_y + 1) * GRID))
-			return ;
 		dic->cross.x = dic->cross.x + dic->delta.x;
 		dic->cross.y = dic->cross.y + dic->delta.y;
+		if (dic->cross.x < 0 || dic->cross.y < 0
+			|| dic->cross.x >= (data->mapi.size_x * GRID)
+			|| dic->cross.y >= (data->mapi.size_y * GRID))
+			return ;
 	}
 	dic->dist = fabs(((data->pos.x - dic->cross.x) / cos(r_a * DEG))
 			* cos((data->dir - r_a) * DEG));

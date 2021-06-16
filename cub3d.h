@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 13:12:05 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:40:09 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ int	ft_get_wall(t_data *data);
 int	keypress(int keycode, t_data *data);
 int	keyrelease(int keycode, t_data *data);
 int	ft_init_data(t_data *data, int fd);
+void	init_keys(t_data *data);
 void	ft_init_player(t_data *data, char dir, int x);
 int	img_pix_get(t_img *img, int x, int y);
 t_tex	*ft_get_tex(t_data *data);

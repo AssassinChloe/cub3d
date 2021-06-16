@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/14 12:32:51 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:40:58 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,13 @@ int	ft_init_data(t_data *data, int fd)
 	data->dir = -1;
 	data->hit = 0;
 	data->parsing = 0;
+	data->floodfill = 0;
 	data->mapi.size_x = 0;
 	data->mapi.size_y = 0;
+	data->mapi.player.x = 0;
+	data->mapi.player.y = 0;
+	data->wall_size = 1;
+	init_keys(data);
 	data->mlx_ptr = mlx_init();
 	if (data->mlx_ptr == NULL)
 		return (-1);

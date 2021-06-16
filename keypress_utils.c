@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 14:05:21 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/11 18:34:37 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:15:27 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	ft_rotate(t_data *data)
 {
 	if (data->key.rot_left == 1)
 	{
-		data->dir += 1;
+		data->dir = data->dir + 1;
 		if (data->dir >= 360)
 			data->dir -= 360;
 	}
 	if (data->key.rot_right == 1)
 	{
-		data->dir -= 1;
+		data->dir = data->dir - 1;
 		if (data->dir < 0)
 			data->dir += 360;
 	}
