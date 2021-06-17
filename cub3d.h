@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 18:53:13 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:29:16 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	ft_init_win(t_data *data);
 void	ft_init_keys(t_data *data);
 int		ft_parse_cub(t_data *data, char *file);
 int		ft_parsing(t_data *data, char *line, char *file);
+int		ft_check_config(t_data *data);
 void	ft_init_player(t_data *data, char dir, int x);
 int		ft_check_if_map(t_data *data, char *line);
 void	ft_deal_with_is_map(t_data *data, char *line, int is_map);
@@ -142,6 +143,7 @@ int		ft_check_line(t_data *data, char *line);
 int		ft_check_map_validity(t_data *data);
 void	ft_map_size(t_data *data);
 void	flood(t_data *data, int x, int y);
+char	*ft_fill_the_blank(t_data *data, int y);
 int		ft_init_texture(t_data *data);
 int		keypress(int keycode, t_data *data);
 int		keyrelease(int keycode, t_data *data);

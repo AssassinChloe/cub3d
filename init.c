@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 18:24:52 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 13:38:13 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_init_parse(t_data *data)
 	while (i < 4)
 	{
 		data->parse.tex[i] = 0;
+		data->tex[i].xpm.img = NULL;
 		data->parse.tex_path[i] = NULL;
 		i++;
 	}
@@ -50,6 +51,7 @@ void	ft_init_parse(t_data *data)
 	data->parse.floor = 0;
 	data->parse.floor_color = 0;
 	data->parse.map = 0;
+	data->map = NULL;
 }
 
 int	ft_init_data(t_data *data, char *file)
@@ -82,6 +84,8 @@ void	ft_init_win(t_data *data)
 	data->win.height = WIN_HEIGHT;
 	data->win.dpp = ((data->win.width / 2) / (tan((FOV / 2) * DEG)));
 	data->win.sub_ray_angle = (FOV / data->win.width);
+	data->mlx_img.img = NULL;
+	data->win_ptr = NULL;
 }
 
 void	ft_init_player(t_data *data, char dir, int x)

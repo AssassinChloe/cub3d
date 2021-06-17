@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 18:42:54 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 16:34:59 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,27 @@ int	ft_check_map_validity(t_data *data)
 {
 	int	x;
 	int	y;
+	int	i;
 
 	data->floodfill = 0;
+	i = 0;
 	ft_map_size(data);
 	y = data->mapi.player.y;
 	x = data->mapi.player.x;
 	data->map[y][x] = '0';
 	flood(data, x, y);
 	if (data->floodfill < 0)
-	{
-		printf("invalid map\n");
 		return (-1);
+	while (i < data->mapi.size_y)
+	{
+		if ((int)ft_strlen(data->map[i]) < data->mapi.size_x)
+			data->map[i] = ft_fill_the_blank(data, i);
+		if (data->map[i] == NULL)
+		{
+			printf("oops\n");
+			return (-1);
+		}
+		i++;
 	}
 	return (0);
 }
@@ -102,23 +112,18 @@ int 	ft_check_if_map(t_data *data, char *line)
 	{
 		if (line[i] == '1' || line[i] == ' ' || line[i] == '0')
 			i++;
-		else if (data->mapi.get_size == 0 && (line[i] == 'W'
-			|| line[i] == 'S' || line[i] == 'E'|| line[i] == 'N')
-			&& data->parse.map == 1)
+		else if ((line[i] == 'W' || line[i] == 'S' || line[i] == 'E'
+				|| line[i] == 'N') && data->parse.map == 1)
 		{
-			if (data->dir < 0)
-				ft_init_player(data, line[i], i);
-			else
+			if (data->mapi.get_size == 0)
 			{
-				printf("multiple players\n");
-				return (-1);
+				if (data->dir < 0)
+					ft_init_player(data, line[i], i);
+				else
+					return (-1);
 			}
 			i++;
 		}
-		else if (data->mapi.get_size == 1 && (line[i] == 'W' ||
-			line[i] == 'S' || line[i] == 'E'|| line[i] == 'N')
-			&& data->parse.map == 1)
-			i++;
 		else
 			return (0);
 	}

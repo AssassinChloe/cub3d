@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 18:27:16 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 14:51:42 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,15 @@ int	main(int argc, char **argv)
 	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &keypress, &data);
 	mlx_loop_hook(data.mlx_ptr, &ft_render, &data);
 	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &keyrelease, &data);
+	mlx_hook(data.win_ptr, 33, 0L, &ft_quit, &data);
 	mlx_loop(data.mlx_ptr);
 	ft_destroy(&data);
 	return (0);
+}
+
+int	ft_quit(t_data *data)
+{
+	return (mlx_loop_end(data->mlx_ptr));
 }
 
 int	ft_destroy(t_data *data)
