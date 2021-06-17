@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 19:15:18 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 15:07:17 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 18:05:50 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	ft_init_texture(t_data *data)
 				&data->tex[i].width,
 				&data->tex[i].height);
 		if (data->tex[i].xpm.img == NULL)
-			return (-1);
+			return (ft_error(5));
 		data->tex[i].xpm.addr = mlx_get_data_addr(data->tex[i].xpm.img,
 				&data->tex[i].xpm.bpp,
 				&data->tex[i].xpm.line_len,
 				&data->tex[i].xpm.endian);
 		if (data->tex[i].xpm.addr == NULL)
-			return (-1);
+			return (ft_error(5));
 		i++;
 	}
 	return (0);

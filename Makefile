@@ -6,7 +6,7 @@
 #    By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/21 15:07:28 by cassassi          #+#    #+#              #
-#    Updated: 2021/06/16 17:16:49 by cassassi         ###   ########.fr        #
+#    Updated: 2021/06/17 18:25:11 by cassassi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= cub3D
 
 SRCS	=  main.c keypress.c parsing.c render.c init.c raycasting.c\
 	raycasting_2.c texture.c parsing_texture.c keypress_utils.c\
-	map.c utils.c
+	map.c utils.c error.c
 
 CC	= clang
 

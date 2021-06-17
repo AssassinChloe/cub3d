@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 13:35:08 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 17:15:06 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 17:34:44 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	get_rgb(char *str)
 
 	color = ft_split(str, ',');
 	if (!(color))
-		return (-1);
+		return (ft_error(-1));
 	i = ft_tab_len(color);
 	if (i != 3)
 	{
 		ft_free_tab(color, i);
-		return (-1);
+		return (ft_error(3));
 	}
 	while (i > 0)
 	{
@@ -55,7 +55,7 @@ int	get_rgb(char *str)
 		if (rgb[i] < 0 || rgb[i] > 255)
 		{
 			ft_free_tab(color, 3);
-			return (-1);
+			return (ft_error(3));
 		}
 	}
 	ft_free_tab(color, 3);
@@ -88,7 +88,7 @@ int	ft_set_tex(t_data *data, char *info, int i)
 {
 	data->parse.tex_path[i] = ft_strdup(info);
 	if (data->parse.tex_path[i] == NULL)
-		return (-1);
+		return (ft_error(4));
 	data->parse.tex[i] = 1;
 	return (0);
 }

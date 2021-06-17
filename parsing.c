@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/17 16:34:52 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 18:52:25 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_check_line(t_data *data, char *line)
 	ret = 0;
 	info = ft_split(line, ' ');
 	if (!(info))
-		return (-1);
+		return (ft_error(-1));
 	while (info[i])
 		i++;
 	if (i == 2 )
@@ -35,18 +35,22 @@ int	ft_parse_cub(t_data *data, char *file)
 {
 	char	*line;
 	int		i;
-
+int j = 0;
+printf("parsecub %d\n", j++);
 	data->mapi.get_size = 0;
 	line = NULL;
 	if (ft_parsing(data, line, file) < 0)
 		return (-1);
+printf("parsecub %d\n", j++);
 	if (ft_check_config(data) < 0)
 		return (-1);
+printf("parsecub %d\n", j++);
 	data->mapi.get_size = 1;
 	data->parse.map = 0;
 	data->map = (char **)malloc(sizeof(char *) * (data->mapi.size_y + 1));
 	if (!data->map)
-		return (-1);
+		return (ft_error(-1));
+printf("parsecub %d\n", j++);
 	data->mapi.size_y = 0;
 	if (ft_parsing(data, line, file) < 0)
 		return (-1);
@@ -64,27 +68,32 @@ int	ft_parsing(t_data *data, char *line, char *file)
 	int	gnl;
 	int	is_map;
 	int	fd;
-
+int i = 0;
+printf("parsing %d\n", i++);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (-1);
+		return (ft_error(-2));
 	gnl = 1;
 	is_map = 0;
+printf("parsing %d\n", i++);
 	while (gnl > 0 && data->parsing >= 0)
 	{
 		gnl = get_next_line(fd, &line);
+		printf("test gnl %d %d\n", gnl, i);
 		is_map = ft_check_if_map(data, line);
-		ft_deal_with_is_map(data, line, is_map);
+		printf("test ismap %d %d\n", is_map, i);
+		data->parsing = ft_deal_with_is_map(data, line, is_map);
+		printf("test data.parsing %d %d\n", data->parsing, i++);
 		free(line);
 		line = NULL;
 	}
-	if (line)
-	{
-		free(line);
-		line = NULL;
-	}
-	if (close(fd) < 0 || gnl < 0 || data->parsing < 0)
-		return (-1);
+printf("parsing %d\n", i++);
+	if (gnl < 0 || data->parsing < 0)
+		ft_parsing_error(gnl);
+printf("parsing %d\n", i++);
+	if (close(fd) < 0)
+		return (ft_error(-3));
+printf("parsing %d\n", i++);
 	return (0);
 }
 
@@ -93,16 +102,16 @@ int	ft_check_config(t_data *data)
 	int	i;
 
 	i = 0;
-	if (data->parse.ceil == 0)
-		return (-1);
-	if (data->parse.floor == 0)
-		return (-1);
+	if (data->parse.ceil == 0 || data->parse.floor == 0)
+		return (ft_error(-4));
 	while (i < 4)
 	{
 		if (data->parse.tex[i] == 0)
-			return (-1);
+			return (ft_error(-4));
 		i++;
 	}
+	if (data->dir < 0)
+		return (ft_error(-9));
 	return (0);
 }
 

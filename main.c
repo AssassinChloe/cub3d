@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/17 14:51:42 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 18:39:03 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,36 @@
 
 static int	ft_setup_params(t_data *data, int ac, char **av)
 {
-	int	fd;
-
-	fd = ft_check_arg(ac, av);
-	if (fd < 0)
+	int i = 0;
+	printf("setup %d\n", i++);
+	if (ft_check_arg(ac, av) < 0)
 		return (-1);
+	printf("setup %d\n", i++);
 	if (ft_init_data(data, av[1]) < 0)
-		return (-1);
+		return (ft_destroy(data));
+	printf("setup %d\n", i++);
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
-
+	int i = 0;
+	printf("test %d\n", i++);
 	if (ft_setup_params(&data, argc, argv) < 0)
-		return (ft_destroy(&data));
+		return (-1);
+	printf("test %d\n", i++);
 	if (ft_init_texture(&data) < 0)
 		return (ft_destroy(&data));
-	data.win_ptr = mlx_new_window(data.mlx_ptr, data.win.width,
-			data.win.height, "my window");
-	if (!data.win_ptr)
-		return (ft_destroy(&data));
-	data.mlx_img.img = mlx_new_image(data.mlx_ptr, data.win.width,
-			data.win.height);
-	data.mlx_img.addr = mlx_get_data_addr(data.mlx_img.img,
-			&data.mlx_img.bpp, &data.mlx_img.line_len,
-			&data.mlx_img.endian);
+	printf("test %d\n", i++);
 	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &keypress, &data);
 	mlx_loop_hook(data.mlx_ptr, &ft_render, &data);
 	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &keyrelease, &data);
 	mlx_hook(data.win_ptr, 33, 0L, &ft_quit, &data);
 	mlx_loop(data.mlx_ptr);
+	printf("test %d\n", i++);
 	ft_destroy(&data);
+	printf("test %d\n", i++);
 	return (0);
 }
 

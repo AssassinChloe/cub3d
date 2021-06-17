@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/17 15:29:16 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 18:33:30 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_data
 
 int		ft_check_arg(int argc, char **argv);
 int		ft_init_data(t_data *data, char *file);
+int		ft_init_mlx(t_data *data);
 void	ft_init_parse(t_data *data);
 void	ft_init_win(t_data *data);
 void	ft_init_keys(t_data *data);
@@ -138,7 +139,7 @@ int		ft_parsing(t_data *data, char *line, char *file);
 int		ft_check_config(t_data *data);
 void	ft_init_player(t_data *data, char dir, int x);
 int		ft_check_if_map(t_data *data, char *line);
-void	ft_deal_with_is_map(t_data *data, char *line, int is_map);
+int	ft_deal_with_is_map(t_data *data, char *line, int is_map);
 int		ft_check_line(t_data *data, char *line);
 int		ft_check_map_validity(t_data *data);
 void	ft_map_size(t_data *data);
@@ -170,6 +171,9 @@ int		ft_set_color(t_data *data, char **info);
 int		ft_check_for_tex(t_data *data, char **info);
 int		ft_tab_len(char **tab);
 int		get_rgb(char *str);
+int		ft_error(int errnb);
+void	ft_error_2(int errnb);
+int		ft_parsing_error(int gnl);
 int		ft_destroy(t_data *data);
 void	ft_destroy_texture(t_data *data);
 #endif

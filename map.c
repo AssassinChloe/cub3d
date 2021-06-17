@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/17 16:34:59 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/17 18:32:09 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,13 @@ int	ft_check_map_validity(t_data *data)
 	data->map[y][x] = '0';
 	flood(data, x, y);
 	if (data->floodfill < 0)
-		return (-1);
+		return (ft_error(-5));
 	while (i < data->mapi.size_y)
 	{
 		if ((int)ft_strlen(data->map[i]) < data->mapi.size_x)
 			data->map[i] = ft_fill_the_blank(data, i);
 		if (data->map[i] == NULL)
-		{
-			printf("oops\n");
-			return (-1);
-		}
+			return (ft_error(-1));
 		i++;
 	}
 	return (0);
@@ -74,7 +71,7 @@ void	flood(t_data *data, int x, int y)
 	}
 }
 
-void	ft_deal_with_is_map(t_data *data, char *line, int is_map)
+int	ft_deal_with_is_map(t_data *data, char *line, int is_map)
 {
 	int	ret;
 
@@ -85,7 +82,7 @@ void	ft_deal_with_is_map(t_data *data, char *line, int is_map)
 		{
 			ret = ft_check_line(data, line);
 			if (ret == -1)
-				data->parsing = -1;
+				return(-1);
 		}
 	}
 	else if (is_map == 1)
@@ -93,12 +90,13 @@ void	ft_deal_with_is_map(t_data *data, char *line, int is_map)
 		data->parse.map = 1;
 		if (data->mapi.get_size == 1)
 			data->map[data->mapi.size_y] = ft_strdup(line);
+			if (data->map[data->mapi.size_y] == NULL)
+				return (ft_error(4));
 		data->mapi.size_y++;
-		return ;
 	}
 	else
-		data->parsing = -1;
-	return ;
+		return(-1);
+	return (0);
 }
 
 int 	ft_check_if_map(t_data *data, char *line)
@@ -120,7 +118,7 @@ int 	ft_check_if_map(t_data *data, char *line)
 				if (data->dir < 0)
 					ft_init_player(data, line[i], i);
 				else
-					return (-1);
+					return (ft_error(-8));
 			}
 			i++;
 		}
