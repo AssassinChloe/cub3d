@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/21 14:37:23 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 16:07:47 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,17 @@ int	ft_check_line(t_data *data, char *line)
 {
 	char	**info;
 	int		i;
-	int		ret;
 
 	i = 0;
-	ret = 0;
 	info = ft_split(line, ' ');
 	if (!(info))
 		return (ft_error(-1));
 	while (info[i])
 		i++;
 	if (i == 2 )
-		ret = ft_check_for_tex(data, info);
-	ft_free_tab(info, i);
-	return (ret);
+		return (ft_check_for_tex(data, info));
+
+	return (-1);
 }
 
 int	ft_parse_cub(t_data *data, char *file)

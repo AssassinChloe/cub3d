@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/21 14:42:36 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 16:04:51 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define FOV 60
 # define GRID 64 
 # define DEG 0.01745329
-# define SPEED 10101010101010101010 
+# define SPEED 10 
 
 typedef struct s_parse
 {

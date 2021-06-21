@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:57:29 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/21 14:38:58 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 16:04:14 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int	ft_error(int errnb)
 		printf("Error close\n");
 	else if (errnb == -4)
 		printf("Missing or wrong data for color/texture\n");
-	else if (errnb == -5)
-		printf("Invalid Map\n");
 	else
 		ft_error_2(errnb);
 	return (-1);
@@ -42,7 +40,9 @@ int	ft_error(int errnb)
 
 void	ft_error_2(int errnb)
 {
-	if (errnb == -6)
+	if (errnb == -5)
+		printf("Invalid Map\n");
+	else if (errnb == -6)
 		printf("MLX error\n");
 	else if (errnb == -7)
 		printf("Failure to read .cub file\n");
