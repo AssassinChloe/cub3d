@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:57:29 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/17 18:33:09 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 10:47:07 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	ft_error(int errnb)
 		printf("Wrong number of argument\n");
 	else if (errnb == 2)
 		printf("Not a .cub file\n");
-	else if (errnb == 3)
-		printf("Wrong ceiling/floor data\n");
 	else if (errnb == 4)
 		printf("Strdup fail\n");
 	else if (errnb == -1)
@@ -30,7 +28,7 @@ int	ft_error(int errnb)
 	else if (errnb == -3)
 		printf("Error close\n");
 	else if (errnb == -4)
-		printf("Missing color or texture\n");
+		printf("Missing or wrong data for color/texture\n");
 	else if (errnb == -5)
 		printf("Invalid Map\n");
 	else if (errnb == -6)
@@ -49,7 +47,7 @@ void	ft_error_2(int errnb)
 	else if (errnb == -9)
 		printf("No starting position for the player\n");
 	else if (errnb == 5)
-		printf("Failure initating texture\n");
+		printf("Failure initating texture, check your path file\n");
 	else
 		printf("error %d \n", errnb);
 }

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 13:35:08 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/17 17:34:44 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 10:37:11 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	get_rgb(char *str)
 	if (i != 3)
 	{
 		ft_free_tab(color, i);
-		return (ft_error(3));
+		return (-1);
 	}
 	while (i > 0)
 	{
@@ -55,7 +55,7 @@ int	get_rgb(char *str)
 		if (rgb[i] < 0 || rgb[i] > 255)
 		{
 			ft_free_tab(color, 3);
-			return (ft_error(3));
+			return (-1);
 		}
 	}
 	ft_free_tab(color, 3);

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:59 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/17 18:39:53 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 10:33:57 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	ft_init_parse(t_data *data)
 
 int	ft_init_data(t_data *data, char *file)
 {
-	int i = 0;
-	printf("data %d\n", i++);
 	data->pos.x = 0;
 	data->pos.y = 0;
 	data->dir = -1;
@@ -48,17 +46,12 @@ int	ft_init_data(t_data *data, char *file)
 	data->mapi.player.y = 0;
 	data->wall_size = 1;
 	ft_init_keys(data);
-	printf("data %d\n", i++);
 	ft_init_parse(data);
-	printf("data %d\n", i++);
 	ft_init_win(data);
-	printf("data %d\n", i++);
 	if (ft_parse_cub(data, file) < 0)
 		return (-1);
-	printf("data %d\n", i++);
 	if (ft_init_mlx(data) < 0)
 		return (ft_error(-6));
-	printf("data %d\n", i++);
 	return (0);
 }
 
@@ -91,6 +84,7 @@ void	ft_init_win(t_data *data)
 	data->win.sub_ray_angle = (FOV / data->win.width);
 	data->mlx_img.img = NULL;
 	data->win_ptr = NULL;
+	data->mlx_ptr = NULL;
 }
 
 void	ft_init_player(t_data *data, char dir, int x)
