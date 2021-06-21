@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/17 18:33:30 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:42:36 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define FOV 60
 # define GRID 64 
 # define DEG 0.01745329
-# define SPEED 2 
+# define SPEED 10101010101010101010 
 
 typedef struct s_parse
 {
@@ -139,7 +139,7 @@ int		ft_parsing(t_data *data, char *line, char *file);
 int		ft_check_config(t_data *data);
 void	ft_init_player(t_data *data, char dir, int x);
 int		ft_check_if_map(t_data *data, char *line);
-int	ft_deal_with_is_map(t_data *data, char *line, int is_map);
+int		ft_deal_with_is_map(t_data *data, char *line, int is_map);
 int		ft_check_line(t_data *data, char *line);
 int		ft_check_map_validity(t_data *data);
 void	ft_map_size(t_data *data);
@@ -174,6 +174,7 @@ int		get_rgb(char *str);
 int		ft_error(int errnb);
 void	ft_error_2(int errnb);
 int		ft_parsing_error(int gnl);
+int		ft_error_if_map(t_data *data);
 int		ft_destroy(t_data *data);
 void	ft_destroy_texture(t_data *data);
 #endif

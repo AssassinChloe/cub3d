@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/21 11:26:19 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:37:23 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_parsing(t_data *data, char *line, char *file)
 	int	gnl;
 	int	is_map;
 	int	fd;
-	
+
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (ft_error(-2));
@@ -101,6 +101,8 @@ int	ft_check_config(t_data *data)
 			return (ft_error(-4));
 		i++;
 	}
+	if (data->parse.map == 0)
+		return (ft_error(3));
 	if (data->dir < 0)
 		return (ft_error(-9));
 	return (0);

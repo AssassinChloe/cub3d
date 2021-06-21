@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:21:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/21 10:41:43 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:21:05 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ long long	ft_atoi(const char *str)
 {
 	unsigned int	i;
 	int				neg;
-	long long				nb;
+	long long		nb;
 
 	i = 0;
 	neg = 1;

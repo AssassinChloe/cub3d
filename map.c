@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/21 12:17:03 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:33:10 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,12 @@ void	flood(t_data *data, int x, int y)
 
 int	ft_deal_with_is_map(t_data *data, char *line, int is_map)
 {
-	int	ret;
-
-	ret = 0;
 	if (is_map == 0 && data->parse.map == 0)
 	{
 		if (data->mapi.get_size == 0)
 		{
-			ret = ft_check_line(data, line);
-			if (ret == -1)
-				return(-1);
+			if (ft_check_line(data, line) < 0)
+				return (ft_error(-4));
 		}
 	}
 	else if (is_map == 1)
@@ -96,7 +92,7 @@ int	ft_deal_with_is_map(t_data *data, char *line, int is_map)
 		}
 		data->mapi.size_y++;
 	}
-	else	
+	else
 		return (-1);
 	return (0);
 }
@@ -125,12 +121,7 @@ int 	ft_check_if_map(t_data *data, char *line)
 			i++;
 		}
 		else
-		{
-			if (data->parse.map == 0)
-				return (0);
-			else
-				return (ft_error(-5));
-		}
+			return (ft_error_if_map(data));
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:02:24 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/21 10:31:39 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:08:10 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_setup_params(t_data *data, int ac, char **av)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	
+
 	if (ft_setup_params(&data, argc, argv) < 0)
 		return (-1);
 	if (ft_init_texture(&data) < 0)
@@ -45,32 +45,25 @@ int	ft_quit(t_data *data)
 
 int	ft_destroy(t_data *data)
 {
-	int i = 0;
-	printf("destroy %d\n", i++);
 	if (data->mlx_img.img)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->mlx_img.img);
 		data->mlx_img.img = NULL;
 	}
-	printf("destroy %d\n", i++);
 	if (data->map)
 		ft_free_tab(data->map, data->mapi.size_y);
-	printf("destroy %d\n", i++);
 	ft_destroy_texture(data);
-	printf("destroy %d\n", i++);
 	if (data->win_ptr)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		data->win_ptr = NULL;
 	}
-	printf("destroy %d\n", i++);
 	if (data->mlx_ptr)
 	{
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 		data->mlx_ptr = NULL;
 	}
-	printf("destroy %d\n", i++);
 	return (-1);
 }
 
