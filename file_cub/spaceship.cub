@@ -2,8 +2,10 @@ NO ./img/spaceship/wall_1.xpm
 SO ./img/spaceship/wall_2.xpm
 EA ./img/spaceship/wall_3.xpm
 WE ./img/spaceship/wall_4.xpm
+
 F 102,102,153
-C 128,128,128
+C 228,128,128
+
 1111111111111111111111
 11111111111111100000011111111111111
              1000000000000000000001

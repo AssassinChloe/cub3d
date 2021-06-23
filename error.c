@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:57:29 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/21 16:04:14 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/23 12:21:32 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ int	ft_error(int errnb)
 		printf("Strdup fail\n");
 	else if (errnb == 5)
 		printf("Failure initating texture, check your path file\n");
+	else if (errnb == 6)
+		printf("Wrong data in .cub file\n");
+	else if (errnb == 7)
+		printf(".cub is a directory\n");
 	else if (errnb == -1)
 		printf("Malloc failure\n");
 	else if (errnb == -2)

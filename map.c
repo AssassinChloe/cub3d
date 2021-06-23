@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/21 14:33:10 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/23 11:55:16 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_deal_with_is_map(t_data *data, char *line, int is_map)
 		if (data->mapi.get_size == 0)
 		{
 			if (ft_check_line(data, line) < 0)
-				return (ft_error(-4));
+				return (-1);
 		}
 	}
 	else if (is_map == 1)
