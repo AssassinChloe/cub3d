@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/23 11:58:22 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/23 16:49:03 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,30 @@
 
 int	ft_check_line(t_data *data, char *line)
 {
-	char	**info;
+	char	**tab;
 	int		i;
 
-	i = 0;
-	if (ft_strncmp(line, "", 1) == 0)
+	if (line[0] == '\0')
 		return (0);
-	info = ft_split(line, ' ');
-	if (!(info))
+	tab = ft_split(line, ' ');
+	if (!(tab))
 		return (ft_error(-1));
-	while (info[i])
-		i++;
-	if (i == 2 && (ft_strncmp(info[0], "SO", 3) == 0
-		|| ft_strncmp(info[0], "WE", 3) == 0
-		|| ft_strncmp(info[0], "EA", 3) == 0
-		|| ft_strncmp(info[0], "NO", 3) == 0
-		|| ft_strncmp(info[0], "C", 2) == 0
-		|| ft_strncmp(info[0], "F", 2) == 0))
+	i = ft_tab_len(tab);
+	if ((ft_strncmp(tab[0], "C", 2) == 0 || ft_strncmp(tab[0], "F", 2) == 0
+			|| ft_strncmp(tab[0], "EA", 3) == 0
+			|| ft_strncmp(tab[0], "NO", 3) == 0
+			|| ft_strncmp(tab[0], "SO", 3) == 0
+			|| ft_strncmp(tab[0], "WE", 3) == 0) && i == 2)
 	{
-		if (ft_check_for_tex(data, info) < 0)
+		if (ft_check_for_tex(data, tab) < 0)
+		{
+			ft_free_tab(tab, i);
 			return (ft_error(-4));
+		}
+		ft_free_tab(tab, i);
 		return (0);
 	}
+	ft_free_tab(tab, i);
 	return (ft_error(6));
 }
 

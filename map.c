@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/23 11:55:16 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/23 16:16:35 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int 	ft_check_if_map(t_data *data, char *line)
 	int	i;
 
 	i = 0;
-	if (line[i] == '\0')
-		return (0);
+	if (line[0] == '\0')
+		return (ft_error_if_map(data));
 	while (line[i])
 	{
 		if (line[i] == '1' || line[i] == ' ' || line[i] == '0')

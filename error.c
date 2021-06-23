@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:57:29 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/23 12:21:32 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/23 17:30:05 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	ft_error(int errnb)
 		printf("Error open\n");
 	else if (errnb == -3)
 		printf("Error close\n");
-	else if (errnb == -4)
-		printf("Missing or wrong data for color/texture\n");
 	else
 		ft_error_2(errnb);
 	return (-1);
@@ -44,7 +42,9 @@ int	ft_error(int errnb)
 
 void	ft_error_2(int errnb)
 {
-	if (errnb == -5)
+	if (errnb == -4)
+		printf("Missing, too many or wrong data for color/texture\n");
+	else if (errnb == -5)
 		printf("Invalid Map\n");
 	else if (errnb == -6)
 		printf("MLX error\n");
@@ -55,7 +55,7 @@ void	ft_error_2(int errnb)
 	else if (errnb == -9)
 		printf("No starting position for the player\n");
 	else
-		printf("error %d \n", errnb);
+		printf("Something went wrong\n");
 }
 
 int	ft_parsing_error(int gnl)
