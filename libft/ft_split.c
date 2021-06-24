@@ -6,13 +6,26 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 16:22:00 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/10 15:01:34 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/24 12:26:04 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_strcount(const char *s, char c)
+static int	ft_is_in_charset(char s, char *c)
+{
+	int	i;
+
+	i = 0;
+	while (c[i])
+	{
+		if (c[i] == s)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+static int	ft_strcount(const char *s, char *c)
 {
 	int	i;
 	int	j;
@@ -21,10 +34,10 @@ static int	ft_strcount(const char *s, char c)
 	j = 0;
 	while (s[i])
 	{
-		if (s[i] != c)
+		if (ft_is_in_charset(s[i], c) == 0)
 		{
 			j++;
-			while (s[i] != c && s[i])
+			while (ft_is_in_charset(s[i], c) == 0 && s[i])
 				i++;
 		}
 		else
@@ -33,35 +46,27 @@ static int	ft_strcount(const char *s, char c)
 	return (j);
 }
 
-static int	ft_splitlen(const char *s, char c, unsigned int *pi)
-{
-	int	len;
-
-	len = 0;
-	while (s[*pi] == c)
-		*pi = *pi + 1;
-	while (s[len + *pi] && s[len + *pi] != c)
-		len++;
-	return (len);
-}
-
-static char	*ft_strcpy(const char *s, char c, unsigned int *pi)
+static char	*ft_strcpy(const char *s, char *c, unsigned int *i)
 {
 	char			*str;
 	unsigned int	j;
 	int				len;
 
 	j = 0;
-	len = ft_splitlen(s, c, pi);
+	len = 0;
+	while (ft_is_in_charset(s[*i], c) == 1)
+		*i = *i + 1;
+	while (s[len + *i] && ft_is_in_charset(s[len + *i], c) == 0)
+		len++;
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!(str))
 		return (NULL);
-	while (s[*pi] && len > 0)
+	while (s[*i] && len > 0)
 	{
-		str[j] = s[*pi];
+		str[j] = s[*i];
 		j++;
 		len--;
-		*pi = *pi + 1;
+		*i = *i + 1;
 	}
 	str[j] = '\0';
 	return (str);
@@ -79,10 +84,9 @@ static char	**ft_free_tab(char **tab, int j)
 	return (tab);
 }
 
-char	**ft_split(const char *s, char c)
+char	**ft_split(const char *s, char *c)
 {
 	char			**tab;
-	unsigned int	*pi;
 	unsigned int	i;
 	int				j;
 	int				len;
@@ -90,7 +94,6 @@ char	**ft_split(const char *s, char c)
 	if (!(s))
 		return (NULL);
 	i = 0;
-	pi = &i;
 	j = 0;
 	len = ft_strcount(s, c);
 	tab = (char **)malloc(sizeof(char *) * (len + 1));
@@ -98,7 +101,7 @@ char	**ft_split(const char *s, char c)
 		return (NULL);
 	while (j < len)
 	{
-		tab[j] = ft_strcpy(s, c, pi);
+		tab[j] = ft_strcpy(s, c, &i);
 		if (tab[j] == NULL)
 			return (ft_free_tab(tab, j));
 		j++;

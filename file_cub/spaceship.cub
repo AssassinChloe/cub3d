@@ -3,7 +3,7 @@ SO    ./img/spaceship/wall_2.xpm
 EA ./img/spaceship/wall_3.xpm
 WE ./img/spaceship/wall_4.xpm
 
-C    128,128,128
+C    128, 128,128
 F 102,102,153
 
 1111111111111111111111
