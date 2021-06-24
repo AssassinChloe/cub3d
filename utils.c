@@ -6,32 +6,75 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 17:15:38 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/23 12:19:53 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/24 17:37:31 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_check_arg(int argc, char**argv)
+int	ft_check_for_comas(char *str)
 {
 	int	i;
-	int	j;
-	int	fd;
+	int	com;
 
-	if (argc != 2)
-		return (ft_error(1));
-	j = 0;
-	while (argv[1][j])
-		j++;
-	i = ft_strncmp(".cub", (argv[1] + (j - 4)), 5);
-	if (i != 0)
-		return (ft_error(2));
-	fd = open(argv[1], O_DIRECTORY);
-	if (fd != -1)
+	i = 0;
+	com = 0;
+	while (str[i])
 	{
-		close(fd);
-		return (ft_error(7));
+		if (str[i] == ',')
+		{
+			com++;
+			i++;
+			while (str[i] && ft_isdigit(str[i]) != 1)
+			{	
+				if (str[i] == ',')
+					return (-1);
+				i++;
+			}
+			if (str[i] == '\0')
+				return (-1);
+		}
+		else 
+			i++;
 	}
+	return (com);
+}
+
+int	ft_check_cf(t_data *data, char *line, char **tab, int i)
+{
+	if ((ft_check_for_comas(line) == 2 && (i >= 2 && i <= 4)
+		&& (ft_strncmp(tab[0], "C", 2) == 0
+		|| ft_strncmp(tab[0], "F", 2) == 0))
+		|| ((ft_strncmp(tab[0], "EA", 3) == 0
+		|| ft_strncmp(tab[0], "NO", 3) == 0
+		|| ft_strncmp(tab[0], "SO", 3) == 0
+		|| ft_strncmp(tab[0], "WE", 3) == 0) && i == 2
+		&& ft_check_for_comas(line) == 0))
+	{
+		if (ft_check_for_tex(data, tab) < 0)
+		{
+			ft_free_tab(tab, i);
+			return (ft_error(-4));
+		}
+	}
+		ft_free_tab(tab, i);
+		return (0);
+
+}
+
+int	ft_check_nsew(t_data *data, char *line, char **tab, int i)
+{
+	if (ft_check_for_comas(line) != 0)
+	{
+		ft_free_tab(tab, i);
+		return (ft_error(-4));
+	}
+	if (ft_check_for_tex(data, tab) < 0)
+	{
+		ft_free_tab(tab, i);
+		return (ft_error(-4));
+	}
+	ft_free_tab(tab, i);
 	return (0);
 }
 

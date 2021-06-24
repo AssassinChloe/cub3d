@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 13:35:08 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/24 12:43:58 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/24 14:38:19 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	get_rgb(char **str)
 	while (i < 4)
 	{
 		
-		rgb[i] = ft_atoi(str[i]);
-		if (rgb[i] < 0 || rgb[i] > 255)
+		rgb[i - 1] = ft_atoi(str[i]);
+		if (rgb[i - 1] < 0 || rgb[i - 1] > 255)
 			return (-1);
 		i++;
 	}

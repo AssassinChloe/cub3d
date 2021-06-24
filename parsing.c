@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/24 12:35:10 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/24 17:34:40 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,21 @@ int	ft_check_line(t_data *data, char *line)
 
 	if (line[0] == '\0')
 		return (0);
-	tab = ft_split(line, " ,");
+	tab = ft_split(line, " ,\t");
 	if (!(tab))
 		return (ft_error(-1));
-	i = ft_tab_len(tab);
-	int j = 0;
-	while (j < i)
+	if (tab[0] == '\0')
 	{
-		printf("%d: %s\n", j, tab[j]);
-		j++;
-	}
-	if (((ft_strncmp(tab[0], "C", 2) == 0 || ft_strncmp(tab[0], "F", 2) == 0)
-			&& i == 4)
-			|| ((ft_strncmp(tab[0], "EA", 3) == 0
-			|| ft_strncmp(tab[0], "NO", 3) == 0
-			|| ft_strncmp(tab[0], "SO", 3) == 0
-			|| ft_strncmp(tab[0], "WE", 3) == 0) && i == 2))
-	{
-		if (ft_check_for_tex(data, tab) < 0)
-		{
-			ft_free_tab(tab, i);
-			return (ft_error(-4));
+		if (ft_check_for_comas(line) != 0)
+		{		
+			free(tab);	
+			return (ft_error(6));
 		}
-		ft_free_tab(tab, i);
+		free(tab);
 		return (0);
 	}
+	i = ft_tab_len(tab);
+	ft_check_cf(data, line, tab, i);
 	ft_free_tab(tab, i);
 	return (ft_error(6));
 }
@@ -51,7 +41,6 @@ int	ft_check_line(t_data *data, char *line)
 int	ft_parse_cub(t_data *data, char *file)
 {
 	char	*line;
-	int		i;
 
 	data->mapi.get_size = 0;
 	line = NULL;
@@ -70,9 +59,6 @@ int	ft_parse_cub(t_data *data, char *file)
 	data->map[data->mapi.size_y] = NULL;
 	if (ft_check_map_validity(data) < 0)
 		return (-1);
-	i = 0;
-	while (data->map[i] != NULL)
-		printf("%s\n", data->map[i++]);
 	return (0);
 }
 

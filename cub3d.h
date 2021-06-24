@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/24 12:41:50 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/24 17:05:41 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define FOV 60
 # define GRID 64 
 # define DEG 0.01745329
-# define SPEED 10 
+# define SPEED 5 
 
 typedef struct s_parse
 {
@@ -141,6 +141,9 @@ void	ft_init_player(t_data *data, char dir, int x);
 int		ft_check_if_map(t_data *data, char *line);
 int		ft_deal_with_is_map(t_data *data, char *line, int is_map);
 int		ft_check_line(t_data *data, char *line);
+int		ft_check_for_comas(char *str);
+int		ft_check_cf(t_data *data, char *line, char **tab, int i);
+int		ft_check_nsew(t_data *data, char *line, char **tab, int i);
 int		ft_check_map_validity(t_data *data);
 void	ft_map_size(t_data *data);
 void	flood(t_data *data, int x, int y);
