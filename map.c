@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:50:09 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/23 16:16:35 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 11:24:42 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_check_map_validity(t_data *data)
 	y = data->mapi.player.y;
 	x = data->mapi.player.x;
 	data->map[y][x] = '0';
-	flood(data, x, y);
+	ft_flood(data, x, y);
 	if (data->floodfill < 0)
 		return (ft_error(-5));
 	while (i < data->mapi.size_y)
@@ -54,7 +54,7 @@ void 	ft_map_size(t_data *data)
 	}
 }
 
-void	flood(t_data *data, int x, int y)
+void	ft_flood(t_data *data, int x, int y)
 {
 	if (x < 0 || y < 0 || (data->map[y][x] != '1' && data->map[y][x] != '0'
 				&& data->map[y][x] != 'X'))
@@ -64,10 +64,10 @@ void	flood(t_data *data, int x, int y)
 	if (data->map[y][x] == '0')
 	{
 		data->map[y][x] = 'X';
-		flood(data, (x + 1), y);
-		flood(data, (x - 1), y);
-		flood(data, x, (y + 1));
-		flood(data, x, (y - 1));
+		ft_flood(data, (x + 1), y);
+		ft_flood(data, (x - 1), y);
+		ft_flood(data, x, (y + 1));
+		ft_flood(data, x, (y - 1));
 	}
 }
 
@@ -116,7 +116,7 @@ int 	ft_check_if_map(t_data *data, char *line)
 				if (data->dir < 0)
 					ft_init_player(data, line[i], i);
 				else
-					return (ft_error(-8));
+					return (ft_error(-5));
 			}
 			i++;
 		}

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:04:37 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 14:22:42 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 11:43:21 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross)
 	t_cross	d_i_l;
 	t_cross	d_i_c;
 
-	init_t_cross(cross);
+	ft_init_t_cross(cross);
 	r_a = ((data->dir + 30) - (data->win.sub_ray_angle * ray_nb));
 	if (r_a >= 360)
 		r_a -= 360;
@@ -57,7 +57,7 @@ void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross)
 	}
 }
 
-void	init_t_cross(t_cross *ray)
+void	ft_init_t_cross(t_cross *ray)
 {
 	ray->dist = 50000;
 	ray->cross.x = 0;
@@ -66,7 +66,7 @@ void	init_t_cross(t_cross *ray)
 	ray->delta.y = 0;
 }
 
-int	set_params_dil(t_data *data, double r_a, t_cross *dil)
+int	ft_set_params_dil(t_data *data, double r_a, t_cross *dil)
 {
 	dil->delta.y = GRID;
 	if (r_a >= 359 || r_a <= 1 || (r_a >= 179 && r_a <= 181))
@@ -83,8 +83,8 @@ int	set_params_dil(t_data *data, double r_a, t_cross *dil)
 
 void	ft_check_intersect_line(t_data *data, double r_a, t_cross *dil)
 {
-	init_t_cross(dil);
-	if (set_params_dil(data, r_a, dil) < 0)
+	ft_init_t_cross(dil);
+	if (ft_set_params_dil(data, r_a, dil) < 0)
 		return ;
 	dil->cross.x = data->pos.x + (((data->pos.y - dil->cross.y)
 				/ sin(r_a * DEG)) * cos(r_a * DEG));

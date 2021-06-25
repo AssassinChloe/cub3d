@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 16:05:58 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/25 11:41:48 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 12:24:39 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <mlx.h>
 # include <stdlib.h>
@@ -23,8 +23,8 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <fcntl.h>
-# include "libft/get_next_line.h"
-# include "libft/libft.h"
+# include "../libft/get_next_line.h"
+# include "../libft/libft.h"
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
@@ -159,6 +159,7 @@ int		ft_keyrelease(int keycode, t_data *data);
 void	ft_movement(t_data *data);
 void	ft_rotate(t_data *data);
 void	ft_move(t_data *data);
+void	ft_lateral(t_data *data, double delta_x, double delta_y);
 int		ft_render(t_data *data);
 int		ft_render_rect(t_img *img, t_rect rect);
 void	ft_ray_lenght(int ray_nb, t_data *data, t_cross *cross);

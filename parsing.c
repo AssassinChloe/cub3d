@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:00:28 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/24 17:34:40 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 11:47:29 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,15 @@ int	ft_check_line(t_data *data, char *line)
 	if (tab[0] == '\0')
 	{
 		if (ft_check_for_comas(line) != 0)
-		{		
-			free(tab);	
+		{
+			free(tab);
 			return (ft_error(6));
 		}
 		free(tab);
 		return (0);
 	}
 	i = ft_tab_len(tab);
-	ft_check_cf(data, line, tab, i);
-	ft_free_tab(tab, i);
-	return (ft_error(6));
+	return (ft_check_cf(data, line, tab, i));
 }
 
 int	ft_parse_cub(t_data *data, char *file)
@@ -107,7 +105,7 @@ int	ft_check_config(t_data *data)
 	if (data->parse.map == 0)
 		return (ft_error(3));
 	if (data->dir < 0)
-		return (ft_error(-9));
+		return (ft_error(-8));
 	return (0);
 }
 

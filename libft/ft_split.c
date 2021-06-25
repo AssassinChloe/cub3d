@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 16:22:00 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/24 12:26:04 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 11:46:15 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	ft_is_in_charset(char s, char *c)
 	}
 	return (0);
 }
+
 static int	ft_strcount(const char *s, char *c)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:57:29 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/23 17:30:05 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 10:38:31 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	ft_error_2(int errnb)
 	else if (errnb == -7)
 		printf("Failure to read .cub file\n");
 	else if (errnb == -8)
-		printf("Too many player\n");
-	else if (errnb == -9)
 		printf("No starting position for the player\n");
 	else
 		printf("Something went wrong\n");

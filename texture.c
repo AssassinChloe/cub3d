@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 19:15:18 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/17 18:05:50 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 11:40:37 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_tex	*ft_get_tex(t_data *data)
 		return (&data->tex[3]);
 }
 
-int	img_pix_get(t_img *img, int x, int y)
+int	ft_img_pix_get(t_img *img, int x, int y)
 {
 	return (*(int *)(img->addr + (y * img->line_len) + x * (img->bpp / 8)));
 }
@@ -85,7 +85,7 @@ int	ft_texture(t_data *data, t_tex *tex, t_cross wall, int i)
 	{
 		y = (int)(j / (data->wall_size / tex->height));
 		ft_pix_to_img(&data->mlx_img, i, (start_h + k),
-			img_pix_get(&tex->xpm, stripe, y));
+			ft_img_pix_get(&tex->xpm, stripe, y));
 		j++;
 		k++;
 	}

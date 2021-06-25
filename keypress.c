@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:45:15 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 18:16:51 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 11:29:53 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_init_keys(t_data *data)
 	data->key.rot_right = 0;
 }
 
-int	keypress(int keycode, t_data *data)
+int	ft_keypress(int keycode, t_data *data)
 {
 	if (keycode == XK_Escape)
 		mlx_loop_end(data->mlx_ptr);
@@ -40,7 +40,7 @@ int	keypress(int keycode, t_data *data)
 	return (0);
 }
 
-int	keyrelease(int keycode, t_data *data)
+int	ft_keyrelease(int keycode, t_data *data)
 {
 	if (keycode == XK_Right)
 		data->key.rot_right = 0;

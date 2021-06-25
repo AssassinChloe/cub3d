@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 13:35:08 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/24 14:38:19 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 11:48:06 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_check_for_tex(t_data *data, char **info)
 	return (ret);
 }
 
-int	get_rgb(char **str)
+int	ft_get_rgb(char **str)
 {
 	int	i;
 	int	rgb[3];
@@ -41,7 +41,6 @@ int	get_rgb(char **str)
 	i = 1;
 	while (i < 4)
 	{
-		
 		rgb[i - 1] = ft_atoi(str[i]);
 		if (rgb[i - 1] < 0 || rgb[i - 1] > 255)
 			return (-1);
@@ -54,7 +53,7 @@ int	ft_set_color(t_data *data, char **info)
 {
 	int	ret;
 
-	ret = get_rgb(info);
+	ret = ft_get_rgb(info);
 	if (ret >= 0 && ft_strncmp(info[0], "C", 2) == 0)
 	{
 		data->parse.ceil_color = ret;

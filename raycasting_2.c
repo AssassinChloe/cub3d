@@ -6,13 +6,13 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 18:19:06 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/16 13:53:51 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/25 11:42:54 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	set_params_dic(t_data *data, double r_a, t_cross *dic)
+int	ft_set_params_dic(t_data *data, double r_a, t_cross *dic)
 {
 	dic->delta.x = GRID;
 	if ((r_a >= 89 && r_a <= 91) || (r_a <= 271 && r_a >= 269))
@@ -31,8 +31,8 @@ int	set_params_dic(t_data *data, double r_a, t_cross *dic)
 
 void	ft_check_intersect_column(t_data *data, double r_a, t_cross *dic)
 {
-	init_t_cross(dic);
-	if (set_params_dic(data, r_a, dic) < 0)
+	ft_init_t_cross(dic);
+	if (ft_set_params_dic(data, r_a, dic) < 0)
 		return ;
 	dic->cross.y = data->pos.y + (((data->pos.x - dic->cross.x)
 				/ cos(r_a * DEG)) * sin(r_a * DEG));
