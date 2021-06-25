@@ -25,11 +25,11 @@ CC	= clang
 
 FLAGS 	= -c -Wall -Wextra -Werror
 
-INC	= -I cub3d.h 
+INC	= -I cub3d.h
 
 BINC	= -I bonus/cub3d.h
 
-LIB	= -lm -lX11 -lXext -lmlx libft/libft.a
+LIB	= -lm -lX11 -lXext miniLibX/libmlx.a libft/libft.a
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -37,13 +37,15 @@ BOBJS	= $(BONUS:.c=.o)
 
 $(NAME):	$(OBJS)
 			$(MAKE) -C libft
+			$(MAKE) -C miniLibX
 			$(CC) $(FLAGS) $(INC) $(SRCS)
 			$(CC) -o $(NAME) $(OBJS) $(LIB)
 all : 		$(NAME)
 
 clean :
 			$(MAKE) clean -C libft
-			rm $(OBJS) 
+			$(MAKE) clean -C miniLibX
+			rm -f $(OBJS) 
 
 fclean : 	clean
 			$(MAKE) fclean -C libft
@@ -53,12 +55,14 @@ re : 		fclean all
 
 bonus :		$(BOBJS)
 			$(MAKE) -C libft
+			$(MAKE) -C miniLibX
 			$(CC) $(FLAGS) $(BINC) $(BONUS)
 			$(CC) -o $(NAME) $(BOBJS) $(LIB)
 
 cleanbonus :	
 			$(MAKE) clean -C libft
-			rm $(BOBJS) 
+			$(MAKE) clean -C miniLibX
+			rm -f $(BOBJS) 
 
 fcleanbonus :	cleanbonus
 			$(MAKE) fclean -C libft

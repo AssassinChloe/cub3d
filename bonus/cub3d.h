@@ -13,7 +13,6 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <mlx.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <X11/X.h>
@@ -25,6 +24,7 @@
 # include <fcntl.h>
 # include "../libft/get_next_line.h"
 # include "../libft/libft.h"
+# include "../miniLibX/mlx.h"
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
