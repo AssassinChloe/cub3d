@@ -6,7 +6,7 @@
 #    By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/21 15:07:28 by cassassi          #+#    #+#              #
-#    Updated: 2021/06/28 14:41:41 by cassassi         ###   ########.fr        #
+#    Updated: 2021/06/28 19:13:23 by cassassi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ BONUS	= bonus/keypress_utils.c bonus/main.c bonus/keypress.c\
 
 CC	= clang
 
-FLAGS 	= -c -Wall -Wextra -Werror
+FLAGS 	= -Wall -Wextra -Werror
 
 INC	= -I cub3d.h
 
@@ -35,14 +35,11 @@ LIB	= -lm -lX11 -lXext miniLibX/libmlx.a libft/libft.a
 
 OBJS	= $(SRCS:.c=.o)
 
-BOBJS	= $(BONUS:.c=.o)
+BOBJS 	= $(BONUS:.c=.o)
 
-$(NAME):	$(OBJS)
-			$(MAKE) -C libft
-			$(MAKE) -C miniLibX
-			$(CC) $(FLAGS) $(INC) $(SRCS)
-			$(CC) -o $(NAME) $(OBJS) $(LIB)
 all : 		$(NAME)
+
+bonus :		$(BNAME)
 
 clean :
 			$(MAKE) clean -C libft
@@ -51,15 +48,19 @@ clean :
 
 fclean : 	clean
 			$(MAKE) fclean -C libft
-			rm -rf $(NAME)
+			rm -f $(NAME)
 
-re : 		fclean all
 
-bonus :		$(BOBJS)
+$(NAME):	$(OBJS)
 			$(MAKE) -C libft
 			$(MAKE) -C miniLibX
-			$(CC) $(FLAGS) $(BINC) $(BONUS)
-			$(CC) -o $(BNAME) $(BOBJS) $(LIB)
+			$(CC)  -c $(FLAGS) $(INC) $(SRCS)
+			$(CC) -o $(NAME) $(OBJS) $(LIB)
+	
+$(BNAME):	$(BOBJS)
+			$(MAKE) -C libft
+			$(MAKE) -C miniLibX
+			$(CC) -o $(BNAME) $(BOBJS) $(LIB) 
 
 cleanbonus :	
 			$(MAKE) clean -C libft
@@ -68,5 +69,11 @@ cleanbonus :
 
 fcleanbonus :	cleanbonus
 			$(MAKE) fclean -C libft
-			rm -rf $(BNAME)
+			rm -f $(BNAME)
+
+re : 		fclean all
+
 rebonus	:	fcleanbonus bonus
+
+bonus/%.o:bonus/%.c
+	$(CC) $(FLAGS) $(BINC) -o $@ -c $<
