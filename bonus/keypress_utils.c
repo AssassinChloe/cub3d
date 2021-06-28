@@ -6,7 +6,7 @@
 /*   By: cassassi <cassassi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 14:05:21 by cassassi          #+#    #+#             */
-/*   Updated: 2021/06/25 14:42:29 by cassassi         ###   ########.fr       */
+/*   Updated: 2021/06/28 14:56:32 by cassassi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ void	ft_move(t_data *data)
 	delta_x = cos(data->dir * DEG) * SPEED;
 	delta_y = -sin(data->dir * DEG) * SPEED;
 	if (data->key.forward == 1
-		&& data->map[(int)(data->pos.y + delta_y) / GRID]
-			[(int)(data->pos.x + delta_x) / GRID] == 'X')
+		&& data->map[(int)(data->pos.y + delta_y * 10) / GRID]
+			[(int)(data->pos.x + delta_x * 10) / GRID] == 'X')
 	{
 		data->pos.x += delta_x;
 		data->pos.y += delta_y;
 	}
 	if (data->key.backward == 1
-		&& data->map[(int)(data->pos.y - delta_y) / GRID]
-			[(int)(data->pos.x - delta_x) / GRID] == 'X')
+		&& data->map[(int)(data->pos.y - delta_y * 10) / GRID]
+			[(int)(data->pos.x - delta_x * 10) / GRID] == 'X')
 	{
 		data->pos.x -= delta_x;
 		data->pos.y -= delta_y;
@@ -61,15 +61,15 @@ void	ft_move(t_data *data)
 void	ft_lateral(t_data *data, double delta_x, double delta_y)
 {
 	if (data->key.left == 1
-		&& data->map[(int)(data->pos.y - delta_x) / GRID]
-			[(int)(data->pos.x + delta_y) / GRID] == 'X')
+		&& data->map[(int)(data->pos.y - delta_x * 10) / GRID]
+			[(int)(data->pos.x + delta_y * 10) / GRID] == 'X')
 	{
 		data->pos.x += delta_y;
 		data->pos.y -= delta_x;
 	}
 	if (data->key.right == 1
-		&& data->map[(int)(data->pos.y + delta_x) / GRID]
-			[(int)(data->pos.x - delta_y) / GRID] == 'X')
+		&& data->map[(int)(data->pos.y + delta_x * 10) / GRID]
+			[(int)(data->pos.x - delta_y * 10) / GRID] == 'X')
 	{
 		data->pos.x -= delta_y;
 		data->pos.y += delta_x;
