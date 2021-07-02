@@ -38,7 +38,7 @@ int	ft_check_map_validity(t_data *data)
 	return (0);
 }
 
-void 	ft_map_size(t_data *data)
+void	ft_map_size(t_data *data)
 {
 	int	len;
 	int	i;
@@ -57,7 +57,7 @@ void 	ft_map_size(t_data *data)
 void	ft_flood(t_data *data, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= data->mapi.size_x || y >= data->mapi.size_y
-			|| (data->map[y][x] != '1' && data->map[y][x] != '0'
+		|| (data->map[y][x] != '1' && data->map[y][x] != '0'
 				&& data->map[y][x] != 'X'))
 		data->floodfill = -1;
 	if (data->floodfill == -1)
@@ -98,7 +98,7 @@ int	ft_deal_with_is_map(t_data *data, char *line, int is_map)
 	return (0);
 }
 
-int 	ft_check_if_map(t_data *data, char *line)
+int	ft_check_if_map(t_data *data, char *line)
 {
 	int	i;
 

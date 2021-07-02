@@ -20,7 +20,7 @@ void	ft_pix_to_img(t_img *img, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
-int 	ft_render_rect(t_img *img, t_rect rect)
+int	ft_render_rect(t_img *img, t_rect rect)
 {
 	int	i;
 	int	j;
