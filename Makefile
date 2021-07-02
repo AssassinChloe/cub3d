@@ -33,7 +33,7 @@ BINC	= -I bonus/cub3d.h
 
 LIB	= -lm -lX11 -lXext miniLibX/libmlx.a libft/libft.a
 
-OBJSD	= .obj/
+OBJSD	= mandatory/.obj/
 
 OBJS	= $(addprefix $(OBJSD), $(SRCS:%.c=%.o))
 
@@ -81,7 +81,7 @@ rebonus	:	fcleanbonus bonus
 $(BOBJSD)%.o:bonus/%.c
 		@mkdir -p $(BOBJSD)
 		$(CC) $(FLAGS) $(BINC) -o $@ -c $<
-$(OBJSD)%.o:%.c
+$(OBJSD)%.o:mandatory/%.c
 		@mkdir -p $(OBJSD) 
 		$(CC) $(FLAGS) $(INC) -o $@ -c $<
 

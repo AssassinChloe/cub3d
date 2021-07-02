@@ -23,9 +23,9 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "libft/get_next_line.h"
-# include "libft/libft.h"
-# include "miniLibX/mlx.h"
+# include "../libft/get_next_line.h"
+# include "../libft/libft.h"
+# include "../miniLibX/mlx.h"
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
